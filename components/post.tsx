@@ -5,7 +5,7 @@ export type PostProps = {
   body: string;
   id: number;
   userId: number;
-}
+};
 
 export default function Post(props: PostProps) {
   const { title, body, id } = props;
@@ -17,5 +17,5 @@ export default function Post(props: PostProps) {
         <a>Read more...</a>
       </Link>
     </article>
-  )
+  );
 }
