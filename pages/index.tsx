@@ -1,8 +1,8 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { GetStaticProps } from 'next';
+import Post, { PostProps } from '../components/post';
 
-import Post from '../components/post'
-
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async (context) => {
   // fetch list of posts
   const response = await fetch(
     'https://jsonplaceholder.typicode.com/posts?_page=1'
@@ -15,7 +15,8 @@ export async function getStaticProps() {
   }
 }
 
-export default function IndexPage({ postList }) {
+export default function IndexPage(props: { postList: PostProps[] }) {
+  const { postList } = props
   return (
     <main>
       <Head>

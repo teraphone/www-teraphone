@@ -1,5 +1,7 @@
-import Link from 'next/link'
-import Head from 'next/head'
+import Link from 'next/link';
+import Head from 'next/head';
+import { GetStaticProps } from 'next';
+import { PostProps } from '../../components/post';
 
 export async function getStaticPaths() {
   const response = await fetch(
@@ -7,7 +9,7 @@ export async function getStaticPaths() {
   )
   const postList = await response.json()
   return {
-    paths: postList.map((post) => {
+    paths: postList.map((post: PostProps) => {
       return {
         params: {
           id: `${post.id}`,
@@ -18,10 +20,10 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async (context) => {
   // fetch single post detail
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${params.id}`
+    `https://jsonplaceholder.typicode.com/posts/${context.params?.id}`
   )
   const post = await response.json()
   return {
@@ -29,7 +31,8 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default function Post({ title, body }) {
+export default function Post(props: PostProps) {
+  const { title, body } = props
   return (
     <main>
       <Head>
