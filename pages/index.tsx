@@ -23,6 +23,21 @@ export default function IndexPage() {
               <a>/email-verification?code=1234</a>
             </Link>
           </p>
+          <p>
+            <Link href="/password-reset">
+              <a>/password-reset</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/password-reset?code=1234">
+              <a>/password-reset?code=1234</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/forgot-password">
+              <a>/forgot-password</a>
+            </Link>
+          </p>
         </>
       )}
     </main>
