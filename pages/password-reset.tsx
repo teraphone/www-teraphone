@@ -56,7 +56,7 @@ export default function PasswordReset() {
   );
 
   const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
+    async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setRequestStatus('pending');
       const data = new FormData(event.currentTarget);
@@ -68,6 +68,18 @@ export default function PasswordReset() {
       });
       console.log('url:', url);
       console.log('body:', body);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body,
+      });
+      if (response.status === 200) {
+        setRequestStatus('success');
+      } else {
+        setRequestStatus('error');
+      }
     },
     [code]
   );
@@ -163,7 +175,7 @@ export default function PasswordReset() {
           {requestStatus === 'error' && (
             <Box component="div" sx={{ mt: 3, textAlign: 'center' }}>
               <Typography component="p" variant="body1">
-                Failed! Your password-reset link may be expired.
+                Failed: invalid or expired password-reset link.
               </Typography>
             </Box>
           )}
