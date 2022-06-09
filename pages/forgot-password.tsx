@@ -11,3 +11,4 @@ export default function ForgotPassword() {
     </main>
   );
 }
+// todo: needs captcha. see https://github.com/dozoisch/react-google-recaptcha
