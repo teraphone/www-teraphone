@@ -41,18 +41,18 @@ export default function ForgotPassword() {
       const body = JSON.stringify({ email: emailAddress });
       console.log('url:', url);
       console.log('body:', body);
-      // const response = await fetch(url, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body,
-      // });
-      // if (response.status === 200) {
-      //   setRequestStatus('success');
-      // } else {
-      //   setRequestStatus('error');
-      // }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body,
+      });
+      if (response.status === 200) {
+        setRequestStatus('success');
+      } else {
+        setRequestStatus('error');
+      }
     },
     []
   );

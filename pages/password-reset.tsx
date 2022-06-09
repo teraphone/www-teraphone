@@ -83,11 +83,13 @@ export default function PasswordReset() {
   );
 
   useEffect(() => {
-    if (code !== undefined) {
-      console.log('code:', code);
-    } else {
-      console.log('redirecting to /');
-      router.push('/');
+    if (router.isReady) {
+      if (code !== undefined) {
+        console.log('code:', code);
+      } else {
+        console.log('redirecting to /');
+        router.push('/');
+      }
     }
   }, [code, router]);
 
