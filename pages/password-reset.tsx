@@ -167,15 +167,16 @@ export default function PasswordReset() {
           )}
           {requestStatus === 'success' && (
             <Box component="div" sx={{ mt: 3 }}>
-              <Typography component="h2" variant="h5">
-                Success!
+              <Typography component="p" variant="body1">
+                Success: Your password has been updated.
               </Typography>
             </Box>
           )}
           {requestStatus === 'error' && (
-            <Box component="div" sx={{ mt: 3, textAlign: 'center' }}>
+            <Box component="div" sx={{ mt: 3 }}>
               <Typography component="p" variant="body1">
-                Failed: invalid or expired password-reset link.
+                Failed: invalid or expired password-reset link. Contact
+                help@teraphone.app for support.
               </Typography>
             </Box>
           )}
