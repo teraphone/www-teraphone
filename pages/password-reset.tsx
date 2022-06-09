@@ -13,7 +13,7 @@ export default function PasswordReset() {
       console.log('redirecting to /');
       router.push('/');
     }
-  }, [code]);
+  }, [code, router]);
 
   return (
     <main>

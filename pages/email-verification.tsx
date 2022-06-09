@@ -13,7 +13,7 @@ export default function EmailVerification() {
       console.log('redirecting to /');
       router.push('/');
     }
-  }, [code]);
+  }, [code, router]);
 
   return (
     <main>
