@@ -1,0 +1,1 @@
+export const PUBLIC_BASE_URL = 'https://api-dev.teraphone.app/v1/public';
