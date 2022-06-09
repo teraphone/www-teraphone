@@ -9,6 +9,7 @@ export default function ForgotPassword() {
   const [requestStatus, setRequestStatus] = useState<
     'none' | 'pending' | 'success' | 'error'
   >('none');
+  const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [emailValid, setEmailValid] = useState(false);
@@ -16,6 +17,7 @@ export default function ForgotPassword() {
   const handleEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
+      setEmail(value);
       if (!validator.isEmail(value)) {
         setEmailError(true);
         setEmailHelperText('Invalid email address');
@@ -34,9 +36,9 @@ export default function ForgotPassword() {
       event.preventDefault();
       setRequestStatus('pending');
       const data = new FormData(event.currentTarget);
-      const email = data.get('email') as string;
+      const emailAddress = data.get('emailAddress') as string;
       const url = PUBLIC_BASE_URL + '/forgot-password';
-      const body = JSON.stringify({ email });
+      const body = JSON.stringify({ email: emailAddress });
       console.log('url:', url);
       console.log('body:', body);
       // const response = await fetch(url, {
@@ -89,9 +91,9 @@ export default function ForgotPassword() {
                     autoFocus
                     required
                     fullWidth
-                    id="email"
+                    id="email-address"
                     label="Email Address"
-                    name="email"
+                    name="emailAddress"
                   />
                 </Grid>
               </Grid>
@@ -109,16 +111,20 @@ export default function ForgotPassword() {
           )}
           {requestStatus === 'success' && (
             <Box component="div" sx={{ mt: 3 }}>
-              <Typography component="h2" variant="h5">
-                Success: An email has been sent to you with instructions to
-                reset your password.
+              <Typography component="p" variant="body1">
+                Success: If we find {email} in our records we will send you a
+                message with instructions to reset your password.
+              </Typography>
+              <br />
+              <Typography component="p" variant="body1">
+                Please allow a few minutes for your message to arrive.
               </Typography>
             </Box>
           )}
           {requestStatus === 'error' && (
-            <Box component="div" sx={{ mt: 3, textAlign: 'center' }}>
+            <Box component="div" sx={{ mt: 3 }}>
               <Typography component="p" variant="body1">
-                Failed: invalid request.
+                Failed: invalid request. Contact help@teraphone.app for support.
               </Typography>
             </Box>
           )}
