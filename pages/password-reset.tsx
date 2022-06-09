@@ -64,8 +64,6 @@ export default function PasswordReset() {
         code,
         new_password: newPassword,
       });
-      console.log('url:', url);
-      console.log('body:', body);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -84,10 +82,7 @@ export default function PasswordReset() {
 
   useEffect(() => {
     if (router.isReady) {
-      if (code !== undefined) {
-        console.log('code:', code);
-      } else {
-        console.log('redirecting to /');
+      if (code === undefined) {
         router.push('/');
       }
     }

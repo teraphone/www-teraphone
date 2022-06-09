@@ -9,14 +9,12 @@ export default function EmailVerification() {
   const { code } = router.query;
   const [requestStatus, setRequestStatus] = useState<
     'none' | 'pending' | 'success' | 'error'
-  >('error');
+  >('none');
 
   const handleRequest = useCallback(async () => {
     setRequestStatus('pending');
     const url = PUBLIC_BASE_URL + '/email-verification';
     const body = JSON.stringify({ code });
-    console.log('url:', url);
-    console.log('body:', body);
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -34,10 +32,8 @@ export default function EmailVerification() {
   useEffect(() => {
     if (router.isReady) {
       if (code !== undefined) {
-        console.log('code:', code);
         handleRequest();
       } else {
-        console.log('redirecting to /');
         router.push('/');
       }
     }
