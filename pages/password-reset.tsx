@@ -19,8 +19,6 @@ export default function PasswordReset() {
   const [confirmPasswordHelperText, setConfirmPasswordHelperText] =
     useState('');
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handlePasswordChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
