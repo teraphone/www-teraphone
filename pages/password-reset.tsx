@@ -1,12 +1,6 @@
 import { PUBLIC_BASE_URL } from '../util/client';
-import {
-  Button,
-  Box,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { Box, Container, Grid, TextField, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useCallback } from 'react';
@@ -15,8 +9,8 @@ export default function PasswordReset() {
   const router = useRouter();
   const { code } = router.query;
   const [requestStatus, setRequestStatus] = useState<
-    'pending' | 'success' | 'error'
-  >('pending');
+    'none' | 'pending' | 'success' | 'error'
+  >('none');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordHelperText, setPasswordHelperText] = useState('');
@@ -64,6 +58,7 @@ export default function PasswordReset() {
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      setRequestStatus('pending');
       const data = new FormData(event.currentTarget);
       const newPassword = data.get('newPassword') as string;
       const url = PUBLIC_BASE_URL + '/password-reset';
@@ -104,51 +99,74 @@ export default function PasswordReset() {
           <Typography component="h1" variant="h5">
             Password Reset
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  error={passwordError}
-                  helperText={passwordHelperText}
-                  onChange={handlePasswordChange}
-                  autoFocus
-                  required
-                  fullWidth
-                  type="password"
-                  id="new-password"
-                  label="New Password"
-                  name="newPassword"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={confirmPasswordError}
-                  helperText={confirmPasswordHelperText}
-                  onChange={handleConfirmPasswordChange}
-                  required
-                  fullWidth
-                  type="password"
-                  id="confirm-new-password"
-                  label="Confirm New Password"
-                  name="confirmNewPassword"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              disabled={!(passwordValid && confirmPasswordValid)}
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+          {(requestStatus === 'none' || requestStatus === 'pending') && (
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
             >
-              Change Password
-            </Button>
-          </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    error={passwordError}
+                    helperText={passwordHelperText}
+                    onChange={handlePasswordChange}
+                    autoFocus
+                    required
+                    fullWidth
+                    type="password"
+                    id="new-password"
+                    label="New Password"
+                    name="newPassword"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={confirmPasswordError}
+                    helperText={confirmPasswordHelperText}
+                    onChange={handleConfirmPasswordChange}
+                    required
+                    fullWidth
+                    type="password"
+                    id="confirm-new-password"
+                    label="Confirm New Password"
+                    name="confirmNewPassword"
+                  />
+                </Grid>
+              </Grid>
+              <LoadingButton
+                disabled={
+                  !(
+                    passwordValid &&
+                    confirmPasswordValid &&
+                    requestStatus === 'none'
+                  )
+                }
+                type="submit"
+                fullWidth
+                variant="contained"
+                loading={requestStatus === 'pending'}
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Change Password
+              </LoadingButton>
+            </Box>
+          )}
+          {requestStatus === 'success' && (
+            <Box component="div" sx={{ mt: 3 }}>
+              <Typography component="h2" variant="h5">
+                Success!
+              </Typography>
+            </Box>
+          )}
+          {requestStatus === 'error' && (
+            <Box component="div" sx={{ mt: 3, textAlign: 'center' }}>
+              <Typography component="p" variant="body1">
+                Failed! Your password-reset link may be expired.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Container>
     </main>
