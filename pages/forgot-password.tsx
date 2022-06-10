@@ -1,9 +1,10 @@
-import { PUBLIC_BASE_URL } from '../util/client';
+import { API_PUBLIC_BASE_URL, RECAPTCHA_SITE_KEY } from '../util/client';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Container, Grid, TextField, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useState, useCallback } from 'react';
 import validator from 'validator';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function ForgotPassword() {
   const [requestStatus, setRequestStatus] = useState<
@@ -13,6 +14,7 @@ export default function ForgotPassword() {
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState('');
   const [emailValid, setEmailValid] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,13 +33,18 @@ export default function ForgotPassword() {
     []
   );
 
+  const handleCaptchaChange = useCallback((token: string | null) => {
+    console.log('Captcha token:', token);
+    setCaptchaToken(token);
+  }, []);
+
   const handleSubmit = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setRequestStatus('pending');
       const data = new FormData(event.currentTarget);
       const emailAddress = data.get('emailAddress') as string;
-      const url = PUBLIC_BASE_URL + '/forgot-password';
+      const url = API_PUBLIC_BASE_URL + '/forgot-password';
       const body = JSON.stringify({ email: emailAddress });
       const response = await fetch(url, {
         method: 'POST',
@@ -92,11 +99,22 @@ export default function ForgotPassword() {
                     id="email-address"
                     label="Email Address"
                     name="emailAddress"
+                    sx={{ mb: 3 }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <ReCAPTCHA
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={handleCaptchaChange}
                   />
                 </Grid>
               </Grid>
               <LoadingButton
-                disabled={!(emailValid && requestStatus === 'none')}
+                disabled={
+                  !(emailValid && requestStatus === 'none' && captchaToken)
+                }
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -131,4 +149,3 @@ export default function ForgotPassword() {
     </main>
   );
 }
-// todo: needs captcha. see https://github.com/dozoisch/react-google-recaptcha
