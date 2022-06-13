@@ -1,0 +1,1 @@
+this doc is for drafting the landing page copy
