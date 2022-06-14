@@ -21,3 +21,9 @@ Target Audience:
   - reddit
   - facebook
   - linkedin
+
+Value Proposition:
+- Unlock the serendipity of in-person collaboration for your remote team.
+  - Eliminate the friction of coordinating calls with dedicated voice channels. Join a conversation with a single click. Hang out and chat or just listen-in. No need for a formal meeting.
+  - Show your entire workspace with multi-screen sharing.
+  - Share more freely. Trivially bring your entire workspace to the conversation. Share as many screens or windows as you like, and view your teams' screens in full resolution with multi-monitor support.
