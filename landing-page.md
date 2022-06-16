@@ -16,9 +16,9 @@ Target Audience:
   - collaboration is more fatiguing and inefficient than in-person
   - loss of culture and tribal knowledge circulation
   - hesitant to start casual conversations with team members
+  - text chat and email are too slow, or too formal
+  - waiting for a scheduled meeting to resolve an issue is inefficient, frustrating
 - traffic source
-  - google search
-  - reddit
   - facebook
   - linkedin
 
@@ -38,6 +38,15 @@ pain points: (in addition to the above)
   - If this were in-person one could simply look over your shoulder and see your entire workspace.
   - Why can we only share one screen at a time? what if you have multiple monitors or windows that you need to share? You either squish everything to fit into one screen or you have to keep switching windows.
   - What if you have a giant monitor? You'd like to organize shared screens into a grid to best utilize your available screen real-estate.
+- pain scenario: you're blocked on some task or decision. you send an email or text chat to some colleagues who might be able to help. Now you're twiddling your thumbs waiting for a reply... This delay is annoying. Should you call someone direcly? Who would be most appropriate? Maybe wait a bit more... someone will probably reply soon. Worst case there's the team meeting this afternoon.
 
 benefits (what does product let users do? what value do they get?):
-- 
+- Speak with your coworkers as if you were all in the same room together
+- See at a glance who is talking to whom, without needing to join the meeting or interrupt
+- Starting a conversation is as simple as saying "Hey". You're already connected.
+- No more juggling which screen or window to share in a presentation or collaboration.
+
+
+## comment
+new logical architecture
+"network" -> "server" -> "channel"
