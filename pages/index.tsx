@@ -10,7 +10,7 @@ export default function IndexPage() {
         <title>TERAPHONE</title>
       </Head>
 
-      <h1>Hello World</h1>
+      <h1>Coming Soon!</h1>
       {debug && (
         <>
           <p>
