@@ -22,12 +22,12 @@
     "validator": "^13.7.0"
   },
   "scripts": {
+    "start": "next",
     "dev": "next",
     "build": "next build",
     "preexport": "npm run build",
     "export": "next export",
-    "prestart": "npm run export",
-    "start": "serve out",
+    "serve": "npm run export && serve out",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "devDependencies": {
