@@ -1,7 +1,5 @@
 import Head from 'next/head';
-import Link from 'next/link';
-
-const debug = false;
+import { Typography } from '@mui/material';
 
 export default function IndexPage() {
   return (
@@ -10,36 +8,24 @@ export default function IndexPage() {
         <title>TERAPHONE</title>
       </Head>
 
-      <h1>Coming Soon!</h1>
-      {debug && (
-        <>
-          <p>
-            <Link href="/email-verification">
-              <a>/email-verification</a>
-            </Link>
-          </p>
-          <p>
-            <Link href="/email-verification?code=1234">
-              <a>/email-verification?code=1234</a>
-            </Link>
-          </p>
-          <p>
-            <Link href="/password-reset">
-              <a>/password-reset</a>
-            </Link>
-          </p>
-          <p>
-            <Link href="/password-reset?code=1234">
-              <a>/password-reset?code=1234</a>
-            </Link>
-          </p>
-          <p>
-            <Link href="/forgot-password">
-              <a>/forgot-password</a>
-            </Link>
-          </p>
-        </>
-      )}
+      <Typography variant="h3" component="h1">
+        DAVID WURTZ
+      </Typography>
+      <Typography variant="h3" component="h1">
+        TERAPHONE LLC
+      </Typography>
+      <Typography variant="h3" component="h1">
+        1566 GUERRERO ST APT 3
+      </Typography>
+      <Typography variant="h3" component="h1">
+        SAN FRANCISCO, CA 94110
+      </Typography>
+      <Typography variant="h3" component="h1">
+        PHONE: (503) 956-0316
+      </Typography>
+      <Typography variant="h3" component="h1">
+        EMAIL: DAVID@TERAPHONE.APP
+      </Typography>
     </main>
   );
 }
