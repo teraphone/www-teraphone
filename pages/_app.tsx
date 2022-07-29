@@ -12,6 +12,7 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, pageProps, emotionCache = cache } = props;
+
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
