@@ -1,6 +1,5 @@
 import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Sitemap from '../components/Sitemap';
 
@@ -19,7 +18,7 @@ export default function IndexPage() {
       </Head>
       {debug && <Sitemap />}
       <Box p={4} pt={8} sx={{ textAlign: 'center' }}>
-        <Image
+        <img
           alt="Teraphone logo"
           height="150"
           // src="/images/teraphone-logo.svg"
@@ -118,7 +117,7 @@ export default function IndexPage() {
             </Grid>
           </form>
         </Box>
-        {/* <Image
+        {/* <img
           src="/images/teraphone-screenshot.png"
           alt="Teraphone screenshot"
           width="705"
@@ -128,7 +127,7 @@ export default function IndexPage() {
           <Typography my={4} sx={{ color: 'text.secondary' }}>
             Coming Soon to the Microsoft AppSource Marketplace!
           </Typography>
-          <Image
+          <img
             alt="Microsoft logo"
             height="23"
             src="/images/microsoft-logo.png"
