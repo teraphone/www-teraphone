@@ -2,13 +2,13 @@
   "private": true,
   "dependencies": {
     "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.9.0",
+    "@emotion/react": "^11.9.3",
     "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/styled": "^11.9.3",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.3",
     "@mui/lab": "^5.0.0-alpha.85",
-    "@mui/material": "^5.8.3",
+    "@mui/material": "^5.8.7",
     "@types/node": "^17.0.40",
     "@types/react": "^18.0.12",
     "eslint": "^8.17.0",
@@ -22,12 +22,12 @@
     "validator": "^13.7.0"
   },
   "scripts": {
+    "start": "next",
     "dev": "next",
     "build": "next build",
     "preexport": "npm run build",
     "export": "next export",
-    "prestart": "npm run export",
-    "start": "serve out",
+    "serve": "npm run export && serve out",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "devDependencies": {
