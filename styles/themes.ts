@@ -1,5 +1,35 @@
 import { createTheme } from '@mui/material';
 
+function buttonColorFromClassName(className: string) {
+  const colorVariants = [
+    'primary',
+    'secondary',
+    'success',
+    'error',
+    'info',
+    'warning',
+  ];
+  const buttonVariants = className
+    .split(' ')
+    .filter((c) => c.startsWith('MuiButton-contained'))
+    .map((c) => c.replace('MuiButton-contained', '').toLowerCase());
+  const color = colorVariants.find((c) => buttonVariants.includes(c)) as
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'error'
+    | 'info'
+    | 'warning';
+
+  return color;
+}
+
+export const globalStyles = {
+  'html, body, body > div': {
+    height: '100%',
+  },
+};
+
 export const theme = createTheme({
   typography: {
     fontFamily: [
@@ -35,10 +65,9 @@ export const theme = createTheme({
       fontWeight: 'bold',
     },
     button: {
-      // fontSize: '0.875rem', // 14px
       fontSize: '1rem', // 16px
-      fontWeight: 500,
-      textTransform: 'uppercase',
+      fontWeight: 600,
+      textTransform: 'none',
     },
   },
   palette: {
@@ -48,16 +77,43 @@ export const theme = createTheme({
     secondary: {
       main: '#A4C',
     },
+    text: {
+      primary: '#222',
+    },
   },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          // '& h1': {
-          //   color: 'black',
-          // },
           fontSize: '0.875rem', // 14px
           lineHeight: 1.4286,
+          backgroundImage: 'radial-gradient(#fafafa 40%, transparent 43%)',
+          backgroundSize: '24px 24px',
+          height: '100%',
+        },
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: ({ theme, className }) => {
+          const color = buttonColorFromClassName(className as string);
+
+          if (color) {
+            return {
+              '&.MuiButton-contained:hover': {
+                backgroundColor: theme.palette[color].light,
+              },
+              '&.MuiButton-contained:focus-visible': {
+                backgroundColor: theme.palette[color].light,
+              },
+              '&.MuiButton-contained:active': {
+                backgroundColor: theme.palette[color].main,
+              },
+            };
+          }
         },
       },
     },

@@ -1,120 +1,148 @@
+import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { Box, Button, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { green } from '@mui/material/colors';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Sitemap from '../components/Sitemap';
 
 const debug = false;
 
-const CtaButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.getContrastText(green[800]),
-  backgroundColor: green[800],
-  '&:hover': {
-    backgroundColor: green[600],
-  },
-}));
-
 export default function IndexPage() {
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
+  const [validationError, setValidationError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   return (
-    <Box sx={{ m: 4 }}>
+    <>
       <Head>
         <title>TERAPHONE</title>
       </Head>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          You have got to be kidding me
+      {debug && <Sitemap />}
+      <Box p={4} pt={8} sx={{ textAlign: 'center' }}>
+        <Image
+          alt="Teraphone logo"
+          height="150"
+          // src="/images/teraphone-logo.svg"
+          src="/images/teraphone-logo-and-name-vertical.svg"
+          width="150"
+        />
+        <Typography component="h2" my={4} variant="h1">
+          Voice rooms for Microsoft Teams
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          Subtitle 1
-        </Typography>
-        <Typography variant="body1" gutterBottom>
-          Body 1
-        </Typography>
-        <Typography variant="subtitle2" gutterBottom>
-          Subtitle 2
-        </Typography>
-        <Typography variant="body2" gutterBottom>
-          Body 2
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-        <Typography variant="h2" gutterBottom>
-          Heading 2
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-        <Typography variant="h3" gutterBottom>
-          Heading 3
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-        <Typography variant="h4" gutterBottom>
-          Heading 4
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-        <Typography variant="h5" gutterBottom>
-          Heading 5
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-        <Typography variant="h6" gutterBottom>
-          Heading 6
-        </Typography>
-        <Typography paragraph>Hello world</Typography>
-      </div>
-      <main>
-        {debug && <Sitemap />}
-        <Typography variant="h2" gutterBottom>
+        <Typography my={4} variant="h2">
           Reclaim the spontaneity of in-person collaboration
         </Typography>
-        <Typography variant="h3" gutterBottom>
-          Dedicated Voice Channels with Microsoft Teams Integration
-        </Typography>
-        <Typography>
-          Coming Soon to the Microsoft AppSource Marketplace!
-        </Typography>
-        <Box marginY={4}>
-          <CtaButton variant="contained" color="success">
-            Request early access
-          </CtaButton>
+        <Box my={8}>
+          <form
+            noValidate
+            onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              setError(false);
+              setValidationError(false);
+              setSuccess(false);
+
+              const form = event.currentTarget as HTMLFormElement;
+              const isValid = form.checkValidity();
+              if (!isValid) {
+                setValidationError(true);
+                return;
+              }
+
+              const formFields = (event.target as HTMLFormElement).elements;
+              const email = (formFields.namedItem('email') as HTMLInputElement)
+                ?.value;
+
+              if (!email) {
+                setError(true);
+                setSuccess(false);
+                return;
+              }
+
+              try {
+                setSubmitting(true);
+                await fetch(
+                  'https://api-dev.teraphone.app/v1/public/email-signup',
+                  {
+                    body: JSON.stringify({ email }),
+                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                  }
+                );
+                setSuccess(true);
+              } catch (error) {
+                setError(true);
+              }
+              setSubmitting(false);
+            }}
+          >
+            <Grid container justifyContent="center" spacing={1}>
+              <Grid item>
+                <TextField
+                  color={success ? 'success' : 'primary'}
+                  error={error || validationError}
+                  FormHelperTextProps={{
+                    sx: {
+                      textAlign: 'center',
+                      color: success ? 'success.main' : 'text.secondary',
+                    },
+                  }}
+                  fullWidth
+                  helperText={
+                    (validationError && 'Please enter a valid email address') ||
+                    (error && 'There was an error submitting your email') ||
+                    (success && 'Thanks for signing up!') ||
+                    "We'll never share your email"
+                  }
+                  InputProps={{ sx: { textAlign: 'center' } }}
+                  inputProps={{ pattern: '[^@]+@[^@]+\\.[^@]+' }}
+                  label="Email address"
+                  name="email"
+                  onChange={() => setValidationError(false)}
+                  required
+                  size="small"
+                  sx={{ backgroundColor: 'white', width: '260px' }}
+                  type="email"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  color="success"
+                  disabled={submitting}
+                  type="submit"
+                  variant="contained"
+                >
+                  Request early access
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
         </Box>
-        <Box marginY={4}>
-          <Button variant="contained" color="primary">
-            primary
-          </Button>
-          <Button variant="contained" color="secondary">
-            secondary
-          </Button>
-          <Button variant="contained" color="success">
-            success
-          </Button>
-          <Button variant="contained" color="error">
-            error
-          </Button>
-          <Button variant="contained" color="info">
-            info
-          </Button>
-          <Button variant="contained" color="warning">
-            warning
-          </Button>
-        </Box>
-        <Typography variant="h4" gutterBottom>
-          Introducing Teraphone
-        </Typography>
-        <Typography>
-          A communication tool designed to remove conversation barriers for
-          remote/hybrid teams by eliminating the need to orchestrate multi-party
-          voice calls every time a group wants to talk. Teraphone makes it easy
-          to start, join, or listen in on impromptu conversations with Dedicated
-          Voice Rooms.
-        </Typography>
-        <Image
-          src="/teraphone-screenshot.png"
+        {/* <Image
+          src="/images/teraphone-screenshot.png"
           alt="Teraphone screenshot"
           width="705"
           height="730"
-        />
-        <Typography variant="h3" gutterBottom>
-          Remote Work Needs Dedicated Voice Channels
+        /> */}
+        <Box my={8}>
+          <Typography my={4} sx={{ color: 'text.secondary' }}>
+            Coming Soon to the Microsoft AppSource Marketplace!
+          </Typography>
+          <Image
+            alt="Microsoft logo"
+            height="23"
+            src="/images/microsoft-logo.png"
+            style={{
+              filter: 'grayscale(1)',
+              opacity: 0.8,
+            }}
+            width="108"
+          />
+        </Box>
+        <Typography mt={8} sx={{ color: 'text.secondary' }} variant="body2">
+          Copyright © 2022 TERAPHONE LLC, All rights reserved.
         </Typography>
-      </main>
-    </Box>
+      </Box>
+    </>
   );
 }
