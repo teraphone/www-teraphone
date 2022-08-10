@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import Link from '../components/Link';
 import Sitemap from '../components/Sitemap';
 
 const debug = false;
@@ -138,9 +139,17 @@ export default function IndexPage() {
             width="108"
           />
         </Box>
-        <Typography mt={8} sx={{ color: 'text.secondary' }} variant="body2">
-          Copyright © 2022 TERAPHONE LLC, All rights reserved.
-        </Typography>
+        <Box my={8}>
+          <Link href="/privacy-policy" m={2} variant="body2">
+            Privacy Policy
+          </Link>
+          <Link href="/help" mx={1} my={2} variant="body2">
+            Contact
+          </Link>
+          <Typography my={2} sx={{ color: 'text.secondary' }} variant="body2">
+            Copyright © 2022 TERAPHONE LLC, All rights reserved.
+          </Typography>
+        </Box>
       </Box>
     </>
   );
