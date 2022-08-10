@@ -21,10 +21,9 @@ export default function IndexPage() {
       <Box p={4} pt={8} sx={{ textAlign: 'center' }}>
         <img
           alt="Teraphone logo"
-          height="150"
+          height="130"
           // src="/images/teraphone-logo.svg"
           src="/images/teraphone-logo-and-name-vertical.svg"
-          width="150"
         />
         <Typography component="h2" my={4} variant="h1">
           Voice rooms for Microsoft Teams
