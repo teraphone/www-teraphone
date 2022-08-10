@@ -3,6 +3,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { globalStyles, theme } from '../styles/themes';
 import createEmotionCache from '../styles/createEmotionCache';
+import AppChrome from '../components/AppChrome';
 
 const cache = createEmotionCache();
 
@@ -18,7 +19,9 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         <GlobalStyles styles={globalStyles} />
         <CssBaseline />
-        <Component {...pageProps} />
+        <AppChrome>
+          <Component {...pageProps} />
+        </AppChrome>
       </ThemeProvider>
     </CacheProvider>
   );
