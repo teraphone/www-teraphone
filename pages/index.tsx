@@ -19,13 +19,12 @@ export default function IndexPage() {
       </Head>
       {debug && <Sitemap />}
       <Grid
-        alignItems="center"
         container
         direction={{ xs: 'column-reverse', md: 'row' }}
         justifyContent="center"
         spacing={4}
       >
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} alignSelf="center">
           <img
             src="/images/teraphone-screenshot.png"
             alt="Teraphone screenshot"
@@ -38,7 +37,7 @@ export default function IndexPage() {
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={8} alignSelf={{ xs: 'start', md: 'center' }}>
           <Box mb={4}>
             <Typography component="h2" variant="h1" sx={{ fontSize: 56 }}>
               Voice rooms
@@ -49,7 +48,7 @@ export default function IndexPage() {
               </span>
             </Typography>
           </Box>
-          <Typography component="h3" variant="body1" sx={{ fontSize: 24 }}>
+          <Typography component="h3" variant="body1" sx={{ fontSize: 32 }}>
             Reclaim the spontaneity of{' '}
             <span style={{ whiteSpace: 'nowrap' }}>in-person</span>{' '}
             collaboration
