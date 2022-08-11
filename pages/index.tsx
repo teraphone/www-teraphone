@@ -199,7 +199,11 @@ export default function IndexPage() {
             </Link>
           </Box>
           <Box>
-            <Typography my={2} sx={{ color: 'text.secondary' }} variant="body2">
+            <Typography
+              my={2}
+              sx={{ color: 'text.secondary', textAlign: 'center' }}
+              variant="body2"
+            >
               Copyright © 2022 TERAPHONE LLC, All rights reserved.
             </Typography>
           </Box>
