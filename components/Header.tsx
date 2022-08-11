@@ -1,14 +1,17 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import CloseIcon from '@mui/icons-material/Close';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import Paper from '@mui/material/Paper';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import Link, { NextLinkComposed } from './Link';
 
@@ -19,14 +22,9 @@ const pages = [
 
 const Header = () => {
   const router = useRouter();
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleOpenNavMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleCloseNavMenu = () => setIsMenuOpen(false);
 
   return (
     <AppBar position="static" elevation={0}>
@@ -104,38 +102,42 @@ const Header = () => {
                 right: '-15px',
               }}
             >
-              <MenuIcon />
+              {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: {
-                  xs: 'block',
-                  md: 'none',
-                },
-              }}
-            >
+          </Box>
+        </Toolbar>
+      </Container>
+      {isMenuOpen && (
+        <ClickAwayListener onClickAway={handleCloseNavMenu}>
+          <Paper
+            elevation={8}
+            sx={{
+              borderRadius: 0,
+              display: { xs: 'block', md: 'none' },
+              left: 0,
+              position: 'absolute',
+              right: 0,
+              top: '64px',
+            }}
+          >
+            <MenuList variant="menu" id="menu-appbar">
               {pages.map((page) => (
                 <MenuItem
                   component={NextLinkComposed}
                   key={page.name}
                   onClick={handleCloseNavMenu}
                   selected={router.asPath === page.url}
+                  sx={{ justifyContent: 'center', minHeight: 56 }}
                   to={page.url}
                 >
-                  <Typography textAlign="center">{page.name}</Typography>
+                  <Typography
+                    textAlign="center"
+                    variant="h4"
+                    component="p"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
               <MenuItem
@@ -148,14 +150,22 @@ const Header = () => {
                   }, 100);
                 }}
                 selected={router.asPath === '/#signup'}
+                sx={{ justifyContent: 'center', minHeight: 56 }}
                 to="/#signup"
               >
-                <Typography textAlign="center">Sign up</Typography>
+                <Typography
+                  textAlign="center"
+                  variant="h4"
+                  component="p"
+                  sx={{ fontWeight: 600 }}
+                >
+                  Sign up
+                </Typography>
               </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+            </MenuList>
+          </Paper>
+        </ClickAwayListener>
+      )}
     </AppBar>
   );
 };
