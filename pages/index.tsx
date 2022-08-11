@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import Link from '../components/Link';
 import Sitemap from '../components/Sitemap';
 
 const debug = false;
@@ -17,18 +18,17 @@ export default function IndexPage() {
         <title>TERAPHONE</title>
       </Head>
       {debug && <Sitemap />}
-      <Box p={4} pt={8} sx={{ textAlign: 'center' }}>
+      <Box mt={8} sx={{ textAlign: 'center' }}>
         <img
           alt="Teraphone logo"
-          height="150"
+          height="130"
           // src="/images/teraphone-logo.svg"
           src="/images/teraphone-logo-and-name-vertical.svg"
-          width="150"
         />
         <Typography component="h2" my={4} variant="h1">
           Voice rooms for Microsoft Teams
         </Typography>
-        <Typography my={4} variant="h2">
+        <Typography my={4} component="h3" variant="h2">
           Reclaim the spontaneity of in-person collaboration
         </Typography>
         <Box my={8}>
@@ -138,9 +138,17 @@ export default function IndexPage() {
             width="108"
           />
         </Box>
-        <Typography mt={8} sx={{ color: 'text.secondary' }} variant="body2">
-          Copyright © 2022 TERAPHONE LLC, All rights reserved.
-        </Typography>
+        <Box mt={8} pb={4}>
+          <Link href="/privacy-policy" m={2} variant="body2">
+            Privacy Policy
+          </Link>
+          <Link href="/help" mx={1} my={2} variant="body2">
+            Contact
+          </Link>
+          <Typography my={2} sx={{ color: 'text.secondary' }} variant="body2">
+            Copyright © 2022 TERAPHONE LLC, All rights reserved.
+          </Typography>
+        </Box>
       </Box>
     </>
   );
