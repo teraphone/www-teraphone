@@ -186,14 +186,40 @@ export default function IndexPage() {
           display="flex"
           flexDirection="column"
         >
-          <Box>
-            <Link href="/privacy-policy" m={2} variant="body2">
+          <Box
+            my={1}
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <Link
+              href="/privacy-policy"
+              mx={2}
+              my={1}
+              sx={{ whiteSpace: 'nowrap' }}
+              variant="body2"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms-of-service" m={2} variant="body2">
-              Terms of Service
+            <Link
+              href="/terms-of-service"
+              mx={2}
+              my={1}
+              sx={{ whiteSpace: 'nowrap' }}
+              variant="body2"
+            >
+              Terms of Services
             </Link>
-            <Link href="/help" mx={1} my={2} variant="body2">
+            <Link
+              href="/help"
+              mx={2}
+              my={1}
+              sx={{ whiteSpace: 'nowrap' }}
+              variant="body2"
+            >
               Contact
             </Link>
           </Box>
