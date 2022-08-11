@@ -40,17 +40,19 @@ export default function IndexPage() {
         </Grid>
         <Grid item xs={12} sm={8}>
           <Box mb={4}>
-            <Typography component="h2" variant="h1" sx={{ fontSize: 70 }}>
+            <Typography component="h2" variant="h1" sx={{ fontSize: 56 }}>
               Voice rooms
             </Typography>
             <Typography component="h2" variant="h1">
-              <span style={{ fontSize: 60, fontWeight: 400 }}>
+              <span style={{ fontSize: 48, fontWeight: 'normal' }}>
                 for Microsoft Teams
               </span>
             </Typography>
           </Box>
-          <Typography component="h3" variant="body1" sx={{ fontSize: 30 }}>
-            Reclaim the spontaneity of in-person collaboration
+          <Typography component="h3" variant="body1" sx={{ fontSize: 24 }}>
+            Reclaim the spontaneity of{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>in-person</span>{' '}
+            collaboration
           </Typography>
         </Grid>
       </Grid>

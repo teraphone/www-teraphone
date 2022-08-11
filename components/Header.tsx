@@ -34,10 +34,7 @@ const Header = () => {
       <Container>
         <Toolbar
           disableGutters
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
+          sx={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}
         >
           <Box sx={{ flexBasis: '200px', flexGrow: 1, paddingTop: '3px' }}>
             <Link href="/">
@@ -95,6 +92,8 @@ const Header = () => {
                   xs: 'flex',
                   md: 'none',
                 },
+                position: 'relative',
+                right: '-15px',
               }}
             >
               <MenuIcon />
