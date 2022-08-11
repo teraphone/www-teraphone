@@ -145,17 +145,11 @@ export default function IndexPage() {
         <Box
           alignItems="center"
           display="flex"
-          flexDirection={{ xs: 'column-reverse', sm: 'row' }}
+          flexDirection={{ xs: 'column', sm: 'row' }}
           gap={8}
           justifyContent="center"
           my={8}
         >
-          <img
-            alt="Teraphone logo"
-            height="130"
-            // src="/images/teraphone-logo.svg"
-            src="/images/teraphone-logo-and-name-vertical.svg"
-          />
           <Box
             maxWidth={230}
             display="flex"
@@ -178,6 +172,11 @@ export default function IndexPage() {
               />
             </Box>
           </Box>
+          <img
+            alt="Teraphone logo"
+            height="100"
+            src="/images/teraphone-logo-and-name-vertical.svg"
+          />
         </Box>
         <Box
           mt={8}
