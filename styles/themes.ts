@@ -28,7 +28,7 @@ export const globalStyles = {
   'html, body, body > div': {
     height: '100%',
     maxWidth: '100%',
-    overflowX: 'hidden',
+    overflowX: 'hidden' as const,
   },
 };
 
