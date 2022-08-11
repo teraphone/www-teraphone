@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { NextLinkComposed } from './Link';
+import Link, { NextLinkComposed } from './Link';
 
 const pages = [
   { name: 'Home', url: '/' },
@@ -40,23 +40,27 @@ const Header = () => {
           }}
         >
           <Box sx={{ flexBasis: '200px', flexGrow: 1, paddingTop: '3px' }}>
-            <img
-              alt="Teraphone logo"
-              height="24"
-              src="/images/teraphone-logo-white.svg"
-              width="24"
-            />
+            <Link href="/">
+              <img
+                alt="Teraphone logo"
+                height="24"
+                src="/images/teraphone-logo-white.svg"
+                width="24"
+              />
+            </Link>
           </Box>
           <Box
             component="h1"
             m={0}
             sx={{ flexGrow: 4, display: 'flex', justifyContent: 'center' }}
           >
-            <img
-              alt="Teraphone"
-              src="/images/teraphone-logo-text-white.svg"
-              width="180"
-            />
+            <Link href="/">
+              <img
+                alt="Teraphone"
+                src="/images/teraphone-logo-text-white.svg"
+                width="180"
+              />
+            </Link>
           </Box>
           <Box
             sx={{

@@ -142,6 +142,9 @@ export default function IndexPage() {
           <Link href="/privacy-policy" m={2} variant="body2">
             Privacy Policy
           </Link>
+          <Link href="/terms-of-service" m={2} variant="body2">
+            Terms of Service
+          </Link>
           <Link href="/help" mx={1} my={2} variant="body2">
             Contact
           </Link>

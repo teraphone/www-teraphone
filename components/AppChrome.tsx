@@ -6,7 +6,13 @@ const AppChrome = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Header />
-      <Container sx={{ marginBottom: '32px', marginTop: '32px' }}>
+      <Container
+        sx={{
+          marginBottom: '32px',
+          marginTop: '32px',
+          overflowWrap: 'break-word',
+        }}
+      >
         {children}
       </Container>
     </div>
