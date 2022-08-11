@@ -18,19 +18,43 @@ export default function IndexPage() {
         <title>TERAPHONE</title>
       </Head>
       {debug && <Sitemap />}
-      <Box mt={8} sx={{ textAlign: 'center' }}>
-        <img
-          alt="Teraphone logo"
-          height="130"
-          // src="/images/teraphone-logo.svg"
-          src="/images/teraphone-logo-and-name-vertical.svg"
-        />
-        <Typography component="h2" my={4} variant="h1">
-          Voice rooms for Microsoft Teams
-        </Typography>
-        <Typography my={4} component="h3" variant="h2">
-          Reclaim the spontaneity of in-person collaboration
-        </Typography>
+      <Grid
+        alignItems="center"
+        container
+        direction={{ xs: 'column-reverse', md: 'row' }}
+        justifyContent="center"
+        spacing={4}
+      >
+        <Grid item xs={12} sm={4}>
+          <img
+            src="/images/teraphone-screenshot.png"
+            alt="Teraphone screenshot"
+            style={{
+              height: 'auto',
+              maxWidth: '500px',
+              position: 'relative',
+              top: '10px',
+              width: '100%',
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <Box mb={4}>
+            <Typography component="h2" variant="h1" sx={{ fontSize: 70 }}>
+              Voice rooms
+            </Typography>
+            <Typography component="h2" variant="h1">
+              <span style={{ fontSize: 60, fontWeight: 400 }}>
+                for Microsoft Teams
+              </span>
+            </Typography>
+          </Box>
+          <Typography component="h3" variant="body1" sx={{ fontSize: 30 }}>
+            Reclaim the spontaneity of in-person collaboration
+          </Typography>
+        </Grid>
+      </Grid>
+      <Box mt={8}>
         <Box my={8}>
           <form
             noValidate
@@ -117,40 +141,66 @@ export default function IndexPage() {
             </Grid>
           </form>
         </Box>
-        {/* <img
-          src="/images/teraphone-screenshot.png"
-          alt="Teraphone screenshot"
-          width="705"
-          height="730"
-        /> */}
-        <Box my={8}>
-          <Typography my={4} sx={{ color: 'text.secondary' }}>
-            Coming Soon to the Microsoft AppSource Marketplace!
-          </Typography>
+        <Box
+          alignItems="center"
+          display="flex"
+          flexDirection={{ xs: 'column-reverse', sm: 'row' }}
+          gap={8}
+          justifyContent="center"
+          my={8}
+        >
           <img
-            alt="Microsoft logo"
-            height="23"
-            src="/images/microsoft-logo.png"
-            style={{
-              filter: 'grayscale(1)',
-              opacity: 0.8,
-            }}
-            width="108"
+            alt="Teraphone logo"
+            height="130"
+            // src="/images/teraphone-logo.svg"
+            src="/images/teraphone-logo-and-name-vertical.svg"
           />
+          <Box
+            maxWidth={230}
+            display="flex"
+            flexDirection="column"
+            textAlign="center"
+          >
+            <Typography mb={4} sx={{ color: 'text.secondary' }}>
+              Coming Soon to the Microsoft AppSource Marketplace!
+            </Typography>
+            <Box>
+              <img
+                alt="Microsoft logo"
+                height="23"
+                src="/images/microsoft-logo.png"
+                style={{
+                  filter: 'grayscale(1)',
+                  opacity: 0.8,
+                }}
+                width="108"
+              />
+            </Box>
+          </Box>
         </Box>
-        <Box mt={8} pb={4}>
-          <Link href="/privacy-policy" m={2} variant="body2">
-            Privacy Policy
-          </Link>
-          <Link href="/terms-of-service" m={2} variant="body2">
-            Terms of Service
-          </Link>
-          <Link href="/help" mx={1} my={2} variant="body2">
-            Contact
-          </Link>
-          <Typography my={2} sx={{ color: 'text.secondary' }} variant="body2">
-            Copyright © 2022 TERAPHONE LLC, All rights reserved.
-          </Typography>
+        <Box
+          mt={8}
+          pb={4}
+          alignItems="center"
+          display="flex"
+          flexDirection="column"
+        >
+          <Box>
+            <Link href="/privacy-policy" m={2} variant="body2">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" m={2} variant="body2">
+              Terms of Service
+            </Link>
+            <Link href="/help" mx={1} my={2} variant="body2">
+              Contact
+            </Link>
+          </Box>
+          <Box>
+            <Typography my={2} sx={{ color: 'text.secondary' }} variant="body2">
+              Copyright © 2022 TERAPHONE LLC, All rights reserved.
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </>
