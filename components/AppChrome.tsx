@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
+import { Box } from '@mui/material';
 import Header from './Header';
 
 const AppChrome = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Header />
-      {children}
+      <Box m={4}>{children}</Box>
     </div>
   );
 };

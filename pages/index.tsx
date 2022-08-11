@@ -18,7 +18,7 @@ export default function IndexPage() {
         <title>TERAPHONE</title>
       </Head>
       {debug && <Sitemap />}
-      <Box p={4} pt={8} sx={{ textAlign: 'center' }}>
+      <Box mt={8} sx={{ textAlign: 'center' }}>
         <img
           alt="Teraphone logo"
           height="130"
@@ -28,7 +28,7 @@ export default function IndexPage() {
         <Typography component="h2" my={4} variant="h1">
           Voice rooms for Microsoft Teams
         </Typography>
-        <Typography my={4} variant="h2">
+        <Typography my={4} component="h3" variant="h2">
           Reclaim the spontaneity of in-person collaboration
         </Typography>
         <Box my={8}>
@@ -138,7 +138,7 @@ export default function IndexPage() {
             width="108"
           />
         </Box>
-        <Box my={8}>
+        <Box mt={8} pb={4}>
           <Link href="/privacy-policy" m={2} variant="body2">
             Privacy Policy
           </Link>
