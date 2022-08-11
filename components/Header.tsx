@@ -39,27 +39,33 @@ const Header = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexBasis: '200px', flexGrow: 1, paddingTop: '3px' }}>
             <img
               alt="Teraphone logo"
-              height="30"
+              height="24"
               src="/images/teraphone-logo-white.svg"
-              width="30"
+              width="24"
             />
           </Box>
           <Box
             component="h1"
             m={0}
-            sx={{ flexGrow: 3, display: 'flex', justifyContent: 'center' }}
+            sx={{ flexGrow: 4, display: 'flex', justifyContent: 'center' }}
           >
             <img
               alt="Teraphone"
-              height="20"
               src="/images/teraphone-logo-text-white.svg"
-              width="193"
+              width="180"
             />
           </Box>
-          <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'end' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexBasis: '200px',
+              flexGrow: 1,
+              justifyContent: 'end',
+            }}
+          >
             <Box sx={{ display: { md: 'flex', xs: 'none' }, gap: '8px' }}>
               {pages.map((page) => (
                 <Button
