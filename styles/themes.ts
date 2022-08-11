@@ -27,8 +27,6 @@ function buttonColorFromClassName(className: string) {
 export const globalStyles = {
   'html, body, body > div': {
     height: '100%',
-    maxWidth: '100%',
-    overflowX: 'hidden' as const,
   },
 };
 

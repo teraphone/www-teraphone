@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Header from './Header';
 
 const AppChrome = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <Box sx={{ overflowX: 'hidden' }}>
       <Header />
       <Container
         sx={{
@@ -15,7 +15,7 @@ const AppChrome = ({ children }: { children: ReactNode }) => {
       >
         {children}
       </Container>
-    </div>
+    </Box>
   );
 };
 
