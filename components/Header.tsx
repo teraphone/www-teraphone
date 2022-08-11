@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { MouseEvent, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useRouter } from 'next/router';
 import Link, { NextLinkComposed } from './Link';
 
 const pages = [
@@ -17,14 +18,12 @@ const pages = [
 ];
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+  const router = useRouter();
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -74,7 +73,16 @@ const Header = () => {
                   key={page.name}
                   onClick={handleCloseNavMenu}
                   to={page.url}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: 'white',
+                    display: 'block',
+                    textDecoration:
+                      router.pathname === page.url
+                        ? 'underline 2px rgba(255, 255, 255, 0.4)'
+                        : 'none',
+                    textUnderlineOffset: '5px',
+                  }}
                 >
                   {page.name}
                 </Button>
@@ -124,6 +132,7 @@ const Header = () => {
                   component={NextLinkComposed}
                   key={page.name}
                   onClick={handleCloseNavMenu}
+                  selected={router.asPath === page.url}
                   to={page.url}
                 >
                   <Typography textAlign="center">{page.name}</Typography>
@@ -138,6 +147,7 @@ const Header = () => {
                     if (emailInput) emailInput.focus();
                   }, 100);
                 }}
+                selected={router.asPath === '/#signup'}
                 to="/#signup"
               >
                 <Typography textAlign="center">Sign up</Typography>
