@@ -23,7 +23,7 @@ const pages = [
 const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const handleOpenNavMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleOpenNavMenu = () => setIsMenuOpen(true);
   const handleCloseNavMenu = () => setIsMenuOpen(false);
 
   return (
@@ -91,7 +91,7 @@ const Header = () => {
               aria-label="Menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={!isMenuOpen ? handleOpenNavMenu : handleCloseNavMenu}
               color="inherit"
               sx={{
                 display: {
@@ -102,13 +102,18 @@ const Header = () => {
                 right: '-15px',
               }}
             >
-              {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+              {!isMenuOpen ? <MenuIcon /> : <CloseIcon />}
             </IconButton>
           </Box>
         </Toolbar>
       </Container>
       {isMenuOpen && (
-        <ClickAwayListener onClickAway={handleCloseNavMenu}>
+        <ClickAwayListener
+          // Adding a short delay avoids a bug where clicking the close button
+          // would trigger this handler to close the menu then think the open
+          // button was clicked and open the menu again
+          onClickAway={() => setTimeout(() => handleCloseNavMenu(), 10)}
+        >
           <Paper
             elevation={8}
             sx={{
