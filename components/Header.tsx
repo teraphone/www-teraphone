@@ -130,6 +130,19 @@ const Header = () => {
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem
+                component={NextLinkComposed}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  setTimeout(() => {
+                    const emailInput = document.getElementsByName('email')[0];
+                    if (emailInput) emailInput.focus();
+                  }, 100);
+                }}
+                to="/#signup"
+              >
+                <Typography textAlign="center">Sign up</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

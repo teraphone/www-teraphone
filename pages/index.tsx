@@ -57,6 +57,7 @@ export default function IndexPage() {
       <Box mt={8}>
         <Box my={8}>
           <form
+            id="signup"
             noValidate
             onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
               event.preventDefault();
