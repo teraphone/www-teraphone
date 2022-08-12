@@ -1,15 +1,22 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useTheme } from '@mui/material/styles';
+import {
+  AppBar,
+  Box,
+  Button,
+  ClickAwayListener,
+  Container,
+  IconButton,
+  MenuItem,
+  MenuList,
+  Paper,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import { NextLinkComposed } from './Link';
+import Link, { NextLinkComposed } from './Link';
 
 const pages = [
   { name: 'Home', url: '/' },
@@ -17,46 +24,41 @@ const pages = [
 ];
 
 const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const theme = useTheme();
+  const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleOpenNavMenu = () => setIsMenuOpen(true);
+  const handleCloseNavMenu = () => setIsMenuOpen(false);
 
   return (
     <AppBar position="static" elevation={0}>
       <Container>
         <Toolbar
           disableGutters
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
+          sx={{ display: 'flex', justifyContent: 'space-between', gap: '16px' }}
         >
           <Box sx={{ flexBasis: '200px', flexGrow: 1, paddingTop: '3px' }}>
-            <img
-              alt="Teraphone logo"
-              height="24"
-              src="/images/teraphone-logo-white.svg"
-              width="24"
-            />
+            <Link href="/">
+              <img
+                alt="Teraphone logo"
+                height="24"
+                src="/images/teraphone-logo-white.svg"
+                width="24"
+              />
+            </Link>
           </Box>
           <Box
             component="h1"
             m={0}
             sx={{ flexGrow: 4, display: 'flex', justifyContent: 'center' }}
           >
-            <img
-              alt="Teraphone"
-              src="/images/teraphone-logo-text-white.svg"
-              width="180"
-            />
+            <Link href="/">
+              <img
+                alt="Teraphone"
+                src="/images/teraphone-logo-text-white.svg"
+                width="180"
+              />
+            </Link>
           </Box>
           <Box
             sx={{
@@ -73,7 +75,16 @@ const Header = () => {
                   key={page.name}
                   onClick={handleCloseNavMenu}
                   to={page.url}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{
+                    my: 2,
+                    color: 'white',
+                    display: 'block',
+                    textDecoration:
+                      router.pathname === page.url
+                        ? 'underline 2px rgba(255, 255, 255, 0.4)'
+                        : 'none',
+                    textUnderlineOffset: '5px',
+                  }}
                 >
                   {page.name}
                 </Button>
@@ -84,52 +95,82 @@ const Header = () => {
               aria-label="Menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={!isMenuOpen ? handleOpenNavMenu : handleCloseNavMenu}
               color="inherit"
               sx={{
                 display: {
                   xs: 'flex',
                   md: 'none',
                 },
+                position: 'relative',
+                right: '-15px',
               }}
             >
-              <MenuIcon />
+              {!isMenuOpen ? <MenuIcon /> : <CloseIcon />}
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: {
-                  xs: 'block',
-                  md: 'none',
-                },
-              }}
-            >
+          </Box>
+        </Toolbar>
+      </Container>
+      {isMenuOpen && (
+        <ClickAwayListener
+          // Adding a short delay avoids a bug where clicking the close button
+          // would trigger this handler to close the menu then think the open
+          // button was clicked and open the menu again
+          onClickAway={() => setTimeout(() => handleCloseNavMenu(), 10)}
+        >
+          <Paper
+            elevation={8}
+            sx={{
+              backgroundColor: theme.palette.grey[100],
+              borderRadius: 0,
+              display: { xs: 'block', md: 'none' },
+              left: 0,
+              position: 'absolute',
+              right: 0,
+              top: '64px',
+            }}
+          >
+            <MenuList disablePadding id="menu-appbar" variant="menu">
               {pages.map((page) => (
                 <MenuItem
                   component={NextLinkComposed}
                   key={page.name}
                   onClick={handleCloseNavMenu}
+                  selected={router.asPath === page.url}
+                  sx={{
+                    borderBottomColor: `${theme.palette.grey[300]} !important`,
+                    borderBottom: '1px solid',
+                    justifyContent: 'center',
+                    minHeight: '56px !important',
+                  }}
                   to={page.url}
                 >
-                  <Typography textAlign="center">{page.name}</Typography>
+                  <Typography textAlign="center" sx={{ fontWeight: 600 }}>
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+            </MenuList>
+            <Box onClick={() => handleCloseNavMenu()} p={2} textAlign="center">
+              <Button
+                color="success"
+                component={NextLinkComposed}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  setTimeout(() => {
+                    const emailInput = document.getElementsByName('email')[0];
+                    if (emailInput) emailInput.focus();
+                  }, 100);
+                }}
+                to="/#signup"
+                variant="contained"
+              >
+                Sign up
+              </Button>
+            </Box>
+          </Paper>
+        </ClickAwayListener>
+      )}
     </AppBar>
   );
 };
