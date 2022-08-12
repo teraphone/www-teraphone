@@ -12,6 +12,7 @@ import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import Link, { NextLinkComposed } from './Link';
 
@@ -21,6 +22,7 @@ const pages = [
 ];
 
 const Header = () => {
+  const theme = useTheme();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleOpenNavMenu = () => setIsMenuOpen(true);
@@ -117,6 +119,7 @@ const Header = () => {
           <Paper
             elevation={8}
             sx={{
+              backgroundColor: theme.palette.grey[100],
               borderRadius: 0,
               display: { xs: 'block', md: 'none' },
               left: 0,
@@ -125,27 +128,30 @@ const Header = () => {
               top: '64px',
             }}
           >
-            <MenuList variant="menu" id="menu-appbar">
+            <MenuList disablePadding id="menu-appbar" variant="menu">
               {pages.map((page) => (
                 <MenuItem
                   component={NextLinkComposed}
                   key={page.name}
                   onClick={handleCloseNavMenu}
                   selected={router.asPath === page.url}
-                  sx={{ justifyContent: 'center', minHeight: 56 }}
+                  sx={{
+                    borderBottomColor: `${theme.palette.grey[300]} !important`,
+                    borderBottom: '1px solid',
+                    justifyContent: 'center',
+                    minHeight: '56px !important',
+                  }}
                   to={page.url}
                 >
-                  <Typography
-                    textAlign="center"
-                    variant="h4"
-                    component="p"
-                    sx={{ fontWeight: 600 }}
-                  >
+                  <Typography textAlign="center" sx={{ fontWeight: 600 }}>
                     {page.name}
                   </Typography>
                 </MenuItem>
               ))}
-              <MenuItem
+            </MenuList>
+            <Box onClick={() => handleCloseNavMenu()} p={2} textAlign="center">
+              <Button
+                color="success"
                 component={NextLinkComposed}
                 onClick={() => {
                   handleCloseNavMenu();
@@ -154,20 +160,12 @@ const Header = () => {
                     if (emailInput) emailInput.focus();
                   }, 100);
                 }}
-                selected={router.asPath === '/#signup'}
-                sx={{ justifyContent: 'center', minHeight: 56 }}
                 to="/#signup"
+                variant="contained"
               >
-                <Typography
-                  textAlign="center"
-                  variant="h4"
-                  component="p"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Sign up
-                </Typography>
-              </MenuItem>
-            </MenuList>
+                Sign up
+              </Button>
+            </Box>
           </Paper>
         </ClickAwayListener>
       )}
