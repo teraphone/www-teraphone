@@ -28,6 +28,8 @@ export default function IndexPage() {
           <img
             src="/images/teraphone-screenshot.png"
             alt="Teraphone screenshot"
+            height="1424"
+            width="1372"
             style={{
               height: 'auto',
               maxWidth: '500px',
