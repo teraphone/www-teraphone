@@ -1,11 +1,14 @@
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
+import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
 import { loginRequest } from '../src/ms-auth/authConfig';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Login = () => {
   const { instance, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
+  const [authResult, setAuthResult] = useState<AuthenticationResult | null>(
+    null
+  );
 
   useEffect(() => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
@@ -17,8 +20,18 @@ const Login = () => {
     if (isAuthenticated) {
       const account = instance.getActiveAccount();
       console.log('user is logged in:', account);
+      instance
+        .acquireTokenSilent(loginRequest)
+        .then(setAuthResult)
+        .catch(console.error);
     }
   }, [instance, isAuthenticated]);
+
+  useEffect(() => {
+    if (authResult) {
+      console.log('authResult:', authResult);
+    }
+  }, [authResult]);
 
   return null;
 };
