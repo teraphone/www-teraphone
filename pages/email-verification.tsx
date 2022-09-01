@@ -1,4 +1,4 @@
-import { API_PUBLIC_BASE_URL } from '../util/client';
+import { API_DEMO_PUBLIC_BASE_URL } from '../util/client';
 import { Box, Container, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -13,7 +13,7 @@ export default function EmailVerification() {
 
   const handleRequest = useCallback(async () => {
     setRequestStatus('pending');
-    const url = API_PUBLIC_BASE_URL + '/email-verification';
+    const url = API_DEMO_PUBLIC_BASE_URL + '/email-verification';
     const body = JSON.stringify({ code });
     const response = await fetch(url, {
       method: 'POST',

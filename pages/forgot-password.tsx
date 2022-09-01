@@ -1,4 +1,4 @@
-import { API_PUBLIC_BASE_URL, RECAPTCHA_SITE_KEY } from '../util/client';
+import { API_DEMO_PUBLIC_BASE_URL, RECAPTCHA_SITE_KEY } from '../util/client';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, Container, Grid, TextField, Typography } from '@mui/material';
 import Head from 'next/head';
@@ -44,7 +44,7 @@ export default function ForgotPassword() {
       setRequestStatus('pending');
       const data = new FormData(event.currentTarget);
       const emailAddress = data.get('emailAddress') as string;
-      const url = API_PUBLIC_BASE_URL + '/forgot-password';
+      const url = API_DEMO_PUBLIC_BASE_URL + '/forgot-password';
       const body = JSON.stringify({ email: emailAddress });
       const response = await fetch(url, {
         method: 'POST',
