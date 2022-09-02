@@ -11,21 +11,22 @@ const Login = () => {
     null
   );
   const router = useRouter();
-  const { destination, ...rest } = router.query;
-  const targetPage = destination ? destination : '/login';
-  const params = Object.entries(rest)
+  const { destination, ...query } = router.query;
+  const targetPage = destination ? (destination as string) : '/';
+  const params = Object.entries(query)
     .map(([key, value]) => `${key}=${value}`)
     .join('&');
+  const targetUrl = BASE_REDIRECT_URI + targetPage + '?' + params;
 
   useEffect(() => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
       instance.loginRedirect({
         ...loginRequest,
-        redirectStartPage: BASE_REDIRECT_URI + targetPage + '?' + params,
+        redirectStartPage: targetUrl,
         // redirectUri: BASE_REDIRECT_URI + '/login',
       });
     }
-  }, [inProgress, instance, isAuthenticated, params, targetPage]);
+  }, [inProgress, instance, isAuthenticated, targetUrl]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -35,8 +36,11 @@ const Login = () => {
         .acquireTokenSilent(loginRequest)
         .then(setAuthResult)
         .catch(console.error);
+      const urlObj = { pathname: targetPage, query };
+      console.log('redirecting to:', urlObj);
+      router.push(urlObj); // WTF why does this not work?
     }
-  }, [instance, isAuthenticated]);
+  }, [instance, isAuthenticated, query, router, targetPage]);
 
   useEffect(() => {
     if (authResult) {
