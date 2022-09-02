@@ -10,14 +10,6 @@ export const msalConfig = {
     }
 };
 
-export const setRedirectUri = (destination: string) => {
-    msalConfig.auth.redirectUri = BASE_REDIRECT_URI + destination;
-}
-
-export const setLogoutRedirectUri = (destination: string) => {
-    msalConfig.auth.postLogoutRedirectUri = BASE_LOGOUT_REDIRECT_URI + destination;
-}
-
 export const loginRequest = {
     scopes: ["User.Read"]
 };
