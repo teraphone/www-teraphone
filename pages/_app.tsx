@@ -24,6 +24,7 @@ if (accounts.length > 0) {
 msalInstance.addEventCallback((event: EventMessage) => {
   if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
     const payload = event.payload as AuthenticationResult;
+    console.log('got payload:', payload);
     const account = payload.account;
     msalInstance.setActiveAccount(account);
   }
