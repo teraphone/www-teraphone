@@ -29,7 +29,7 @@ const Login = () => {
   }, [inProgress, instance, isAuthenticated, targetUrl]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && inProgress === InteractionStatus.None) {
       const account = instance.getActiveAccount();
       console.log('user is logged in:', account);
       instance
@@ -38,9 +38,9 @@ const Login = () => {
         .catch(console.error);
       const urlObj = { pathname: targetPage, query };
       console.log('redirecting to:', urlObj);
-      router.push(urlObj); // WTF why does this not work?
+      router.push(urlObj).catch(console.error);
     }
-  }, [instance, isAuthenticated, query, router, targetPage]);
+  }, [inProgress, instance, isAuthenticated, query, router, targetPage]);
 
   useEffect(() => {
     if (authResult) {
