@@ -1,4 +1,4 @@
-export const BASE_URI = "http://localhost:3000";
+export const BASE_URI = "https://teraphone.app";
 export const REDIRECT_URI = BASE_URI + "/login";
 export const LOGOUT_REDIRECT_URI = BASE_URI;
 
