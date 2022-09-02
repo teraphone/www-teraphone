@@ -2,6 +2,7 @@ import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
 import { loginRequest, BASE_REDIRECT_URI } from '../src/ms-auth/authConfig';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const { instance, inProgress } = useMsal();
@@ -9,16 +10,20 @@ const Login = () => {
   const [authResult, setAuthResult] = useState<AuthenticationResult | null>(
     null
   );
+  const router = useRouter();
+  const params = Object.entries(router.query)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
 
   useEffect(() => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
       instance.loginRedirect({
         ...loginRequest,
-        redirectStartPage: BASE_REDIRECT_URI + '/help',
+        redirectStartPage: BASE_REDIRECT_URI + '/help' + '?' + params,
         // redirectUri: BASE_REDIRECT_URI + '/login',
       });
     }
-  }, [inProgress, instance, isAuthenticated]);
+  }, [inProgress, instance, isAuthenticated, params]);
 
   useEffect(() => {
     if (isAuthenticated) {
