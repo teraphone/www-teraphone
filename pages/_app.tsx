@@ -3,6 +3,32 @@ import { EmotionCache } from '@emotion/react';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { globalStyles, theme } from '../styles/themes';
 import AppChrome from '../components/AppChrome';
+import { useRouter } from 'next/router';
+import { MsalProvider } from '@azure/msal-react';
+import {
+  PublicClientApplication,
+  EventType,
+  EventMessage,
+  AuthenticationResult,
+} from '@azure/msal-browser';
+import { CustomNavigationClient } from '../src/ms-auth/NavigationClient';
+import { msalConfig } from '../src/ms-auth/authConfig';
+
+export const msalInstance = new PublicClientApplication(msalConfig);
+
+const accounts = msalInstance.getAllAccounts();
+if (accounts.length > 0) {
+  msalInstance.setActiveAccount(accounts[0]);
+}
+
+msalInstance.addEventCallback((event: EventMessage) => {
+  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
+    const payload = event.payload as AuthenticationResult;
+    console.log('got payload:', payload);
+    const account = payload.account;
+    msalInstance.setActiveAccount(account);
+  }
+});
 
 interface MyAppProps extends AppProps {
   emotionCache: EmotionCache;
@@ -10,14 +36,19 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, pageProps } = props;
+  const router = useRouter();
+  const navigationClient = new CustomNavigationClient(router);
+  msalInstance.setNavigationClient(navigationClient);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles styles={globalStyles} />
       <CssBaseline />
-      <AppChrome>
-        <Component {...pageProps} />
-      </AppChrome>
+      <MsalProvider instance={msalInstance}>
+        <AppChrome>
+          <Component {...pageProps} />
+        </AppChrome>
+      </MsalProvider>
     </ThemeProvider>
   );
 }
