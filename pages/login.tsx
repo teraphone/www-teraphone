@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     if (authResult) {
-      console.log('authResult:', authResult);
+      //   console.log('authResult:', authResult);
     }
   }, [authResult]);
 
