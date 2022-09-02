@@ -11,7 +11,9 @@ const Login = () => {
     null
   );
   const router = useRouter();
-  const params = Object.entries(router.query)
+  const { destination, ...rest } = router.query;
+  const targetPage = destination ? destination : '/login';
+  const params = Object.entries(rest)
     .map(([key, value]) => `${key}=${value}`)
     .join('&');
 
@@ -19,11 +21,11 @@ const Login = () => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
       instance.loginRedirect({
         ...loginRequest,
-        redirectStartPage: BASE_REDIRECT_URI + '/help' + '?' + params,
+        redirectStartPage: BASE_REDIRECT_URI + targetPage + '?' + params,
         // redirectUri: BASE_REDIRECT_URI + '/login',
       });
     }
-  }, [inProgress, instance, isAuthenticated, params]);
+  }, [inProgress, instance, isAuthenticated, params, targetPage]);
 
   useEffect(() => {
     if (isAuthenticated) {
