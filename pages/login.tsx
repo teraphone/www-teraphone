@@ -1,6 +1,6 @@
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
-import { loginRequest } from '../src/ms-auth/authConfig';
+import { loginRequest, BASE_REDIRECT_URI } from '../src/ms-auth/authConfig';
 import { useEffect, useState } from 'react';
 
 const Login = () => {
@@ -12,7 +12,11 @@ const Login = () => {
 
   useEffect(() => {
     if (!isAuthenticated && inProgress === InteractionStatus.None) {
-      instance.loginRedirect(loginRequest).catch(console.error);
+      instance.loginRedirect({
+        ...loginRequest,
+        redirectStartPage: BASE_REDIRECT_URI + '/help',
+        // redirectUri: BASE_REDIRECT_URI + '/login',
+      });
     }
   }, [inProgress, instance, isAuthenticated]);
 
