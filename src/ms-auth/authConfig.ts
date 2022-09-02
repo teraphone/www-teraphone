@@ -1,5 +1,5 @@
-const BASE_REDIRECT_URI = 'http://localhost:3000';
-const BASE_LOGOUT_REDIRECT_URI = 'http://localhost:3000';
+export const BASE_REDIRECT_URI = 'http://localhost:3000';
+export const BASE_LOGOUT_REDIRECT_URI = 'http://localhost:3000';
 
 export const msalConfig = {
     auth: {
@@ -9,6 +9,14 @@ export const msalConfig = {
         postLogoutRedirectUri: BASE_LOGOUT_REDIRECT_URI,
     }
 };
+
+export const setRedirectUri = (destination: string) => {
+    msalConfig.auth.redirectUri = BASE_REDIRECT_URI + destination;
+}
+
+export const setLogoutRedirectUri = (destination: string) => {
+    msalConfig.auth.postLogoutRedirectUri = BASE_LOGOUT_REDIRECT_URI + destination;
+}
 
 export const loginRequest = {
     scopes: ["User.Read"]
