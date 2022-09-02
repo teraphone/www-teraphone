@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { AuthenticationResult, InteractionStatus } from '@azure/msal-browser';
 import { loginRequest, BASE_REDIRECT_URI } from '../src/ms-auth/authConfig';
@@ -7,7 +8,7 @@ import { useRouter } from 'next/router';
 const Login = () => {
   const { instance, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
-  const [authResult, setAuthResult] = useState<AuthenticationResult | null>(
+  const [_authResult, setAuthResult] = useState<AuthenticationResult | null>(
     null
   );
   const router = useRouter();
@@ -19,34 +20,27 @@ const Login = () => {
   const targetUrl = BASE_REDIRECT_URI + targetPage + '?' + params;
 
   useEffect(() => {
-    if (!isAuthenticated && inProgress === InteractionStatus.None) {
-      instance.loginRedirect({
-        ...loginRequest,
-        redirectStartPage: targetUrl,
-        // redirectUri: BASE_REDIRECT_URI + '/login',
-      });
+    if (inProgress === InteractionStatus.None) {
+      if (!isAuthenticated) {
+        instance.loginRedirect({
+          ...loginRequest,
+          redirectStartPage: targetUrl,
+        });
+      } else {
+        const urlObj = { pathname: targetPage, query };
+        console.log('redirecting to:', urlObj);
+        router.push(urlObj).catch(console.error);
+      }
     }
-  }, [inProgress, instance, isAuthenticated, targetUrl]);
-
-  useEffect(() => {
-    if (isAuthenticated && inProgress === InteractionStatus.None) {
-      const account = instance.getActiveAccount();
-      console.log('user is logged in:', account);
-      instance
-        .acquireTokenSilent(loginRequest)
-        .then(setAuthResult)
-        .catch(console.error);
-      const urlObj = { pathname: targetPage, query };
-      console.log('redirecting to:', urlObj);
-      router.push(urlObj).catch(console.error);
-    }
-  }, [inProgress, instance, isAuthenticated, query, router, targetPage]);
-
-  useEffect(() => {
-    if (authResult) {
-      //   console.log('authResult:', authResult);
-    }
-  }, [authResult]);
+  }, [
+    inProgress,
+    instance,
+    isAuthenticated,
+    query,
+    router,
+    targetPage,
+    targetUrl,
+  ]);
 
   return null;
 };
