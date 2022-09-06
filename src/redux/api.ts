@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { PeachoneResponse, Welcome } from './types'
+import { PeachoneResponse, Welcome, AuthUserInfo, AuthRequest } from './types'
 
 export const peachoneApi = createApi({
     reducerPath: 'peachoneApi',
@@ -8,7 +8,16 @@ export const peachoneApi = createApi({
         getPublic: builder.query<PeachoneResponse<Welcome>, void>({
             query: () => '/public',
         }),
+        auth: builder.mutation<PeachoneResponse<AuthUserInfo>, AuthRequest>({
+            query: (body) => ({
+                url: '/public/auth',
+                method: 'POST',
+                body,
+            }),
+            transformResponse: (response: { data: PeachoneResponse<AuthUserInfo> }) => response.data,
+        }),
+
     }),
 })
 
-export const { useGetPublicQuery } = peachoneApi
+export const { useGetPublicQuery, useAuthMutation } = peachoneApi
