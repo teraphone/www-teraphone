@@ -4,8 +4,8 @@ import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { loginRequest } from '../../src/ms-auth/authConfig';
-import { setMSAuthResult } from '../../src/redux/AuthSlice';
-import { useAppDispatch } from '../../src/redux/hooks';
+import { selectMSAuthResult, setMSAuthResult } from '../../src/redux/AuthSlice';
+import { useAppDispatch, useAppSelector } from '../../src/redux/hooks';
 
 const Activate = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -13,6 +13,7 @@ const Activate = (): JSX.Element => {
   const { data, error, isLoading } = useGetPublicQuery();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
+  const { accessToken: msAccessToken } = useAppSelector(selectMSAuthResult);
 
   useEffect(() => {
     if (inProgress === InteractionStatus.None) {
@@ -32,6 +33,16 @@ const Activate = (): JSX.Element => {
       }
     }
   }, [dispatch, inProgress, instance, isAuthenticated, router]);
+
+  useEffect(() => {
+    if (msAccessToken) {
+      console.log('msAccessToken:', msAccessToken);
+      // todo:
+      // - auth with peachone
+      // - exchange token with resolve api to get subscription
+      // - send subscriptionId to activate api
+    }
+  });
 
   if (isLoading) {
     return (
