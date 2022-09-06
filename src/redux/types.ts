@@ -5,7 +5,7 @@ export type BasePeachoneResponse = {
 export type PeachoneResponse<T> = BasePeachoneResponse & T;
 
 export type Welcome = {
-    "path": string;
+    path: string;
 }
 
 export type AuthRequest = {
@@ -13,9 +13,10 @@ export type AuthRequest = {
 }
 
 export type AuthUserInfo = {
-    "oid": string;
-    "tid": string;
-    "email": string;
-    "name": string;
-    "companyName": string;
+    oid: string;
+    tid: string;
+    email: string;
+    name: string;
+    companyName: string;
+    
 }

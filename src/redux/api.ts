@@ -14,7 +14,6 @@ export const peachoneApi = createApi({
                 method: 'POST',
                 body,
             }),
-            transformResponse: (response: { data: PeachoneResponse<AuthUserInfo> }) => response.data,
         }),
 
     }),

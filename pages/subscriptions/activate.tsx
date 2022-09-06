@@ -1,11 +1,14 @@
-import { useGetPublicQuery } from '../../src/redux/api';
+import { useAuthMutation, useGetPublicQuery } from '../../src/redux/api';
 import { InteractionStatus } from '@azure/msal-browser';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { loginRequest } from '../../src/ms-auth/authConfig';
 import { selectMSAuthResult, setMSAuthResult } from '../../src/redux/AuthSlice';
 import { useAppDispatch, useAppSelector } from '../../src/redux/hooks';
+
+const oboScopes = {
+  scopes: ['api://9ef60b2f-3246-4390-8e17-a57478e7ec45/User.Read'],
+};
 
 const Activate = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -14,6 +17,8 @@ const Activate = (): JSX.Element => {
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
   const { accessToken: msAccessToken } = useAppSelector(selectMSAuthResult);
+  const [peachoneAuth, result] = useAuthMutation();
+  console.log('peachone result', result);
 
   useEffect(() => {
     if (inProgress === InteractionStatus.None) {
@@ -27,7 +32,7 @@ const Activate = (): JSX.Element => {
       } else {
         console.log('is authenticated');
         instance
-          .acquireTokenSilent(loginRequest)
+          .acquireTokenSilent(oboScopes)
           .then((authResult) => dispatch(setMSAuthResult(authResult)))
           .catch(console.error);
       }
@@ -37,12 +42,18 @@ const Activate = (): JSX.Element => {
   useEffect(() => {
     if (msAccessToken) {
       console.log('msAccessToken:', msAccessToken);
+      peachoneAuth({ msAccessToken })
+        .unwrap()
+        .then((data) => {
+          console.log('got peachone response:', data); // <--- this is undefined???
+        })
+        .catch(console.error);
       // todo:
       // - auth with peachone
       // - exchange token with resolve api to get subscription
       // - send subscriptionId to activate api
     }
-  });
+  }, [msAccessToken, peachoneAuth]);
 
   if (isLoading) {
     return (

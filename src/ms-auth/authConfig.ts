@@ -20,7 +20,7 @@ export const setLogoutRedirectUri = (destination: string) => {
 }
 
 export const loginRequest = {
-    scopes: ["User.Read"]
+    scopes: ["api://9ef60b2f-3246-4390-8e17-a57478e7ec45/User.Read"]
 };
 
 export const graphConfig = {
