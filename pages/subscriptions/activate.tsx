@@ -1,25 +1,29 @@
 import { useGetPublicQuery } from '../../src/redux/api';
-import { useIsAuthenticated } from '@azure/msal-react';
+import { InteractionStatus } from '@azure/msal-browser';
+import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const Activate = (): JSX.Element => {
+  const { inProgress } = useMsal();
   const { data, error, isLoading } = useGetPublicQuery();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      const urlObj = {
-        pathname: '/login',
-        query: { destination: '/subscriptions/activate', ...router.query },
-      };
-      console.log('redirecting to:', urlObj);
-      router.push(urlObj).catch(console.error);
-    } else {
-      console.log('is authenticated');
+    if (inProgress === InteractionStatus.None) {
+      if (!isAuthenticated) {
+        const urlObj = {
+          pathname: '/login',
+          query: { destination: '/subscriptions/activate', ...router.query },
+        };
+        console.log('redirecting to:', urlObj);
+        router.push(urlObj).catch(console.error);
+      } else {
+        console.log('is authenticated');
+      }
     }
-  });
+  }, [inProgress, isAuthenticated, router]);
 
   if (isLoading) {
     return (
