@@ -4,11 +4,12 @@ import { peachoneApi } from './api';
 import authReducer from './AuthSlice';
 
 export const store = configureStore({
-    reducer: {
-        [peachoneApi.reducerPath]: peachoneApi.reducer,
-        auth: authReducer,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(peachoneApi.middleware),
+  reducer: {
+    [peachoneApi.reducerPath]: peachoneApi.reducer,
+    auth: authReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(peachoneApi.middleware),
 });
 
 setupListeners(store.dispatch);

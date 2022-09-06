@@ -3,21 +3,21 @@ import { AuthenticationResult } from '@azure/msal-browser';
 import type { RootState } from './store';
 
 export type AuthState = {
-    msAuthResult: AuthenticationResult;
-}
+  msAuthResult: AuthenticationResult;
+};
 
 const initialState: AuthState = {
-    msAuthResult: {} as AuthenticationResult,
+  msAuthResult: {} as AuthenticationResult,
 };
 
 export const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        setMSAuthResult: (state, action: PayloadAction<AuthenticationResult>) => {
-            state.msAuthResult = action.payload;
-        },
+  name: 'auth',
+  initialState,
+  reducers: {
+    setMSAuthResult: (state, action: PayloadAction<AuthenticationResult>) => {
+      state.msAuthResult = action.payload;
     },
+  },
 });
 
 export const { setMSAuthResult } = authSlice.actions;

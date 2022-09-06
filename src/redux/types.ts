@@ -1,22 +1,21 @@
 export type BasePeachoneResponse = {
-    success: boolean;
-}
+  success: boolean;
+};
 
 export type PeachoneResponse<T> = BasePeachoneResponse & T;
 
 export type Welcome = {
-    path: string;
-}
+  path: string;
+};
 
 export type AuthRequest = {
-    msAccessToken: string;
-}
+  msAccessToken: string;
+};
 
 export type AuthUserInfo = {
-    oid: string;
-    tid: string;
-    email: string;
-    name: string;
-    companyName: string;
-    
-}
+  oid: string;
+  tid: string;
+  email: string;
+  name: string;
+  companyName: string;
+};
