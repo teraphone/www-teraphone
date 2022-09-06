@@ -3,9 +3,13 @@ import { InteractionStatus } from '@azure/msal-browser';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { loginRequest } from '../../src/ms-auth/authConfig';
+import { setMSAuthResult } from '../../src/redux/AuthSlice';
+import { useAppDispatch } from '../../src/redux/hooks';
 
 const Activate = (): JSX.Element => {
-  const { inProgress } = useMsal();
+  const dispatch = useAppDispatch();
+  const { inProgress, instance } = useMsal();
   const { data, error, isLoading } = useGetPublicQuery();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
@@ -21,9 +25,13 @@ const Activate = (): JSX.Element => {
         router.push(urlObj).catch(console.error);
       } else {
         console.log('is authenticated');
+        instance
+          .acquireTokenSilent(loginRequest)
+          .then((authResult) => dispatch(setMSAuthResult(authResult)))
+          .catch(console.error);
       }
     }
-  }, [inProgress, isAuthenticated, router]);
+  }, [dispatch, inProgress, instance, isAuthenticated, router]);
 
   if (isLoading) {
     return (
