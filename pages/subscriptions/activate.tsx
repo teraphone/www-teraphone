@@ -52,6 +52,7 @@ const Activate = (): JSX.Element => {
       // - auth with peachone
       // - exchange token with resolve api to get subscription
       // - send subscriptionId to activate api
+      // - redirect to /subscriptions/overview
     }
   }, [msAccessToken, peachoneAuth]);
 
