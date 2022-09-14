@@ -1,4 +1,8 @@
 /* eslint-disable */
+
+const WS_URL = 'wss://sfu-demo.teraphone.app';
+const ROOM_TOKEN = '';
+
 (self.webpackChunk_N_E = self.webpackChunk_N_E || []).push([
   [571],
   {
@@ -1532,10 +1536,12 @@
         var t = (0, i.useState)([]),
           e = t[0],
           r = t[1],
-          c = (0, i.useState)(void 0),
+          // LiveKit WebSocket URL (React.useState)
+          c = (0, i.useState)(WS_URL),
           s = c[0],
           a = c[1],
-          u = (0, i.useState)(void 0),
+          // LiveKit Room Token (React.useState)
+          u = (0, i.useState)(ROOM_TOKEN),
           l = u[0],
           f = u[1],
           p = (0, i.useState)(!1),
