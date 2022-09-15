@@ -95,17 +95,23 @@ const ConnectionTest = () => {
     setTestResumeConnectionError('');
   }, []);
 
-  const runTests = useCallback(async () => {
-    // todo: finish this
+  const runPhase1 = useCallback(async () => {
+    // test signal connection
+    // test webrtc connection
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const runPhase2 = useCallback(async () => {
+    // test connect to TURN
+    // test publish audio
+    // test publish video
+    // test resume connection
+  }, []);
 
-  if (error) {
-    return <div>sad face</div>;
-  }
+  const runTests = useCallback(async () => {
+    resetTests();
+    await runPhase1();
+    await runPhase2();
+  }, [resetTests, runPhase1, runPhase2]);
 
   return (
     <Container>
