@@ -1,5 +1,11 @@
 import { useGetConnectionTestTokenQuery } from '../src/redux/api';
-import { Room, RoomConnectOptions, RoomEvent } from 'livekit-client';
+import {
+  ConnectionError,
+  Room,
+  RoomConnectOptions,
+  RoomEvent,
+  RoomOptions,
+} from 'livekit-client';
 import {
   Box,
   Button,
@@ -24,7 +30,7 @@ interface TestItemProps {
   error: string;
 }
 
-const ROOM_URL = 'wss://sfu-demo.teraphone.app';
+const ROOM_URL = 'wss://sfu-demo2.teraphone.app';
 
 const TestStatusItem = (props: TestItemProps) => {
   const { status, message, error } = props;
@@ -99,9 +105,40 @@ const ConnectionTest = () => {
   }, []);
 
   const runPhase1 = useCallback(async () => {
+    const token = data?.roomToken;
+    if (!token) {
+      return;
+    }
+
+    // init room
+    const room = new Room();
+    room.on(RoomEvent.SignalConnected, () => {
+      console.log(RoomEvent.SignalConnected);
+      setTestSignalConnectionStatus('success');
+      setTestWebRTCConnectionStatus('pending');
+    });
+
+    // connect
+    const roomConnectOptions = {
+      autoSubscribe: false,
+    };
+    try {
+      setTestSignalConnectionStatus('pending');
+      await room.connect(ROOM_URL, token, roomConnectOptions);
+    } catch (err: unknown) {
+      if (err instanceof ConnectionError) {
+        setTestSignalConnectionStatus('failure');
+        setTestSignalConnectionError(err.message);
+      } else {
+        console.log(err);
+      }
+      return;
+    }
+    setTestWebRTCConnectionStatus('success');
+
     // test signal connection
     // test webrtc connection
-  }, []);
+  }, [data?.roomToken]);
 
   const runPhase2 = useCallback(async () => {
     // test connect to TURN
