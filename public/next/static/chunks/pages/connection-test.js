@@ -1715,7 +1715,7 @@ const ROOM_TOKEN = '';
                               backgroundColor: '#4963B0',
                             },
                             children: (0, n.jsxs)(R.xv, {
-                              fontFamily: 'Avenir',
+                              fontFamily: 'system-ui, sans-serif',
                               fontWeight: 800,
                               fontSize: '0.75rem',
                               lineHeight: '1.25rem',

@@ -31704,7 +31704,7 @@
             i.default.createElement(
               o.Text,
               {
-                fontFamily: 'Everett',
+                fontFamily: 'system-ui',
                 fontWeight: '300',
                 fontSize: '1.5rem',
                 color: u,
@@ -31716,7 +31716,7 @@
               i.default.createElement(
                 o.Text,
                 {
-                  fontFamily: 'Everett',
+                  fontFamily: 'system-ui',
                   fontWeight: '300',
                   fontSize: '11px',
                   lineHeight: '1rem',
@@ -32161,7 +32161,7 @@
       const o = r(n(30274)),
         i = {
           baseStyle: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             borderRadius: '3.3125rem',
             letterSpacing: '0.08em',
             textTransform: 'uppercase',
@@ -32190,7 +32190,7 @@
               color: 'cld.fg1',
             },
             primaryRebrand: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               textTransform: 'none',
               fontSize: '1rem',
               height: '3rem',
@@ -34543,80 +34543,80 @@
       t.default = {
         textStyles: {
           h1: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 900,
             fontSize: '3.5rem',
             lineHeight: '4.5rem',
           },
           h2: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 900,
             fontSize: '2.5rem',
             lineHeight: '3.5rem',
           },
           h3: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 900,
             fontSize: '1.75rem',
             lineHeight: '2.5rem',
           },
           h4: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 900,
             fontSize: '1.375rem',
             lineHeight: '2rem',
           },
           h5: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 900,
             fontSize: '1rem',
             lineHeight: '1.5rem',
           },
           'h5-mono': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 600,
             fontSize: '0.8125rem',
             lineHeight: '1.5rem',
             letterSpacing: '0.05em',
           },
           'subtitle-1': {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 400,
             fontSize: '1.375rem',
             lineHeight: '2rem',
           },
           'subtitle-2': {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 400,
             fontSize: '1.125rem',
             lineHeight: '1.75rem',
           },
           body1: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 400,
             fontSize: '1rem',
             lineHeight: '1.5rem',
           },
           body2: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 400,
             fontSize: '0.875rem',
             lineHeight: '1.25rem',
           },
           caption: {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 400,
             fontSize: '0.75rem',
             lineHeight: '1.25rem',
           },
           'caption-mono': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '0.75rem',
             lineHeight: '1.25rem',
           },
           'caption-mono-uppercase': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '0.75rem',
             lineHeight: '1.25rem',
@@ -34624,13 +34624,13 @@
             letterSpacing: '0.05em',
           },
           'body1-mono': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '1rem',
             lineHeight: '1.5rem',
           },
           'body1-mono-uppercase': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '1rem',
             lineHeight: '1.5rem',
@@ -34638,13 +34638,13 @@
             letterSpacing: '0.05em',
           },
           'body2-mono': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '0.875rem',
             lineHeight: '1.25rem',
           },
           'body2-mono-uppercase': {
-            fontFamily: 'IBM Plex Mono',
+            fontFamily: 'ui-monospace, monospace',
             fontWeight: 400,
             fontSize: '0.875rem',
             lineHeight: '1.25rem',
@@ -34652,14 +34652,14 @@
             letterSpacing: '0.05em',
           },
           'button-title-1': {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 800,
             fontSize: '0.75rem',
             lineHeight: '1.25rem',
             letterSpacing: '0.08em',
           },
           'button-title-2': {
-            fontFamily: 'Avenir',
+            fontFamily: 'system-ui, sans-serif',
             fontWeight: 800,
             fontSize: '0.6875rem',
             lineHeight: '1.25rem',
@@ -34667,44 +34667,44 @@
           },
           v2: {
             h1: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 400,
               fontSize: '3.5rem',
               lineHeight: '4.5rem',
             },
             h2: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 400,
               fontSize: '2.5rem',
               lineHeight: '3.5rem',
             },
             h3: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 400,
               fontSize: '1.75rem',
               lineHeight: '2.5rem',
             },
             h4: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 400,
               fontSize: '1.375rem',
               lineHeight: '2rem',
             },
             h5: {
-              fontFamily: 'VG5000',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 400,
               fontSize: '1rem',
               lineHeight: '1.5rem',
             },
             'h5-mono': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 600,
               fontSize: '0.75rem',
               lineHeight: '1.5rem',
               letterSpacing: '0.05em',
             },
             'h5-mono-uppercase': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 600,
               fontSize: '0.75rem',
               lineHeight: '1.5rem',
@@ -34712,43 +34712,43 @@
               textTransform: 'uppercase',
             },
             subtitle1: {
-              fontFamily: 'Everett',
+              fontFamily: 'system-ui',
               fontWeight: 400,
               fontSize: '1.25rem',
               lineHeight: '2rem',
             },
             subtitle2: {
-              fontFamily: 'Everett',
+              fontFamily: 'system-ui',
               fontWeight: 400,
               fontSize: '1rem',
               lineHeight: '1.75rem',
             },
             body1: {
-              fontFamily: 'Everett',
+              fontFamily: 'system-ui',
               fontWeight: 400,
               fontSize: '0.875rem',
               lineHeight: '1.5rem',
             },
             body2: {
-              fontFamily: 'Everett',
+              fontFamily: 'system-ui',
               fontWeight: 400,
               fontSize: '0.8125rem',
               lineHeight: '1.25rem',
             },
             caption: {
-              fontFamily: 'Everett',
+              fontFamily: 'system-ui',
               fontWeight: 400,
               fontSize: '0.6875rem',
               lineHeight: '1rem',
             },
             'caption-mono': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.6875rem',
               lineHeight: '1.25rem',
             },
             'caption-mono-uppercase': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.6875rem',
               lineHeight: '1.25rem',
@@ -34756,13 +34756,13 @@
               letterSpacing: '0.05em',
             },
             'body1-mono': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.875rem',
               lineHeight: '1.5rem',
             },
             'body1-mono-uppercase': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.875rem',
               lineHeight: '1.5rem',
@@ -34770,13 +34770,13 @@
               letterSpacing: '0.05em',
             },
             'body2-mono': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.75rem',
               lineHeight: '1.25rem',
             },
             'body2-mono-uppercase': {
-              fontFamily: 'Everett Mono',
+              fontFamily: 'ui-monospace, monospace',
               fontWeight: 400,
               fontSize: '0.75rem',
               lineHeight: '1.25rem',
@@ -34784,14 +34784,14 @@
               letterSpacing: '0.05em',
             },
             'button-title-1': {
-              fontFamily: 'Avenir',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 800,
               fontSize: '0.75rem',
               lineHeight: '1.25rem',
               letterSpacing: '0.08em',
             },
             'button-title-2': {
-              fontFamily: 'Avenir',
+              fontFamily: 'system-ui, sans-serif',
               fontWeight: 800,
               fontSize: '0.6875rem',
               lineHeight: '1.25rem',
@@ -34870,8 +34870,6 @@
           t.Modal =
           t.Button =
           t.GLOBAL =
-          t.V2_FONTS =
-          t.V1_FONTS =
           t.GlobalStyles =
           t.components =
           t.typography =
@@ -34924,18 +34922,6 @@
       t.codeTheme = f.default;
       const p = i(n(59857));
       (t.GlobalStyles = p.default),
-        Object.defineProperty(t, 'V1_FONTS', {
-          enumerable: !0,
-          get: function () {
-            return p.V1_FONTS;
-          },
-        }),
-        Object.defineProperty(t, 'V2_FONTS', {
-          enumerable: !0,
-          get: function () {
-            return p.V2_FONTS;
-          },
-        }),
         Object.defineProperty(t, 'GLOBAL', {
           enumerable: !0,
           get: function () {
@@ -34967,19 +34953,15 @@
       Object.defineProperty(t, '__esModule', {
         value: !0,
       }),
-        (t.GLOBAL = t.V2_FONTS = t.V1_FONTS = void 0);
+        (t.GLOBAL = void 0);
       const o = r(n(67294)),
         i = n(70917);
       n(35202),
-        (t.V1_FONTS =
-          "\n@font-face {\n  font-family: 'Avenir';\n  src: url('/fonts/avenir-pro-roman.woff2') format('woff2'), \n        url('/fonts/avenir-pro-roman.woff') format('woff');\n  font-weight: 400;\n}\n\n@font-face {\n  font-family: 'Avenir';\n  src: url('/fonts/avenir-pro-heavy.woff2') format('woff2'), \n       url('/fonts/avenir-pro-heavy.woff') format('woff');\n  font-weight: 800;\n}\n\n@font-face {\n  font-family: 'Avenir';\n  src: url('/fonts/avenir-pro-black.woff2') format('woff2'), \n      url('/fonts/avenir-pro-black.woff') format('woff');\n  font-weight: 900;\n}\n"),
-        (t.V2_FONTS =
-          "\n@font-face {\n  font-family: 'Everett';\n  src: url('/fonts/everett-regular.woff2') format('woff2'), \n        url('/fonts/everett-regular.woff') format('woff');\n  font-weight: 400;\n}\n\n@font-face {\n  font-family: 'Everett';\n  src: url('/fonts/everett-regular-italic.woff2') format('woff2'), \n        url('/fonts/everett-regular-italic.woff') format('woff');\n  font-weight: 400;\n  font-style: italic;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-thin.woff2') format('woff2'), \n        url('/fonts/everett-mono-thin.woff') format('woff');\n  font-weight: 300;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-thin-italic.woff2') format('woff2'), \n        url('/fonts/everett-mono-thin-italic.woff') format('woff');\n  font-weight: 300;\n  font-style: italic;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-regular.woff2') format('woff2'), \n        url('/fonts/everett-mono-regular.woff') format('woff');\n  font-weight: 400;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-regular-italic.woff2') format('woff2'), \n        url('/fonts/everett-mono-regular-italic.woff') format('woff');\n  font-weight: 400;\n  font-style: italic;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-medium.woff2') format('woff2'), \n        url('/fonts/everett-mono-medium.woff') format('woff');\n  font-weight: 500;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-medium-italic.woff2') format('woff2'), \n        url('/fonts/everett-mono-medium-italic.woff') format('woff');\n  font-weight: 500;\n  font-style: italic;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-bold.woff2') format('woff2'), \n        url('/fonts/everett-mono-bold.woff') format('woff');\n  font-weight: 600;\n}\n\n@font-face {\n  font-family: 'Everett Mono';\n  src: url('/fonts/everett-mono-bold-italic.woff2') format('woff2'), \n        url('/fonts/everett-mono-bold-italic.woff') format('woff');\n  font-weight: 600;\n  font-style: italic;\n}\n\n@font-face {\n  font-family: 'VG5000';\n  src: url('/fonts/vg5000-regular.woff2') format('woff2'), \n      url('/fonts/vg5000-regular.woff') format('woff');\n  font-weight: 400;\n}\n"),
         (t.GLOBAL =
           '\n.js-focus-visible :focus:not([data-focus-visible-added]) {\n  outline: none;\n  box-shadow: none;\n}\n\n.chakra-toast__inner {\n  min-width: unset !important;\n}\n');
       t.default = () =>
         o.default.createElement(i.Global, {
-          styles: [t.V1_FONTS, t.V2_FONTS, t.GLOBAL].join('\n'),
+          styles: t.GLOBAL,
         });
     },
     20640: function (e, t, n) {
@@ -43578,37 +43560,37 @@
           textStyles: {
             v3: {
               body: {
-                fontFamily: 'Everett',
+                fontFamily: 'system-ui',
                 fontWeight: 400,
                 fontSize: '1rem',
                 lineHeight: '1.5',
               },
               h1: {
-                fontFamily: 'VG5000',
+                fontFamily: 'system-ui, sans-serif',
                 fontWeight: 400,
                 fontSize: '3.5rem',
                 lineHeight: '1.1',
               },
               h2: {
-                fontFamily: 'VG5000',
+                fontFamily: 'system-ui, sans-serif',
                 fontWeight: 400,
                 fontSize: '2.75rem',
                 lineHeight: '1.2',
               },
               h3: {
-                fontFamily: 'VG5000',
+                fontFamily: 'system-ui, sans-serif',
                 fontWeight: 400,
                 fontSize: '2rem',
                 lineHeight: '1.2',
               },
               h4: {
-                fontFamily: 'VG5000',
+                fontFamily: 'system-ui, sans-serif',
                 fontWeight: 400,
                 fontSize: '1.375rem',
                 lineHeight: '1.2',
               },
               h5: {
-                fontFamily: 'VG5000',
+                fontFamily: 'system-ui, sans-serif',
                 fontWeight: 400,
                 fontSize: '1rem',
                 lineHeight: '1.2',
@@ -43642,7 +43624,7 @@
                   alignItems: 'center',
                   gap: '.5rem',
                   padding: '1rem 2rem',
-                  fontFamily: 'Everett',
+                  fontFamily: 'system-ui',
                   fontSize: '1.125rem',
                   lineHeight: '1.333333333',
                   color: 'v2.fg1',
@@ -43659,7 +43641,7 @@
                   alignItems: 'center',
                   gap: '.5rem',
                   padding: '1rem 2rem',
-                  fontFamily: 'Everett',
+                  fontFamily: 'system-ui',
                   fontSize: '1.125rem',
                   lineHeight: '1.333333333',
                   color: 'v2.fg4',
