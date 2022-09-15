@@ -1,9 +1,44 @@
-/* Header */
+/* Variables */
+:root {
+  --height: 400px !important;
+}
+
+/* Containers */
+html, body {
+  height: 100% !important;
+}
+body > div {
+  height: 100% !important;
+}
+main.css-vooagt {
+  height: 100% !important;
+  min-height: auto !important;
+  padding: 24px !important;
+}
+.css-1chirrj {
+  height: 100% !important;
+  min-height: var(--height);
+  width: auto !important;
+}
+.css-1qm4dkb {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#chakra-toast-portal {
+  position: fixed !important;
+}
+
+/* Hide header */
 .css-1mi3tt8 {
   display: none !important;
 }
 
-/* Footer */
+/* Hide footer */
 .css-1a1h7um {
   display: none !important;
+}
+
+/* Connection test box */
+.css-18tx429 {
+  height: var(--height);
 }
