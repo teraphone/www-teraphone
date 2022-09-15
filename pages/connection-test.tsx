@@ -24,6 +24,8 @@ interface TestItemProps {
   error: string;
 }
 
+const ROOM_URL = 'wss://sfu-demo.teraphone.app';
+
 const TestStatusItem = (props: TestItemProps) => {
   const { status, message, error } = props;
 
@@ -52,7 +54,8 @@ const TestStatusItem = (props: TestItemProps) => {
 };
 
 const ConnectionTest = () => {
-  const { data, error, isLoading } = useGetConnectionTestTokenQuery();
+  const { data } = useGetConnectionTestTokenQuery();
+  const [testsPending, setTestsPending] = useState(false);
 
   // statuses
   const [testSignalConnectionStatus, setTestSignalConnectionStatus] =
@@ -108,9 +111,11 @@ const ConnectionTest = () => {
   }, []);
 
   const runTests = useCallback(async () => {
+    setTestsPending(true);
     resetTests();
     await runPhase1();
     await runPhase2();
+    setTestsPending(false);
   }, [resetTests, runPhase1, runPhase2]);
 
   return (
@@ -126,7 +131,7 @@ const ConnectionTest = () => {
             </Typography>
             <Button
               variant="contained"
-              disabled={!data?.roomToken}
+              disabled={!data?.roomToken || testsPending}
               onClick={runTests}
             >
               Begin Test
