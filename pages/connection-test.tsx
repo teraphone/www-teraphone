@@ -65,6 +65,19 @@ const ConnectionTest = () => {
   const [testResumeConnectionStatus, setTestResumeConnectionStatus] =
     useState<TestStatus>('waiting');
 
+  const resetTests = useCallback(() => {
+    setTestSignalConnectionStatus('waiting');
+    setTestWebRTCConnectionStatus('waiting');
+    setTestConnectTURNStatus('waiting');
+    setTestPublishAudioStatus('waiting');
+    setTestPublishVideoStatus('waiting');
+    setTestResumeConnectionStatus('waiting');
+  }, []);
+
+  const runTests = useCallback(async () => {
+    // todo: finish this
+  }, []);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -84,7 +97,11 @@ const ConnectionTest = () => {
             <Typography variant="body1">
               Test your connection to Teraphone's servers.
             </Typography>
-            <Button variant="contained" disabled={!data?.roomToken}>
+            <Button
+              variant="contained"
+              disabled={!data?.roomToken}
+              onClick={runTests}
+            >
               Begin Test
             </Button>
           </Box>
@@ -93,9 +110,36 @@ const ConnectionTest = () => {
               Results
             </Typography>
             <List>
-              <TestStatusItem key="test1" status="success" message="Test 1" />
-              <TestStatusItem key="test2" status="failure" message="Test 2" />
-              <TestStatusItem key="test3" status="pending" message="Test 3" />
+              <TestStatusItem
+                key="test-signal-connection"
+                status={testSignalConnectionStatus}
+                message="Connecting to signal connection via WebSocket"
+              />
+              <TestStatusItem
+                key="test-webrtc-connection"
+                status={testWebRTCConnectionStatus}
+                message="Establishing WebRTC connection"
+              />
+              <TestStatusItem
+                key="test-connect-turn"
+                status={testConnectTURNStatus}
+                message="Can connect via TURN"
+              />
+              <TestStatusItem
+                key="test-publish-audio"
+                status={testPublishAudioStatus}
+                message="Can publish audio"
+              />
+              <TestStatusItem
+                key="test-publish-video"
+                status={testPublishVideoStatus}
+                message="Can publish video"
+              />
+              <TestStatusItem
+                key="test-resume-connection"
+                status={testResumeConnectionStatus}
+                message="Resuming connection after interruption"
+              />
             </List>
           </Box>
         </Box>
