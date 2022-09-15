@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import { useCallback, useEffect, useState } from 'react';
 
 type TestStatus = 'waiting' | 'pending' | 'success' | 'failure';
 
@@ -51,6 +52,18 @@ const TestStatusItem = (props: TestItemProps) => {
 
 const ConnectionTest = () => {
   const { data, error, isLoading } = useGetConnectionTestTokenQuery();
+  const [testSignalConnectionStatus, setTestSignalConnectionStatus] =
+    useState<TestStatus>('waiting');
+  const [testWebRTCConnectionStatus, setTestWebRTCConnectionStatus] =
+    useState<TestStatus>('waiting');
+  const [testConnectTURNStatus, setTestConnectTURNStatus] =
+    useState<TestStatus>('waiting');
+  const [testPublishAudioStatus, setTestPublishAudioStatus] =
+    useState<TestStatus>('waiting');
+  const [testPublishVideoStatus, setTestPublishVideoStatus] =
+    useState<TestStatus>('waiting');
+  const [testResumeConnectionStatus, setTestResumeConnectionStatus] =
+    useState<TestStatus>('waiting');
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -71,7 +84,9 @@ const ConnectionTest = () => {
             <Typography variant="body1">
               Test your connection to Teraphone's servers.
             </Typography>
-            <Button variant="contained">Begin Test</Button>
+            <Button variant="contained" disabled={!data?.roomToken}>
+              Begin Test
+            </Button>
           </Box>
           <Box>
             <Typography variant="h3" component="h1">
