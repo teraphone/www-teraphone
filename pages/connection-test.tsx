@@ -21,10 +21,11 @@ type TestStatus = 'waiting' | 'pending' | 'success' | 'failure';
 interface TestItemProps {
   status: TestStatus;
   message: string;
+  error: string;
 }
 
 const TestStatusItem = (props: TestItemProps) => {
-  const { status, message } = props;
+  const { status, message, error } = props;
 
   if (status === 'waiting') {
     return null;
@@ -45,13 +46,15 @@ const TestStatusItem = (props: TestItemProps) => {
   return (
     <ListItem>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={message} />
+      <ListItemText primary={message} secondary={error} />
     </ListItem>
   );
 };
 
 const ConnectionTest = () => {
   const { data, error, isLoading } = useGetConnectionTestTokenQuery();
+
+  // statuses
   const [testSignalConnectionStatus, setTestSignalConnectionStatus] =
     useState<TestStatus>('waiting');
   const [testWebRTCConnectionStatus, setTestWebRTCConnectionStatus] =
@@ -65,6 +68,17 @@ const ConnectionTest = () => {
   const [testResumeConnectionStatus, setTestResumeConnectionStatus] =
     useState<TestStatus>('waiting');
 
+  // error messages
+  const [testSignalConnectionError, setTestSignalConnectionError] =
+    useState('');
+  const [testWebRTCConnectionError, setTestWebRTCConnectionError] =
+    useState('');
+  const [testConnectTURNError, setTestConnectTURNError] = useState('');
+  const [testPublishAudioError, setTestPublishAudioError] = useState('');
+  const [testPublishVideoError, setTestPublishVideoError] = useState('');
+  const [testResumeConnectionError, setTestResumeConnectionError] =
+    useState('');
+
   const resetTests = useCallback(() => {
     setTestSignalConnectionStatus('waiting');
     setTestWebRTCConnectionStatus('waiting');
@@ -72,6 +86,13 @@ const ConnectionTest = () => {
     setTestPublishAudioStatus('waiting');
     setTestPublishVideoStatus('waiting');
     setTestResumeConnectionStatus('waiting');
+
+    setTestSignalConnectionError('');
+    setTestWebRTCConnectionError('');
+    setTestConnectTURNError('');
+    setTestPublishAudioError('');
+    setTestPublishVideoError('');
+    setTestResumeConnectionError('');
   }, []);
 
   const runTests = useCallback(async () => {
@@ -114,31 +135,43 @@ const ConnectionTest = () => {
                 key="test-signal-connection"
                 status={testSignalConnectionStatus}
                 message="Connecting to signal connection via WebSocket"
+                error={testSignalConnectionError}
               />
               <TestStatusItem
                 key="test-webrtc-connection"
                 status={testWebRTCConnectionStatus}
                 message="Establishing WebRTC connection"
+                error={testWebRTCConnectionError}
               />
               <TestStatusItem
                 key="test-connect-turn"
                 status={testConnectTURNStatus}
                 message="Can connect via TURN"
+                error={testConnectTURNError}
               />
               <TestStatusItem
                 key="test-publish-audio"
                 status={testPublishAudioStatus}
                 message="Can publish audio"
+                error={testPublishAudioError}
               />
               <TestStatusItem
                 key="test-publish-video"
                 status={testPublishVideoStatus}
                 message="Can publish video"
+                error={testPublishVideoError}
               />
               <TestStatusItem
                 key="test-resume-connection"
                 status={testResumeConnectionStatus}
                 message="Resuming connection after interruption"
+                error={testResumeConnectionError}
+              />
+              <TestStatusItem
+                key="test-x"
+                status="failure"
+                message="Test that fails"
+                error="This is the error message"
               />
             </List>
           </Box>
