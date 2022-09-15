@@ -15,6 +15,40 @@ import {
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
+type TestStatus = 'waiting' | 'pending' | 'success' | 'failure';
+
+interface TestItemProps {
+  status: TestStatus;
+  message: string;
+}
+
+const TestStatusItem = (props: TestItemProps) => {
+  const { status, message } = props;
+
+  if (status === 'waiting') {
+    return null;
+  }
+  let icon;
+  switch (status) {
+    case 'success':
+      icon = <DoneIcon color="success" />;
+      break;
+    case 'failure':
+      icon = <CloseIcon color="error" />;
+      break;
+    default:
+      icon = <CircularProgress size={24} />;
+      break;
+  }
+
+  return (
+    <ListItem>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={message} />
+    </ListItem>
+  );
+};
+
 const ConnectionTest = () => {
   const { data, error, isLoading } = useGetConnectionTestTokenQuery();
 
@@ -44,24 +78,9 @@ const ConnectionTest = () => {
               Results
             </Typography>
             <List>
-              <ListItem key="test1">
-                <ListItemIcon>
-                  <DoneIcon color="success" />
-                </ListItemIcon>
-                <ListItemText primary="Test 1" />
-              </ListItem>
-              <ListItem key="test2">
-                <ListItemIcon>
-                  <CloseIcon color="error" />
-                </ListItemIcon>
-                <ListItemText primary="Test 2" />
-              </ListItem>
-              <ListItem key="test3">
-                <ListItemIcon>
-                  <CircularProgress size={24} />
-                </ListItemIcon>
-                <ListItemText primary="Test 3" />
-              </ListItem>
+              <TestStatusItem key="test1" status="success" message="Test 1" />
+              <TestStatusItem key="test2" status="failure" message="Test 2" />
+              <TestStatusItem key="test3" status="pending" message="Test 3" />
             </List>
           </Box>
         </Box>
