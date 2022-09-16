@@ -228,13 +228,20 @@ const ConnectionTest = () => {
 
     if (audioTrackPublication) {
       await new Promise((resolve) => setTimeout(resolve, 100));
-      await new Promise((resolve) => {
-        room.once(RoomEvent.LocalTrackUnpublished, resolve);
-        room.localParticipant.unpublishTrack(
-          audioTrackPublication.track as LocalTrack,
-          true
-        );
-      });
+      try {
+        await new Promise((resolve, reject) => {
+          room.once(RoomEvent.LocalTrackUnpublished, resolve);
+          room.localParticipant.unpublishTrack(
+            audioTrackPublication.track as LocalTrack,
+            true
+          );
+          setTimeout(() => reject(new Error('Timed out')), 10000);
+        });
+      } catch (err) {
+        setTestPublishAudioStatus('failure');
+        setTestPublishAudioError('Timed out');
+        return;
+      }
     } else {
       setTestPublishAudioStatus('failure');
       return;
@@ -268,13 +275,20 @@ const ConnectionTest = () => {
 
     if (videoTrackPublication) {
       await new Promise((resolve) => setTimeout(resolve, 100));
-      await new Promise((resolve) => {
-        room.once(RoomEvent.LocalTrackUnpublished, resolve);
-        room.localParticipant.unpublishTrack(
-          videoTrackPublication.track as LocalTrack,
-          true
-        );
-      });
+      try {
+        await new Promise((resolve, reject) => {
+          room.once(RoomEvent.LocalTrackUnpublished, resolve);
+          room.localParticipant.unpublishTrack(
+            videoTrackPublication.track as LocalTrack,
+            true
+          );
+          setTimeout(() => reject(new Error('Timed out')), 10000);
+        });
+      } catch (err) {
+        setTestPublishVideoStatus('failure');
+        setTestPublishVideoError('Timed out');
+        return;
+      }
     } else {
       setTestPublishVideoStatus('failure');
       return;
@@ -282,21 +296,31 @@ const ConnectionTest = () => {
     setTestPublishVideoStatus('success');
 
     // reconnect
-    const onDisconnect = () => {
-      console.log(RoomEvent.Disconnected);
+    try {
+      await new Promise((resolve, reject) => {
+        const onDisconnect = () => {
+          console.log(RoomEvent.Disconnected);
+          setTestResumeConnectionStatus('failure');
+          setTestResumeConnectionError('could not reconnect');
+          resolve(null);
+        };
+        const onReconnected = () => {
+          console.log(RoomEvent.Reconnected);
+          setTestResumeConnectionStatus('success');
+          room.off(RoomEvent.Disconnected, onDisconnect);
+          resolve(null);
+        };
+        setTestResumeConnectionStatus('pending');
+        room.once(RoomEvent.Reconnected, onReconnected);
+        room.once(RoomEvent.Disconnected, onDisconnect);
+        room.simulateScenario('signal-reconnect');
+        setTimeout(() => reject(new Error('Timed out')), 10000);
+      });
+    } catch (err) {
       setTestResumeConnectionStatus('failure');
-      setTestResumeConnectionError('could not reconnect');
-    };
-    const onReconnected = () => {
-      console.log(RoomEvent.Reconnected);
-      setTestResumeConnectionStatus('success');
-      room.off(RoomEvent.Disconnected, onDisconnect);
-    };
-    setTestResumeConnectionStatus('pending');
-    room.once(RoomEvent.Reconnected, onReconnected);
-    room.once(RoomEvent.Disconnected, onDisconnect);
-
-    room.simulateScenario('signal-reconnect');
+      setTestResumeConnectionError('Timed out');
+      return;
+    }
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
