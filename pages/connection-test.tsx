@@ -180,21 +180,29 @@ const ConnectionTest = () => {
 
     // init room
     const room = new Room();
-    room.on(RoomEvent.SignalConnected, () => {
-      console.log(RoomEvent.SignalConnected);
-      setTestSignalConnectionStatus('success');
-      setTestWebRTCConnectionStatus('pending');
-    });
 
     // connect
-    const roomConnectOptions = {
+    const roomConnectOptions: RoomConnectOptions = {
       autoSubscribe: false,
       rtcConfig: {
         iceTransportPolicy: 'relay',
       },
     };
 
-    // todo: finsih this
+    try {
+      setTestConnectTURNStatus('pending');
+      await room.connect(ROOM_URL, token, roomConnectOptions);
+    } catch (err: unknown) {
+      setTestConnectTURNStatus('failure');
+      if (err instanceof LivekitError) {
+        setTestConnectTURNError(err.message);
+      } else {
+        console.log('unknown error:', err);
+        setTestConnectTURNError('unknown error, see console for details');
+      }
+      return;
+    }
+    setTestConnectTURNStatus('success');
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
