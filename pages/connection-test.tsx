@@ -217,7 +217,7 @@ const ConnectionTest = () => {
     <Container>
       <Paper>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Box>
+          <Box sx={{ p: 3 }}>
             <Typography variant="h3" component="h1">
               Connection Test
             </Typography>
@@ -232,7 +232,7 @@ const ConnectionTest = () => {
               Begin Test
             </Button>
           </Box>
-          <Box>
+          <Box sx={{ p: 3 }}>
             <Typography variant="h3" component="h1">
               Results
             </Typography>
