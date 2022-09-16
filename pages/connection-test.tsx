@@ -302,8 +302,12 @@ const ConnectionTest = () => {
   const runTests = useCallback(async () => {
     setTestsPending(true);
     resetTests();
-    await runPhase1();
-    await runPhase2();
+    try {
+      await runPhase1();
+      await runPhase2();
+    } catch (err) {
+      console.log('error running tests:', err);
+    }
     setTestsPending(false);
   }, [resetTests, runPhase1, runPhase2]);
 
