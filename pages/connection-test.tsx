@@ -227,13 +227,13 @@ const ConnectionTest = () => {
     }
 
     if (audioTrackPublication) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       await new Promise((resolve) => {
+        room.once(RoomEvent.LocalTrackUnpublished, resolve);
         room.localParticipant.unpublishTrack(
           audioTrackPublication.track as LocalTrack,
           true
         );
-        room.once(RoomEvent.LocalTrackUnpublished, resolve);
       });
     } else {
       setTestPublishAudioStatus('failure');
@@ -267,13 +267,13 @@ const ConnectionTest = () => {
     }
 
     if (videoTrackPublication) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       await new Promise((resolve) => {
+        room.once(RoomEvent.LocalTrackUnpublished, resolve);
         room.localParticipant.unpublishTrack(
           videoTrackPublication.track as LocalTrack,
           true
         );
-        room.once(RoomEvent.LocalTrackUnpublished, resolve);
       });
     } else {
       setTestPublishVideoStatus('failure');
@@ -295,7 +295,7 @@ const ConnectionTest = () => {
     setTestResumeConnectionStatus('pending');
     room.once(RoomEvent.Reconnected, onReconnected);
     room.once(RoomEvent.Disconnected, onDisconnect);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     room.simulateScenario('signal-reconnect');
   }, [data?.roomToken]);
 
