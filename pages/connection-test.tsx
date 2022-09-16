@@ -227,11 +227,14 @@ const ConnectionTest = () => {
     }
 
     if (audioTrackPublication) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      room.localParticipant.unpublishTrack(
-        audioTrackPublication.track as LocalTrack,
-        true
-      );
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => {
+        room.localParticipant.unpublishTrack(
+          audioTrackPublication.track as LocalTrack,
+          true
+        );
+        room.once(RoomEvent.LocalTrackUnpublished, resolve);
+      });
     } else {
       setTestPublishAudioStatus('failure');
       return;
@@ -264,11 +267,14 @@ const ConnectionTest = () => {
     }
 
     if (videoTrackPublication) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      room.localParticipant.unpublishTrack(
-        videoTrackPublication.track as LocalTrack,
-        true
-      );
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => {
+        room.localParticipant.unpublishTrack(
+          videoTrackPublication.track as LocalTrack,
+          true
+        );
+        room.once(RoomEvent.LocalTrackUnpublished, resolve);
+      });
     } else {
       setTestPublishVideoStatus('failure');
       return;
@@ -289,6 +295,7 @@ const ConnectionTest = () => {
     setTestResumeConnectionStatus('pending');
     room.once(RoomEvent.Reconnected, onReconnected);
     room.once(RoomEvent.Disconnected, onDisconnect);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     room.simulateScenario('signal-reconnect');
   }, [data?.roomToken]);
 
@@ -296,13 +303,13 @@ const ConnectionTest = () => {
     setTestsPending(true);
     resetTests();
     try {
-      await runPhase1();
+      // await runPhase1();
       await runPhase2();
     } catch (err) {
       console.log(err);
     }
     setTestsPending(false);
-  }, [resetTests, runPhase1, runPhase2]);
+  }, [resetTests, runPhase2]);
 
   return (
     <Container>
