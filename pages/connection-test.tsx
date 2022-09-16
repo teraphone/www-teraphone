@@ -26,7 +26,7 @@ import {
 } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 type TestStatus = 'waiting' | 'pending' | 'success' | 'failure';
 
@@ -166,16 +166,6 @@ const ConnectionTest = () => {
       return;
     }
     setTestWebRTCConnectionStatus('success');
-
-    // cleanup
-    if (room.state === 'connected') {
-      try {
-        await room.disconnect();
-      } catch (err: unknown) {
-        console.log('error disconnecting:', err);
-      }
-    }
-    return;
   }, [data?.roomToken]);
 
   const runPhase2 = useCallback(async () => {
@@ -293,6 +283,19 @@ const ConnectionTest = () => {
       return;
     }
     setTestPublishVideoStatus('success');
+
+    // reconnect
+    setTestResumeConnectionStatus('pending');
+    room.on(RoomEvent.Reconnected, () => {
+      console.log(RoomEvent.Reconnected);
+      setTestResumeConnectionStatus('success');
+    });
+    room.on(RoomEvent.Disconnected, () => {
+      console.log(RoomEvent.Disconnected);
+      setTestResumeConnectionStatus('failure');
+      setTestResumeConnectionError('could not reconnect');
+    });
+    room.simulateScenario('signal-reconnect');
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
@@ -311,9 +314,11 @@ const ConnectionTest = () => {
             <Typography variant="h3" component="h1">
               Connection Test
             </Typography>
+            <br />
             <Typography variant="body1">
               Test your connection to Teraphone's servers.
             </Typography>
+            <br />
             <Button
               variant="contained"
               disabled={!data?.roomToken || testsPending}
@@ -362,12 +367,6 @@ const ConnectionTest = () => {
                 status={testResumeConnectionStatus}
                 message="Resuming connection after interruption"
                 error={testResumeConnectionError}
-              />
-              <TestStatusItem
-                key="test-x"
-                status="failure"
-                message="Test that fails"
-                error="This is the error message"
               />
             </List>
           </Box>
