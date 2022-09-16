@@ -1,5 +1,7 @@
 import { useGetConnectionTestTokenQuery } from '../src/redux/api';
 import {
+  setLogLevel,
+  LogLevel,
   createLocalAudioTrack,
   createLocalVideoTrack,
   LivekitError,
@@ -39,6 +41,8 @@ interface TestItemProps {
 }
 
 const ROOM_URL = 'wss://sfu-demo.teraphone.app';
+
+setLogLevel(LogLevel.debug);
 
 const TestStatusItem = (props: TestItemProps) => {
   const { status, message, error } = props;
@@ -138,6 +142,7 @@ const ConnectionTest = () => {
       setTestSignalConnectionStatus('pending');
       await room.connect(ROOM_URL, token, roomConnectOptions);
     } catch (err) {
+      console.log(err);
       if (err instanceof ConnectionError) {
         if (err.message.includes('signal')) {
           setTestSignalConnectionStatus('failure');
