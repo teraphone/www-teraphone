@@ -1,10 +1,15 @@
 import { useGetConnectionTestTokenQuery } from '../src/redux/api';
 import {
+  createLocalAudioTrack,
+  createLocalVideoTrack,
   LivekitError,
+  LocalAudioTrack,
+  LocalVideoTrack,
+  LocalTrack,
+  LocalTrackPublication,
   Room,
   RoomConnectOptions,
   RoomEvent,
-  RoomOptions,
 } from 'livekit-client';
 import {
   Box,
@@ -203,6 +208,42 @@ const ConnectionTest = () => {
       return;
     }
     setTestConnectTURNStatus('success');
+
+    // publish audio
+    setTestPublishAudioStatus('pending');
+    let audioTrack: LocalAudioTrack;
+    let audioTrackPublication: LocalTrackPublication;
+    try {
+      audioTrack = await createLocalAudioTrack();
+      audioTrackPublication = await room.localParticipant.publishTrack(
+        audioTrack
+      );
+    } catch (err: unknown) {
+      setTestPublishAudioStatus('failure');
+      if (err instanceof LivekitError) {
+        setTestPublishAudioError(err.message);
+      } else {
+        console.log('unknown error:', err);
+        setTestPublishAudioError('unknown error, see console for details');
+      }
+      return;
+    }
+
+    if (audioTrack) {
+      try {
+        setTimeout(async () => {
+          room.localParticipant.unpublishTrack(audioTrack, true);
+        }, 100);
+      } catch (err: unknown) {
+        console.log('error unpublishing:', err);
+      }
+    } else {
+      setTestPublishAudioStatus('failure');
+      return;
+    }
+    setTestPublishAudioStatus('success');
+
+    room.localParticipant.publishTrack(audioTrack);
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
