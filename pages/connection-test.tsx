@@ -11,6 +11,8 @@ import {
   Room,
   RoomConnectOptions,
   RoomEvent,
+  ConnectionError,
+  UnsupportedServer,
 } from 'livekit-client';
 import {
   Box,
@@ -131,31 +133,26 @@ const ConnectionTest = () => {
     try {
       setTestSignalConnectionStatus('pending');
       await room.connect(ROOM_URL, token, roomConnectOptions);
-    } catch (err: unknown) {
-      if (err instanceof LivekitError) {
-        switch (err.code) {
-          case 1: // ConnectionError
-            if (err.message.includes('signal')) {
-              setTestSignalConnectionStatus('failure');
-              setTestSignalConnectionError(err.message);
-            } else if (err.message.includes('timeout')) {
-              setTestWebRTCConnectionStatus('failure');
-              setTestWebRTCConnectionError(err.message);
-            } else if (err.message.includes('cancelled')) {
-              setTestWebRTCConnectionStatus('failure');
-              setTestWebRTCConnectionError(err.message);
-            }
-            break;
-          case 10: // UnsupportedServer
-            setTestSignalConnectionStatus('failure');
-            setTestSignalConnectionError(err.message);
-            break;
-          default:
-            setTestSignalConnectionStatus('failure');
-            setTestSignalConnectionError(err.message);
-            setTestWebRTCConnectionStatus('failure');
-            setTestWebRTCConnectionError(err.message);
+    } catch (err) {
+      if (err instanceof ConnectionError) {
+        if (err.message.includes('signal')) {
+          setTestSignalConnectionStatus('failure');
+          setTestSignalConnectionError(err.message);
+        } else if (err.message.includes('timeout')) {
+          setTestWebRTCConnectionStatus('failure');
+          setTestWebRTCConnectionError(err.message);
+        } else if (err.message.includes('cancelled')) {
+          setTestWebRTCConnectionStatus('failure');
+          setTestWebRTCConnectionError(err.message);
         }
+      } else if (err instanceof UnsupportedServer) {
+        setTestSignalConnectionStatus('failure');
+        setTestSignalConnectionError(err.message);
+      } else if (err instanceof LivekitError) {
+        setTestSignalConnectionStatus('failure');
+        setTestSignalConnectionError(err.message);
+        setTestWebRTCConnectionStatus('failure');
+        setTestWebRTCConnectionError(err.message);
       } else {
         console.log('unknown error:', err);
         setTestSignalConnectionStatus('failure');
@@ -188,7 +185,7 @@ const ConnectionTest = () => {
     try {
       setTestConnectTURNStatus('pending');
       await room.connect(ROOM_URL, token, roomConnectOptions);
-    } catch (err: unknown) {
+    } catch (err) {
       setTestConnectTURNStatus('failure');
       if (err instanceof LivekitError) {
         setTestConnectTURNError(err.message);
