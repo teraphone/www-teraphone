@@ -1,6 +1,6 @@
 import { useGetConnectionTestTokenQuery } from '../src/redux/api';
 import {
-  ConnectionError,
+  LivekitError,
   Room,
   RoomConnectOptions,
   RoomEvent,
@@ -30,7 +30,7 @@ interface TestItemProps {
   error: string;
 }
 
-const ROOM_URL = 'wss://sfu-demo2.teraphone.app';
+const ROOM_URL = 'wss://sfu-demo.teraphone.app';
 
 const TestStatusItem = (props: TestItemProps) => {
   const { status, message, error } = props;
@@ -126,26 +126,76 @@ const ConnectionTest = () => {
       setTestSignalConnectionStatus('pending');
       await room.connect(ROOM_URL, token, roomConnectOptions);
     } catch (err: unknown) {
-      if (err instanceof ConnectionError) {
-        setTestSignalConnectionStatus('failure');
-        setTestSignalConnectionError(err.message);
+      if (err instanceof LivekitError) {
+        switch (err.code) {
+          case 1: // ConnectionError
+            if (err.message.includes('signal')) {
+              setTestSignalConnectionStatus('failure');
+              setTestSignalConnectionError(err.message);
+            } else if (err.message.includes('timeout')) {
+              setTestWebRTCConnectionStatus('failure');
+              setTestWebRTCConnectionError(err.message);
+            } else if (err.message.includes('cancelled')) {
+              setTestWebRTCConnectionStatus('failure');
+              setTestWebRTCConnectionError(err.message);
+            }
+            break;
+          case 10: // UnsupportedServer
+            setTestSignalConnectionStatus('failure');
+            setTestSignalConnectionError(err.message);
+            break;
+          default:
+            setTestSignalConnectionStatus('failure');
+            setTestSignalConnectionError(err.message);
+            setTestWebRTCConnectionStatus('failure');
+            setTestWebRTCConnectionError(err.message);
+        }
       } else {
-        console.log(err);
+        console.log('unknown error:', err);
+        setTestSignalConnectionStatus('failure');
+        setTestSignalConnectionError('unknown error, see console for details');
+        setTestWebRTCConnectionStatus('failure');
+        setTestWebRTCConnectionError('unknown error, see console for details');
       }
       return;
     }
     setTestWebRTCConnectionStatus('success');
 
-    // test signal connection
-    // test webrtc connection
+    // cleanup
+    if (room.state === 'connected') {
+      try {
+        await room.disconnect();
+      } catch (err: unknown) {
+        console.log('error disconnecting:', err);
+      }
+    }
+    return;
   }, [data?.roomToken]);
 
   const runPhase2 = useCallback(async () => {
-    // test connect to TURN
-    // test publish audio
-    // test publish video
-    // test resume connection
-  }, []);
+    const token = data?.roomToken;
+    if (!token) {
+      return;
+    }
+
+    // init room
+    const room = new Room();
+    room.on(RoomEvent.SignalConnected, () => {
+      console.log(RoomEvent.SignalConnected);
+      setTestSignalConnectionStatus('success');
+      setTestWebRTCConnectionStatus('pending');
+    });
+
+    // connect
+    const roomConnectOptions = {
+      autoSubscribe: false,
+      rtcConfig: {
+        iceTransportPolicy: 'relay',
+      },
+    };
+
+    // todo: finsih this
+  }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
     setTestsPending(true);
