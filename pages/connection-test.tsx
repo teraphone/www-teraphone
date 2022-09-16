@@ -7,6 +7,7 @@ import {
   LocalVideoTrack,
   LocalTrack,
   LocalTrackPublication,
+  MediaDeviceFailure,
   Room,
   RoomConnectOptions,
   RoomEvent,
@@ -223,8 +224,13 @@ const ConnectionTest = () => {
       if (err instanceof LivekitError) {
         setTestPublishAudioError(err.message);
       } else {
-        console.log('unknown error:', err);
-        setTestPublishAudioError('unknown error, see console for details');
+        const msg = MediaDeviceFailure.getFailure(err);
+        if (msg) {
+          setTestPublishAudioError(msg);
+        } else {
+          console.log('unknown error:', err);
+          setTestPublishAudioError('unknown error, see console for details');
+        }
       }
       return;
     }
@@ -260,8 +266,13 @@ const ConnectionTest = () => {
       if (err instanceof LivekitError) {
         setTestPublishVideoError(err.message);
       } else {
-        console.log('unknown error:', err);
-        setTestPublishVideoError('unknown error, see console for details');
+        const msg = MediaDeviceFailure.getFailure(err);
+        if (msg) {
+          setTestPublishVideoError(msg);
+        } else {
+          console.log('unknown error:', err);
+          setTestPublishVideoError('unknown error, see console for details');
+        }
       }
       return;
     }
