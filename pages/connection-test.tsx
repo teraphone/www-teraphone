@@ -303,13 +303,13 @@ const ConnectionTest = () => {
     setTestsPending(true);
     resetTests();
     try {
-      // await runPhase1();
+      await runPhase1();
       await runPhase2();
     } catch (err) {
       console.log(err);
     }
     setTestsPending(false);
-  }, [resetTests, runPhase2]);
+  }, [resetTests, runPhase1, runPhase2]);
 
   return (
     <Container>
