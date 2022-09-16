@@ -229,10 +229,13 @@ const ConnectionTest = () => {
       return;
     }
 
-    if (audioTrack) {
+    if (audioTrackPublication) {
       try {
         setTimeout(async () => {
-          room.localParticipant.unpublishTrack(audioTrack, true);
+          room.localParticipant.unpublishTrack(
+            audioTrackPublication.track as LocalTrack,
+            true
+          );
         }, 100);
       } catch (err: unknown) {
         console.log('error unpublishing:', err);
@@ -243,7 +246,42 @@ const ConnectionTest = () => {
     }
     setTestPublishAudioStatus('success');
 
-    room.localParticipant.publishTrack(audioTrack);
+    // publish video
+    setTestPublishVideoStatus('pending');
+    let videoTrack: LocalVideoTrack;
+    let videoTrackPublication: LocalTrackPublication;
+    try {
+      videoTrack = await createLocalVideoTrack();
+      videoTrackPublication = await room.localParticipant.publishTrack(
+        videoTrack
+      );
+    } catch (err: unknown) {
+      setTestPublishVideoStatus('failure');
+      if (err instanceof LivekitError) {
+        setTestPublishVideoError(err.message);
+      } else {
+        console.log('unknown error:', err);
+        setTestPublishVideoError('unknown error, see console for details');
+      }
+      return;
+    }
+
+    if (videoTrackPublication) {
+      try {
+        setTimeout(async () => {
+          room.localParticipant.unpublishTrack(
+            videoTrackPublication.track as LocalTrack,
+            true
+          );
+        }, 100);
+      } catch (err: unknown) {
+        console.log('error unpublishing:', err);
+      }
+    } else {
+      setTestPublishVideoStatus('failure');
+      return;
+    }
+    setTestPublishVideoStatus('success');
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
