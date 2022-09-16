@@ -276,16 +276,19 @@ const ConnectionTest = () => {
     setTestPublishVideoStatus('success');
 
     // reconnect
-    setTestResumeConnectionStatus('pending');
-    room.once(RoomEvent.Reconnected, () => {
-      console.log(RoomEvent.Reconnected);
-      setTestResumeConnectionStatus('success');
-    });
-    room.once(RoomEvent.Disconnected, () => {
+    const onDisconnect = () => {
       console.log(RoomEvent.Disconnected);
       setTestResumeConnectionStatus('failure');
       setTestResumeConnectionError('could not reconnect');
-    });
+    };
+    const onReconnected = () => {
+      console.log(RoomEvent.Reconnected);
+      setTestResumeConnectionStatus('success');
+      room.off(RoomEvent.Disconnected, onDisconnect);
+    };
+    setTestResumeConnectionStatus('pending');
+    room.once(RoomEvent.Reconnected, onReconnected);
+    room.once(RoomEvent.Disconnected, onDisconnect);
     room.simulateScenario('signal-reconnect');
   }, [data?.roomToken]);
 
