@@ -16,7 +16,6 @@ import {
 } from 'livekit-client';
 import {
   Box,
-  Button,
   CircularProgress,
   Container,
   List,
@@ -29,6 +28,7 @@ import {
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import { useCallback, useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 type TestStatus = 'waiting' | 'pending' | 'success' | 'failure';
 
@@ -62,7 +62,11 @@ const TestStatusItem = (props: TestItemProps) => {
   return (
     <ListItem>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={message} secondary={error} />
+      <ListItemText
+        primary={message}
+        secondary={error}
+        secondaryTypographyProps={{ color: 'error' }}
+      />
     </ListItem>
   );
 };
@@ -306,7 +310,10 @@ const ConnectionTest = () => {
   return (
     <Container>
       <Paper>
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box
+          sx={{ display: 'flex' }}
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
           <Box sx={{ p: 3 }}>
             <Typography variant="h3" component="h1">
               Connection Test
@@ -316,13 +323,14 @@ const ConnectionTest = () => {
               Test your connection to Teraphone's servers.
             </Typography>
             <br />
-            <Button
+            <LoadingButton
               variant="contained"
               disabled={!data?.roomToken || testsPending}
               onClick={runTests}
+              loading={!data?.roomToken || testsPending}
             >
               Begin Test
-            </Button>
+            </LoadingButton>
           </Box>
           <Box sx={{ p: 3 }}>
             <Typography variant="h3" component="h1">
