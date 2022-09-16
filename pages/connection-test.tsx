@@ -227,16 +227,11 @@ const ConnectionTest = () => {
     }
 
     if (audioTrackPublication) {
-      try {
-        setTimeout(async () => {
-          room.localParticipant.unpublishTrack(
-            audioTrackPublication.track as LocalTrack,
-            true
-          );
-        }, 100);
-      } catch (err: unknown) {
-        console.log('error unpublishing:', err);
-      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      room.localParticipant.unpublishTrack(
+        audioTrackPublication.track as LocalTrack,
+        true
+      );
     } else {
       setTestPublishAudioStatus('failure');
       return;
@@ -269,16 +264,11 @@ const ConnectionTest = () => {
     }
 
     if (videoTrackPublication) {
-      try {
-        setTimeout(async () => {
-          room.localParticipant.unpublishTrack(
-            videoTrackPublication.track as LocalTrack,
-            true
-          );
-        }, 100);
-      } catch (err: unknown) {
-        console.log('error unpublishing:', err);
-      }
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      room.localParticipant.unpublishTrack(
+        videoTrackPublication.track as LocalTrack,
+        true
+      );
     } else {
       setTestPublishVideoStatus('failure');
       return;
@@ -287,11 +277,11 @@ const ConnectionTest = () => {
 
     // reconnect
     setTestResumeConnectionStatus('pending');
-    room.on(RoomEvent.Reconnected, () => {
+    room.once(RoomEvent.Reconnected, () => {
       console.log(RoomEvent.Reconnected);
       setTestResumeConnectionStatus('success');
     });
-    room.on(RoomEvent.Disconnected, () => {
+    room.once(RoomEvent.Disconnected, () => {
       console.log(RoomEvent.Disconnected);
       setTestResumeConnectionStatus('failure');
       setTestResumeConnectionError('could not reconnect');
@@ -306,7 +296,7 @@ const ConnectionTest = () => {
       await runPhase1();
       await runPhase2();
     } catch (err) {
-      console.log('error running tests:', err);
+      console.log(err);
     }
     setTestsPending(false);
   }, [resetTests, runPhase1, runPhase2]);
