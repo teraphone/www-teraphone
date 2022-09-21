@@ -13,6 +13,8 @@ import {
 } from '@azure/msal-browser';
 import { CustomNavigationClient } from '../src/ms-auth/NavigationClient';
 import { msalConfig } from '../src/ms-auth/authConfig';
+import { store } from '../src/redux/store';
+import { Provider } from 'react-redux';
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -24,7 +26,6 @@ if (accounts.length > 0) {
 msalInstance.addEventCallback((event: EventMessage) => {
   if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
     const payload = event.payload as AuthenticationResult;
-    console.log('got payload:', payload);
     const account = payload.account;
     msalInstance.setActiveAccount(account);
   }
@@ -41,14 +42,16 @@ export default function MyApp(props: MyAppProps) {
   msalInstance.setNavigationClient(navigationClient);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles styles={globalStyles} />
-      <CssBaseline />
-      <MsalProvider instance={msalInstance}>
-        <AppChrome>
-          <Component {...pageProps} />
-        </AppChrome>
-      </MsalProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles styles={globalStyles} />
+        <CssBaseline />
+        <MsalProvider instance={msalInstance}>
+          <AppChrome>
+            <Component {...pageProps} />
+          </AppChrome>
+        </MsalProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
