@@ -15,6 +15,7 @@ import {
   RoomEvent,
   ConnectionError,
   UnsupportedServer,
+  ConnectionState,
 } from 'livekit-client';
 import {
   Box,
@@ -172,6 +173,24 @@ const ConnectionTest = () => {
       return;
     }
     setTestWebRTCConnectionStatus('success');
+
+    // disconnect
+    if (room.state === ConnectionState.Connected) {
+      try {
+        await new Promise((resolve, reject) => {
+          const onDisconnect = () => {
+            console.log(RoomEvent.Disconnected);
+            resolve(null);
+          };
+          room.once(RoomEvent.Disconnected, onDisconnect);
+          setTimeout(() => reject(new Error('Disconnect timed out')), 10000);
+          room.disconnect(true);
+        });
+      } catch (err) {
+        console.log('Could not disconnect cleanly:', err);
+      }
+    }
+    return;
   }, [data?.roomToken]);
 
   const runPhase2 = useCallback(async () => {
@@ -326,6 +345,24 @@ const ConnectionTest = () => {
       setTestResumeConnectionError('Timed out');
       return;
     }
+
+    // disconnect
+    if (room.state === ConnectionState.Connected) {
+      try {
+        await new Promise((resolve, reject) => {
+          const onDisconnect = () => {
+            console.log(RoomEvent.Disconnected);
+            resolve(null);
+          };
+          room.once(RoomEvent.Disconnected, onDisconnect);
+          setTimeout(() => reject(new Error('Disconnect timed out')), 10000);
+          room.disconnect(true);
+        });
+      } catch (err) {
+        console.log('Could not disconnect cleanly:', err);
+      }
+    }
+    return;
   }, [data?.roomToken]);
 
   const runTests = useCallback(async () => {
@@ -333,6 +370,7 @@ const ConnectionTest = () => {
     resetTests();
     try {
       await runPhase1();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       await runPhase2();
     } catch (err) {
       console.log(err);
