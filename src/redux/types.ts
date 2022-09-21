@@ -19,3 +19,7 @@ export type AuthUserInfo = {
   name: string;
   companyName: string;
 };
+
+export type ConnectionTestToken = {
+  roomToken: string;
+};
