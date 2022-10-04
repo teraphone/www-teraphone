@@ -16,6 +16,10 @@ export default function IndexPage() {
     <>
       <Head>
         <title>TERAPHONE</title>
+        <meta
+          name="description"
+          content="Reclaim the spontaneity of in-person collaboration with voice rooms for Microsoft Teams."
+        />
       </Head>
       {debug && <Sitemap />}
       <Grid
