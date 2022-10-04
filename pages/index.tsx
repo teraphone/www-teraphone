@@ -159,9 +159,12 @@ export default function IndexPage() {
             flexDirection="column"
             textAlign="center"
           >
-            <Typography mb={4} sx={{ color: 'text.secondary' }}>
-              Coming Soon to the Microsoft AppSource Marketplace!
-            </Typography>
+            <Link
+              href="https://appsource.microsoft.com/en-US/product/web-apps/teraphonellc1657754233816.get-teraphone"
+              mb={4}
+            >
+              Find us on the Microsoft AppSource Marketplace!
+            </Link>
             <Box>
               <img
                 alt="Microsoft logo"
