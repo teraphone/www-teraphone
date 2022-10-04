@@ -2,9 +2,6 @@ import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Link from '../components/Link';
-import Sitemap from '../components/Sitemap';
-
-const debug = false;
 
 export default function IndexPage() {
   const [submitting, setSubmitting] = useState(false);
@@ -21,7 +18,6 @@ export default function IndexPage() {
           content="Reclaim the spontaneity of in-person collaboration with voice rooms for Microsoft Teams."
         />
       </Head>
-      {debug && <Sitemap />}
       <Grid
         container
         direction={{ xs: 'column-reverse', md: 'row' }}
