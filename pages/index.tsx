@@ -1,6 +1,13 @@
 import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Link from '../components/Link';
 
 export default function IndexPage() {
@@ -18,11 +25,13 @@ export default function IndexPage() {
           content="Reclaim the spontaneity of in-person collaboration with voice rooms for Microsoft Teams."
         />
       </Head>
+
+      {/* -------------------- Begin Hero -------------------- */}
       <Grid
         container
         direction={{ xs: 'column-reverse', md: 'row' }}
         justifyContent="center"
-        spacing={4}
+        spacing={2}
       >
         <Grid item xs={12} sm={6} alignSelf="center">
           <img
@@ -50,7 +59,7 @@ export default function IndexPage() {
           <Typography component="h2" variant="body1" sx={{ fontSize: 20 }}>
             Reclaim the spontaneity of{' '}
             <span style={{ whiteSpace: 'nowrap' }}>in-person</span>{' '}
-            collaboration
+            collaboration!
           </Typography>
           <Box my={4}>
             <form
@@ -143,6 +152,60 @@ export default function IndexPage() {
           </Box>
         </Grid>
       </Grid>
+      {/* -------------------- End Hero -------------------- */}
+
+      {/* -------------------- Begin Intro -------------------- */}
+      <Container>
+        <Box sx={{ p: 3 }}>
+          <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
+            Introducing Teraphone
+          </Typography>
+          <br />
+          <Typography component="p" variant="body1">
+            Teraphone provides persistent voice rooms, better presence signaling
+            and improved screen sharing; allowing coworkers to collaborate
+            without the friction of setting up meetings.
+          </Typography>
+          <br />
+          <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
+            Teraphone Benefits
+          </Typography>
+          <br />
+          <Typography component="h4" variant="h4">
+            Break down silos
+          </Typography>
+          <Typography component="p" variant="body1">
+            Shared rooms encourage participation. Conversations are more
+            inviting when teammates know that a room is public.
+          </Typography>
+          <br />
+          <Typography component="h4" variant="h4">
+            Encourage tribal knowledge circulation
+          </Typography>
+          <Typography component="p" variant="body1">
+            Room persistence reduces coordination friction for real-time
+            communication.
+          </Typography>
+          <br />
+          <Typography component="h4" variant="h4">
+            Improve the collaboration experience
+          </Typography>
+          <Typography component="p" variant="body1">
+            Better screen sharing capabilities reduce presentation interruptions
+            and visual fatigue.
+          </Typography>
+          <br />
+          <Typography component="h4" variant="h4">
+            Reduce social isolation
+          </Typography>
+          <Typography component="p" variant="body1">
+            Provide an inclusive environment for coworkers who prefer real-time
+            conversations.
+          </Typography>
+        </Box>
+      </Container>
+      {/* -------------------- End Intro -------------------- */}
+
       <Box mt={8}>
         <Box
           alignItems="center"
