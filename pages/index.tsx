@@ -24,127 +24,126 @@ export default function IndexPage() {
         justifyContent="center"
         spacing={4}
       >
-        <Grid item xs={12} sm={4} alignSelf="center">
+        <Grid item xs={12} sm={6} alignSelf="center">
           <img
-            src="/images/teraphone-screenshot.png"
+            src="/images/teraphone-app-screenshot-1055x720.png"
             alt="Teraphone screenshot"
-            height="1424"
-            width="1372"
+            height="720"
+            width="1055"
             style={{
               height: 'auto',
-              maxWidth: '500px',
+              maxWidth: '1280px',
               position: 'relative',
               top: '10px',
               width: '100%',
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={8} alignSelf={{ xs: 'start', md: 'center' }}>
+        <Grid item xs={12} sm={6} alignSelf={{ xs: 'center', md: 'center' }}>
           <Box mb={4}>
-            <Typography component="h2" variant="h1" sx={{ fontSize: 56 }}>
+            <Typography component="h1" variant="h1" sx={{ fontSize: 48 }}>
               Voice rooms
-            </Typography>
-            <Typography component="h2" variant="h1">
-              <span style={{ fontSize: 48, fontWeight: 'normal' }}>
-                for Microsoft Teams
-              </span>
+              <br />
+              for Microsoft Teams
             </Typography>
           </Box>
-          <Typography component="h3" variant="body1" sx={{ fontSize: 32 }}>
+          <Typography component="h2" variant="body1" sx={{ fontSize: 20 }}>
             Reclaim the spontaneity of{' '}
             <span style={{ whiteSpace: 'nowrap' }}>in-person</span>{' '}
             collaboration
           </Typography>
+          <Box my={4}>
+            <form
+              id="signup"
+              noValidate
+              onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
+                event.preventDefault();
+                setError(false);
+                setValidationError(false);
+                setSuccess(false);
+
+                const form = event.currentTarget as HTMLFormElement;
+                const isValid = form.checkValidity();
+                if (!isValid) {
+                  setValidationError(true);
+                  return;
+                }
+
+                const formFields = (event.target as HTMLFormElement).elements;
+                const email = (
+                  formFields.namedItem('email') as HTMLInputElement
+                )?.value;
+
+                if (!email) {
+                  setError(true);
+                  setSuccess(false);
+                  return;
+                }
+
+                try {
+                  setSubmitting(true);
+                  await fetch(
+                    'https://api-dev.teraphone.app/v1/public/email-signup',
+                    {
+                      body: JSON.stringify({ email }),
+                      headers: { 'Content-Type': 'application/json' },
+                      method: 'POST',
+                    }
+                  );
+                  setSuccess(true);
+                } catch (error) {
+                  setError(true);
+                }
+                setSubmitting(false);
+              }}
+            >
+              <Grid container justifyContent="left" spacing={1}>
+                <Grid item>
+                  <TextField
+                    color={success ? 'success' : 'primary'}
+                    error={error || validationError}
+                    FormHelperTextProps={{
+                      sx: {
+                        textAlign: 'center',
+                        color: success ? 'success.main' : 'text.secondary',
+                      },
+                    }}
+                    fullWidth
+                    helperText={
+                      (validationError &&
+                        'Please enter a valid email address') ||
+                      (error && 'There was an error submitting your email') ||
+                      (success && 'Thanks for signing up!') ||
+                      "We'll never share your email"
+                    }
+                    InputProps={{ sx: { textAlign: 'center' } }}
+                    inputProps={{ pattern: '[^@]+@[^@]+\\.[^@]+' }}
+                    label="Email address"
+                    name="email"
+                    onChange={() => setValidationError(false)}
+                    required
+                    size="small"
+                    sx={{ backgroundColor: 'white', width: '260px' }}
+                    type="email"
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item>
+                  <Button
+                    color="success"
+                    disabled={submitting}
+                    type="submit"
+                    variant="contained"
+                  >
+                    Request early access
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
         </Grid>
       </Grid>
       <Box mt={8}>
-        <Box my={8}>
-          <form
-            id="signup"
-            noValidate
-            onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
-              event.preventDefault();
-              setError(false);
-              setValidationError(false);
-              setSuccess(false);
-
-              const form = event.currentTarget as HTMLFormElement;
-              const isValid = form.checkValidity();
-              if (!isValid) {
-                setValidationError(true);
-                return;
-              }
-
-              const formFields = (event.target as HTMLFormElement).elements;
-              const email = (formFields.namedItem('email') as HTMLInputElement)
-                ?.value;
-
-              if (!email) {
-                setError(true);
-                setSuccess(false);
-                return;
-              }
-
-              try {
-                setSubmitting(true);
-                await fetch(
-                  'https://api-dev.teraphone.app/v1/public/email-signup',
-                  {
-                    body: JSON.stringify({ email }),
-                    headers: { 'Content-Type': 'application/json' },
-                    method: 'POST',
-                  }
-                );
-                setSuccess(true);
-              } catch (error) {
-                setError(true);
-              }
-              setSubmitting(false);
-            }}
-          >
-            <Grid container justifyContent="center" spacing={1}>
-              <Grid item>
-                <TextField
-                  color={success ? 'success' : 'primary'}
-                  error={error || validationError}
-                  FormHelperTextProps={{
-                    sx: {
-                      textAlign: 'center',
-                      color: success ? 'success.main' : 'text.secondary',
-                    },
-                  }}
-                  fullWidth
-                  helperText={
-                    (validationError && 'Please enter a valid email address') ||
-                    (error && 'There was an error submitting your email') ||
-                    (success && 'Thanks for signing up!') ||
-                    "We'll never share your email"
-                  }
-                  InputProps={{ sx: { textAlign: 'center' } }}
-                  inputProps={{ pattern: '[^@]+@[^@]+\\.[^@]+' }}
-                  label="Email address"
-                  name="email"
-                  onChange={() => setValidationError(false)}
-                  required
-                  size="small"
-                  sx={{ backgroundColor: 'white', width: '260px' }}
-                  type="email"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  color="success"
-                  disabled={submitting}
-                  type="submit"
-                  variant="contained"
-                >
-                  Request early access
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
         <Box
           alignItems="center"
           display="flex"
