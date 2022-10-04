@@ -1,0 +1,8 @@
+# Block all crawlers for /login
+User-agent: *
+Disallow: /login
+Disallow: /subscriptions/
+
+# Allow all crawlers
+User-agent: *
+Allow: /
