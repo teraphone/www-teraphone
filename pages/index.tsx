@@ -10,6 +10,26 @@ import {
 } from '@mui/material';
 import Link from '../components/Link';
 
+interface StyledListItem {
+  key: string;
+  primaryText: string;
+  secondaryText: string;
+  iconPath: string;
+}
+
+interface StyledSectionProps {
+  headline: string;
+  subheadline: string;
+  listItems: StyledListItem[];
+  videoPath: string;
+}
+
+const StyledSection = (props: StyledSectionProps) => {
+  const { headline, subheadline, listItems, videoPath } = props;
+  // todo: finish this
+  return null;
+};
+
 export default function IndexPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
