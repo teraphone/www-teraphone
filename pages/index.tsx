@@ -10,24 +10,61 @@ import {
 } from '@mui/material';
 import Link from '../components/Link';
 
-interface StyledListItem {
-  key: string;
+interface StyledListItemProps {
+  key: number | string;
   primaryText: string;
   secondaryText: string;
   iconPath: string;
 }
 
+const StyledListItem = (props: StyledListItemProps) => {
+  const { key, primaryText, secondaryText, iconPath } = props;
+  return (
+    <Box key={key} sx={{ display: 'flex', flexDirection: 'row', py: 4 }}>
+      {iconPath && (
+        <Box sx={{ pr: 2 }}>
+          <img height="50" src={iconPath} />
+        </Box>
+      )}
+      <Box>
+        <Typography variant="h4">{primaryText}</Typography>
+        <Typography variant="body1">{secondaryText}</Typography>
+      </Box>
+    </Box>
+  );
+};
+
 interface StyledSectionProps {
   headline: string;
-  subheadline: string;
-  listItems: StyledListItem[];
-  videoPath: string;
+  subheadline?: string;
+  listItems?: StyledListItemProps[];
+  videoPath?: string;
 }
 
 const StyledSection = (props: StyledSectionProps) => {
-  const { headline, subheadline, listItems, videoPath } = props;
+  const { headline, subheadline, listItems } = props;
   // todo: finish this
-  return null;
+  return (
+    <Container sx={{ py: 3 }}>
+      <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
+        {headline}
+      </Typography>
+      <br />
+      {subheadline && (
+        <Typography component="p" variant="body1">
+          {subheadline}
+        </Typography>
+      )}
+      <br />
+      {listItems && (
+        <Box>
+          {listItems.map((item) => (
+            <StyledListItem {...item} />
+          ))}
+        </Box>
+      )}
+    </Container>
+  );
 };
 
 export default function IndexPage() {
@@ -35,6 +72,43 @@ export default function IndexPage() {
   const [error, setError] = useState(false);
   const [validationError, setValidationError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const benefitsSection = {
+    headline: 'Welcome to the future of work',
+    subheadline:
+      'Teraphone provides persistent voice rooms, better presence signaling and improved screen sharing; allowing coworkers to collaborate without the friction of setting up meetings.',
+    listItems: [
+      {
+        key: 1,
+        primaryText: 'Break down silos',
+        secondaryText:
+          'Shared rooms encourage participation. Conversations are more inviting when teammates know that a room is public.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 2,
+        primaryText: 'Encourage tribal knowledge circulation',
+        secondaryText:
+          'Room persistence reduces coordination friction for real-time communication.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 3,
+        primaryText: 'Improve the collaboration experience',
+        secondaryText:
+          'Better screen sharing capabilities reduce presentation interruptions and visual fatigue.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 4,
+        primaryText: 'Reduce social isolation',
+        secondaryText:
+          'Provide an inclusive environment for coworkers who prefer real-time conversations.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+    ],
+    videoPath: '',
+  };
 
   return (
     <>
@@ -52,6 +126,7 @@ export default function IndexPage() {
         direction={{ xs: 'column-reverse', md: 'row' }}
         justifyContent="center"
         spacing={2}
+        py={4}
       >
         <Grid item xs={12} sm={6} alignSelf="center">
           <img
@@ -174,57 +249,7 @@ export default function IndexPage() {
       </Grid>
       {/* -------------------- End Hero -------------------- */}
 
-      {/* -------------------- Begin Intro -------------------- */}
-      <Container>
-        <Box sx={{ p: 3 }}>
-          <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
-            Introducing Teraphone
-          </Typography>
-          <br />
-          <Typography component="p" variant="body1">
-            Teraphone provides persistent voice rooms, better presence signaling
-            and improved screen sharing; allowing coworkers to collaborate
-            without the friction of setting up meetings.
-          </Typography>
-          <br />
-          <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
-            Teraphone Benefits
-          </Typography>
-          <br />
-          <Typography component="h4" variant="h4">
-            Break down silos
-          </Typography>
-          <Typography component="p" variant="body1">
-            Shared rooms encourage participation. Conversations are more
-            inviting when teammates know that a room is public.
-          </Typography>
-          <br />
-          <Typography component="h4" variant="h4">
-            Encourage tribal knowledge circulation
-          </Typography>
-          <Typography component="p" variant="body1">
-            Room persistence reduces coordination friction for real-time
-            communication.
-          </Typography>
-          <br />
-          <Typography component="h4" variant="h4">
-            Improve the collaboration experience
-          </Typography>
-          <Typography component="p" variant="body1">
-            Better screen sharing capabilities reduce presentation interruptions
-            and visual fatigue.
-          </Typography>
-          <br />
-          <Typography component="h4" variant="h4">
-            Reduce social isolation
-          </Typography>
-          <Typography component="p" variant="body1">
-            Provide an inclusive environment for coworkers who prefer real-time
-            conversations.
-          </Typography>
-        </Box>
-      </Container>
-      {/* -------------------- End Intro -------------------- */}
+      <StyledSection {...benefitsSection} />
 
       <Box mt={8}>
         <Box
