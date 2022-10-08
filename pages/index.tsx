@@ -4,19 +4,18 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Link from '../components/Link';
 
 interface StyledListItemProps {
-  key: number | string;
   primaryText: string;
   secondaryText: string;
   iconPath: string;
 }
 
 const StyledListItem = (props: StyledListItemProps) => {
-  const { key, primaryText, secondaryText, iconPath } = props;
+  const { primaryText, secondaryText, iconPath } = props;
   return (
-    <Box key={key} sx={{ display: 'flex', flexDirection: 'row', py: 4 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', py: 4 }}>
       {iconPath && (
         <Box sx={{ pr: 2 }}>
-          <img height="50" src={iconPath} />
+          <img height="64" src={iconPath} />
         </Box>
       )}
       <Box>
@@ -108,26 +107,27 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'Break down silos',
         secondaryText: 'Shared rooms encourage participation.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_smart-city.png',
       },
       {
         key: 2,
         primaryText: 'Encourage tribal knowledge circulation',
         secondaryText:
           'Reduce coordination friction for real-time communication.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/icon_online-education.png',
       },
       {
         key: 3,
         primaryText: 'Improve the collaboration experience',
         secondaryText: 'Stop presentation interruptions and visual fatigue.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath:
+          '/icons/Icon_negotiation,-interview,-conversation,-communication-20.png',
       },
       {
         key: 4,
         primaryText: 'Reduce social isolation',
         secondaryText: 'More inclusive real-time interactions.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_society,-social,-communication.png',
       },
     ],
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
@@ -143,19 +143,21 @@ export default function IndexPage() {
         primaryText: 'Audio-first communication',
         secondaryText:
           'For casual conversation, co-working, meeetings, pair-programming...',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_vlog-video-communication.png',
       },
       {
         key: 2,
         primaryText: 'Designed for minimal friction',
         secondaryText: 'No need to distribute links or calendar invites.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath:
+          '/icons/Icon_Bubble,-chat,-chat-bubble,-communication,-message,-feedback-60.png',
       },
       {
         key: 3,
         primaryText: 'Have something to say?',
         secondaryText: 'Join or leave with a single click.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath:
+          '/icons/Icon_creative-idea,-bulb,-idea,-light,-person,-solution.png',
       },
     ],
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
@@ -169,19 +171,21 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'Find the action',
         secondaryText: "See who's in the conversation before joining.",
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath:
+          '/icons/Icon_work,-co-working,-office,-workers,-employees.png',
       },
       {
         key: 2,
         primaryText: 'Mentors, make yourself available',
         secondaryText: 'Simplify office hours and 1:1s.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_calendar,-planning,-planner.png',
       },
       {
         key: 3,
         primaryText: 'Need a break?',
         secondaryText: 'See who else is hanging out.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath:
+          '/icons/Icon_Armchair,-chair,-furniture,-interior,-comfort.png',
       },
     ],
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
@@ -196,19 +200,19 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'More than just a screen share',
         secondaryText: 'Each participant can share multiple',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_client,-customer,-profil,-user,-care,-hand.png',
       },
       {
         key: 2,
         primaryText: 'Built for battlestations',
         secondaryText: 'Multi-monitor support for your viewing pleasure.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_devices,-computer,-laptop.png',
       },
       {
         key: 3,
         primaryText: 'Get the most out of your pixels',
         secondaryText: 'View fullscreen streams in HD.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_diamond,-crystal,-clean-code.png',
       },
     ],
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
@@ -222,19 +226,19 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'Single Sign-On (SSO)',
         secondaryText: 'Use your current Work or School account.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_secure,-web-security,-network,-shield.png',
       },
       {
         key: 2,
         primaryText: 'Simplified onboarding',
         secondaryText: 'Automatic profile set-up and contact discovery.',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_puzzle,-solution-47.png',
       },
       {
         key: 3,
         primaryText: 'More Teams integrations coming soon',
         secondaryText: 'Activity feed, chat bots, deep links...',
-        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+        iconPath: '/icons/Icon_launch,-mission,-rocket,-start,-startup.png',
       },
     ],
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
