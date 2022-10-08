@@ -1,13 +1,6 @@
 import { SyntheticEvent, useState } from 'react';
 import Head from 'next/head';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import Link from '../components/Link';
 
 interface StyledListItemProps {
@@ -27,8 +20,12 @@ const StyledListItem = (props: StyledListItemProps) => {
         </Box>
       )}
       <Box>
-        <Typography variant="h4">{primaryText}</Typography>
-        <Typography variant="body1">{secondaryText}</Typography>
+        <Typography component="h3" variant="h4">
+          {primaryText}
+        </Typography>
+        <Typography component="p" variant="body1">
+          {secondaryText}
+        </Typography>
       </Box>
     </Box>
   );
@@ -39,31 +36,60 @@ interface StyledSectionProps {
   subheadline?: string;
   listItems?: StyledListItemProps[];
   videoPath?: string;
+  reversed?: boolean;
 }
 
 const StyledSection = (props: StyledSectionProps) => {
-  const { headline, subheadline, listItems } = props;
+  const { headline, subheadline, listItems, videoPath, reversed } = props;
   // todo: finish this
   return (
-    <Container sx={{ py: 3 }}>
-      <Typography component="h3" variant="h3" sx={{ fontSize: 28 }}>
-        {headline}
-      </Typography>
-      <br />
-      {subheadline && (
-        <Typography component="p" variant="body1">
-          {subheadline}
+    <Grid
+      container
+      direction={{
+        xs: 'column',
+        md: reversed ? 'row-reverse' : 'row',
+      }}
+      justifyContent="center"
+      spacing={2}
+      py={4}
+    >
+      <Grid item xs={12} md={6} alignSelf="center">
+        <Typography component="h2" variant="h3" sx={{ fontSize: 28 }}>
+          {headline}
         </Typography>
+        <br />
+        {subheadline && (
+          <Typography component="p" variant="body1">
+            {subheadline}
+          </Typography>
+        )}
+        <br />
+        {listItems && (
+          <Box>
+            {listItems.map((item) => (
+              <StyledListItem {...item} />
+            ))}
+          </Box>
+        )}
+      </Grid>
+      {videoPath && (
+        <Grid item xs={12} md={6} alignSelf="center">
+          <img
+            src={videoPath}
+            alt="Teraphone screenshot"
+            height="360"
+            width="642"
+            style={{
+              height: 'auto',
+              maxWidth: '642px',
+              position: 'relative',
+              top: '10px',
+              width: '100%',
+            }}
+          />
+        </Grid>
       )}
-      <br />
-      {listItems && (
-        <Box>
-          {listItems.map((item) => (
-            <StyledListItem {...item} />
-          ))}
-        </Box>
-      )}
-    </Container>
+    </Grid>
   );
 };
 
@@ -76,38 +102,36 @@ export default function IndexPage() {
   const benefitsSection = {
     headline: 'Welcome to the future of work',
     subheadline:
-      'Teraphone provides persistent voice rooms, better presence signaling and improved screen sharing; allowing coworkers to collaborate without the friction of setting up meetings.',
+      'Teraphone provides persistent voice rooms, better presence signaling and improved screen sharing.',
     listItems: [
       {
         key: 1,
         primaryText: 'Break down silos',
-        secondaryText:
-          'Shared rooms encourage participation. Conversations are more inviting when teammates know that a room is public.',
+        secondaryText: 'Shared rooms encourage participation.',
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
       {
         key: 2,
         primaryText: 'Encourage tribal knowledge circulation',
         secondaryText:
-          'Room persistence reduces coordination friction for real-time communication.',
+          'Reduce coordination friction for real-time communication.',
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
       {
         key: 3,
         primaryText: 'Improve the collaboration experience',
-        secondaryText:
-          'Better screen sharing capabilities reduce presentation interruptions and visual fatigue.',
+        secondaryText: 'Stop presentation interruptions and visual fatigue.',
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
       {
         key: 4,
         primaryText: 'Reduce social isolation',
-        secondaryText:
-          'Provide an inclusive environment for coworkers who prefer real-time conversations.',
+        secondaryText: 'More inclusive real-time interactions.',
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
     ],
-    videoPath: '',
+    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    reversed: true,
   };
 
   const persistenceSection = {
@@ -134,7 +158,7 @@ export default function IndexPage() {
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
     ],
-    videoPath: '',
+    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
   };
 
   const presenceSection = {
@@ -160,7 +184,8 @@ export default function IndexPage() {
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
     ],
-    videoPath: '',
+    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    reversed: true,
   };
 
   const collaborationSection = {
@@ -186,7 +211,7 @@ export default function IndexPage() {
         iconPath: '/images/teraphone-logo-and-name-vertical.svg',
       },
     ],
-    videoPath: '',
+    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
   };
 
   return (
@@ -202,26 +227,11 @@ export default function IndexPage() {
       {/* -------------------- Begin Hero -------------------- */}
       <Grid
         container
-        direction={{ xs: 'column-reverse', md: 'row' }}
+        direction={{ xs: 'column', md: 'row' }}
         justifyContent="center"
         spacing={2}
         py={4}
       >
-        <Grid item xs={12} sm={6} alignSelf="center">
-          <img
-            src="/images/teraphone-app-screenshot-1055x720.png"
-            alt="Teraphone screenshot"
-            height="720"
-            width="1055"
-            style={{
-              height: 'auto',
-              maxWidth: '1280px',
-              position: 'relative',
-              top: '10px',
-              width: '100%',
-            }}
-          />
-        </Grid>
         <Grid item xs={12} sm={6} alignSelf={{ xs: 'center', md: 'center' }}>
           <Box mb={4}>
             <Typography component="h1" variant="h1" sx={{ fontSize: 48 }}>
@@ -230,7 +240,7 @@ export default function IndexPage() {
               for Microsoft Teams
             </Typography>
           </Box>
-          <Typography component="h2" variant="body1" sx={{ fontSize: 20 }}>
+          <Typography component="p" variant="body1" sx={{ fontSize: 20 }}>
             Reclaim the spontaneity of{' '}
             <span style={{ whiteSpace: 'nowrap' }}>in-person</span>{' '}
             collaboration!
@@ -324,6 +334,21 @@ export default function IndexPage() {
               </Grid>
             </form>
           </Box>
+        </Grid>
+        <Grid item xs={12} sm={6} alignSelf="center">
+          <img
+            src="/images/teraphone-app-screenshot-1055x720.png"
+            alt="Teraphone screenshot"
+            height="720"
+            width="1055"
+            style={{
+              height: 'auto',
+              maxWidth: '1280px',
+              position: 'relative',
+              top: '10px',
+              width: '100%',
+            }}
+          />
         </Grid>
       </Grid>
       {/* -------------------- End Hero -------------------- */}
