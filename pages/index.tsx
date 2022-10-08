@@ -110,6 +110,85 @@ export default function IndexPage() {
     videoPath: '',
   };
 
+  const persistenceSection = {
+    headline: 'Go-to spaces',
+    subheadline: 'Teraphone voice rooms are persistent',
+    listItems: [
+      {
+        key: 1,
+        primaryText: 'Audio-first communication',
+        secondaryText:
+          'For casual conversation, co-working, meeetings, pair-programming...',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 2,
+        primaryText: 'Designed for minimal friction',
+        secondaryText: 'No need to distribute links or calendar invites.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 3,
+        primaryText: 'Have something to say?',
+        secondaryText: 'Join or leave with a single click.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+    ],
+    videoPath: '',
+  };
+
+  const presenceSection = {
+    headline: 'Real-time presence signaling',
+    subheadline: 'No more wondering what people are up to',
+    listItems: [
+      {
+        key: 1,
+        primaryText: 'Find the action',
+        secondaryText: "See who's in the conversation before joining.",
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 2,
+        primaryText: 'Mentors, make yourself available',
+        secondaryText: 'Simplify office hours and 1:1s.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 3,
+        primaryText: 'Need a break?',
+        secondaryText: 'See who else is hanging out.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+    ],
+    videoPath: '',
+  };
+
+  const collaborationSection = {
+    headline: 'Crafted for Collaboration',
+    subheadline: 'A second pair of eyes is always helpful',
+    listItems: [
+      {
+        key: 1,
+        primaryText: 'More than just a screen share',
+        secondaryText: 'Each participant can share multiple',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 2,
+        primaryText: 'Built for battlestations',
+        secondaryText: 'Multi-monitor support for your viewing pleasure.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 3,
+        primaryText: 'Get the most out of your pixels',
+        secondaryText: 'View fullscreen streams in HD.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+    ],
+    videoPath: '',
+  };
+
   return (
     <>
       <Head>
@@ -250,6 +329,9 @@ export default function IndexPage() {
       {/* -------------------- End Hero -------------------- */}
 
       <StyledSection {...benefitsSection} />
+      <StyledSection {...persistenceSection} />
+      <StyledSection {...presenceSection} />
+      <StyledSection {...collaborationSection} />
 
       <Box mt={8}>
         <Box
