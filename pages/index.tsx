@@ -214,6 +214,33 @@ export default function IndexPage() {
     videoPath: '/images/teraphone-app-screenshot-1055x720.png',
   };
 
+  const teamsSection = {
+    headline: 'Built for Microsoft Teams',
+    subheadline: "Use your organization's existing team structure",
+    listItems: [
+      {
+        key: 1,
+        primaryText: 'Single Sign-On (SSO)',
+        secondaryText: 'Use your current Work or School account.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 2,
+        primaryText: 'Simplified onboarding',
+        secondaryText: 'Automatic profile set-up and contact discovery.',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+      {
+        key: 3,
+        primaryText: 'More Teams integrations coming soon',
+        secondaryText: 'Activity feed, chat bots, deep links...',
+        iconPath: '/images/teraphone-logo-and-name-vertical.svg',
+      },
+    ],
+    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    reversed: true,
+  };
+
   return (
     <>
       <Head>
@@ -357,6 +384,7 @@ export default function IndexPage() {
       <StyledSection {...persistenceSection} />
       <StyledSection {...presenceSection} />
       <StyledSection {...collaborationSection} />
+      <StyledSection {...teamsSection} />
 
       <Box mt={8}>
         <Box
