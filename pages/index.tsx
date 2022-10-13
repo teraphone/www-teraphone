@@ -254,10 +254,10 @@ export default function IndexPage() {
   return (
     <>
       <Head>
-        <title>TERAPHONE</title>
+        <title>TERAPHONE | Voice Rooms for Microsoft Teams</title>
         <meta
           name="description"
-          content="Reclaim the spontaneity of in-person collaboration with voice rooms for Microsoft Teams."
+          content="Teraphone is a voice chat and screen sharing app that integrates with Microsoft Teams and provides a more modern communication experience. Teraphone improves Teams with persistent voice rooms, better presence signaling, and multiple screen sharing."
         />
       </Head>
 
