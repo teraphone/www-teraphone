@@ -72,18 +72,24 @@ const StyledSection = (props: StyledSectionProps) => {
         )}
       </Grid>
       {videoPath && (
-        <Grid item xs={12} md={6} alignSelf="center">
-          <img
+        <Grid item xs={12} md={6} alignSelf="center" sx={{ px: 3 }}>
+          <video
             src={videoPath}
-            alt="Teraphone screenshot"
-            height="360"
-            width="642"
+            autoPlay
+            playsInline
+            loop
+            muted
+            height="720"
+            width="1114"
             style={{
               height: 'auto',
-              maxWidth: '642px',
+              maxWidth: '1114px',
               position: 'relative',
               top: '10px',
               width: '100%',
+              borderRadius: '8px',
+              boxShadow:
+                '0 15px 15px rgba(0, 0, 0, 0.2), -12px 0px 12px rgba(0, 0, 0, 0.1), 12px 0 12px rgba(0, 0, 0, 0.1)',
             }}
           />
         </Grid>
@@ -130,7 +136,7 @@ export default function IndexPage() {
         iconPath: '/icons/Icon_society,-social,-communication.png',
       },
     ],
-    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    videoPath: '/videos/benefits-clip.mp4',
     reversed: true,
   };
 
@@ -160,7 +166,7 @@ export default function IndexPage() {
           '/icons/Icon_creative-idea,-bulb,-idea,-light,-person,-solution.png',
       },
     ],
-    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    videoPath: '/videos/persistence-clip.mp4',
   };
 
   const presenceSection = {
@@ -188,7 +194,7 @@ export default function IndexPage() {
           '/icons/Icon_Armchair,-chair,-furniture,-interior,-comfort.png',
       },
     ],
-    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    videoPath: '/videos/presence-clip.mp4',
     reversed: true,
   };
 
@@ -215,7 +221,7 @@ export default function IndexPage() {
         iconPath: '/icons/Icon_diamond,-crystal,-clean-code.png',
       },
     ],
-    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    videoPath: '/videos/collaboration-clip.mp4',
   };
 
   const teamsSection = {
@@ -241,7 +247,7 @@ export default function IndexPage() {
         iconPath: '/icons/Icon_launch,-mission,-rocket,-start,-startup.png',
       },
     ],
-    videoPath: '/images/teraphone-app-screenshot-1055x720.png',
+    videoPath: '/videos/teams-clip.mp4',
     reversed: true,
   };
 
@@ -424,11 +430,6 @@ export default function IndexPage() {
               />
             </Box>
           </Box>
-          <img
-            alt="Teraphone logo"
-            height="100"
-            src="/images/teraphone-logo-and-name-vertical.svg"
-          />
         </Box>
         <Box
           mt={8}
