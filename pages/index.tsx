@@ -374,16 +374,19 @@ export default function IndexPage() {
         </Grid>
         <Grid item xs={12} sm={6} alignSelf="center">
           <img
-            src="/images/teraphone-app-screenshot-1055x720.png"
+            src="/images/teraphone-app-screenshot-1113x720.jpg"
             alt="Teraphone screenshot"
             height="720"
-            width="1055"
+            width="1113"
             style={{
               height: 'auto',
-              maxWidth: '1280px',
+              maxWidth: '1113px',
               position: 'relative',
               top: '10px',
               width: '100%',
+              borderRadius: '8px',
+              boxShadow:
+                '0 15px 15px rgba(0, 0, 0, 0.2), -12px 0px 12px rgba(0, 0, 0, 0.1), 12px 0 12px rgba(0, 0, 0, 0.1)',
             }}
           />
         </Grid>
