@@ -71,7 +71,7 @@ const StyledSection = (props: StyledSectionProps) => {
         )}
       </Grid>
       {videoPath && (
-        <Grid item xs={12} md={6} alignSelf="center">
+        <Grid item xs={12} md={6} alignSelf="auto">
           <Box
             sx={{
               overflow: 'hidden',
@@ -273,7 +273,7 @@ export default function IndexPage() {
         justifyContent="center"
         spacing={2}
         pt={4}
-        pb={10}
+        pb={12}
       >
         <Grid item xs={12} sm={6} alignSelf={{ xs: 'center', md: 'center' }}>
           <Box mb={4}>
