@@ -483,6 +483,15 @@ export default function IndexPage() {
             >
               Contact
             </Link>
+            <Link
+              href="/connection-test"
+              mx={2}
+              my={1}
+              sx={{ whiteSpace: 'nowrap' }}
+              variant="body2"
+            >
+              Connection Test
+            </Link>
           </Box>
           <Box>
             <Typography
