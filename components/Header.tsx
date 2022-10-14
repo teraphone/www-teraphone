@@ -21,6 +21,7 @@ import Link, { NextLinkComposed } from './Link';
 const pages = [
   { name: 'Home', url: '/' },
   { name: 'Help', url: '/help' },
+  { name: 'Download', url: '/download' },
 ];
 
 const Header = () => {
