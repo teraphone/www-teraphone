@@ -78,8 +78,6 @@ const StyledSection = (props: StyledSectionProps) => {
               boxShadow:
                 '0 15px 15px rgba(0, 0, 0, 0.2), -12px 0px 12px rgba(0, 0, 0, 0.1), 12px 0 12px rgba(0, 0, 0, 0.1)',
               borderRadius: '10px',
-              p: 0,
-              m: 0,
             }}
           >
             <video
@@ -93,8 +91,9 @@ const StyledSection = (props: StyledSectionProps) => {
               style={{
                 height: 'auto',
                 maxWidth: '1114px',
-                width: '100%',
-                borderRadius: '10px',
+                width: 'calc(100% + 1px)',
+                display: 'block',
+                marginLeft: '-1px',
               }}
             />
           </Box>
