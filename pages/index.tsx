@@ -125,7 +125,7 @@ export default function IndexPage() {
         primaryText: 'Encourage tribal knowledge circulation',
         secondaryText:
           'Reduce coordination friction for real-time communication.',
-        iconPath: '/icons/icon_online education.svg',
+        iconPath: '/icons/Icon_online education.svg',
       },
       {
         key: 3,
