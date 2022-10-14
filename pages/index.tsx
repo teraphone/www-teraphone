@@ -48,7 +48,7 @@ const StyledSection = (props: StyledSectionProps) => {
         md: reversed ? 'row-reverse' : 'row',
       }}
       justifyContent="center"
-      spacing={2}
+      spacing={6}
       py={4}
     >
       <Grid item xs={12} md={6} alignSelf="center">
@@ -71,26 +71,33 @@ const StyledSection = (props: StyledSectionProps) => {
         )}
       </Grid>
       {videoPath && (
-        <Grid item xs={12} md={6} alignSelf="center" sx={{ px: 3 }}>
-          <video
-            src={videoPath}
-            autoPlay
-            playsInline
-            loop
-            muted
-            height="720"
-            width="1114"
-            style={{
-              height: 'auto',
-              maxWidth: '1114px',
-              position: 'relative',
-              top: '10px',
-              width: '100%',
-              borderRadius: '8px',
+        <Grid item xs={12} md={6} alignSelf="center">
+          <Box
+            sx={{
+              overflow: 'hidden',
               boxShadow:
                 '0 15px 15px rgba(0, 0, 0, 0.2), -12px 0px 12px rgba(0, 0, 0, 0.1), 12px 0 12px rgba(0, 0, 0, 0.1)',
+              borderRadius: '10px',
+              p: 0,
+              m: 0,
             }}
-          />
+          >
+            <video
+              src={videoPath}
+              autoPlay
+              playsInline
+              loop
+              muted
+              height="720"
+              width="1114"
+              style={{
+                height: 'auto',
+                maxWidth: '1114px',
+                width: '100%',
+                borderRadius: '10px',
+              }}
+            />
+          </Box>
         </Grid>
       )}
     </Grid>
