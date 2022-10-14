@@ -272,7 +272,8 @@ export default function IndexPage() {
         direction={{ xs: 'column', md: 'row' }}
         justifyContent="center"
         spacing={2}
-        py={4}
+        pt={4}
+        pb={10}
       >
         <Grid item xs={12} sm={6} alignSelf={{ xs: 'center', md: 'center' }}>
           <Box mb={4}>
