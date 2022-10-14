@@ -78,7 +78,6 @@ const StyledSection = (props: StyledSectionProps) => {
               boxShadow:
                 '0 15px 15px rgba(0, 0, 0, 0.2), -12px 0px 12px rgba(0, 0, 0, 0.1), 12px 0 12px rgba(0, 0, 0, 0.1)',
               borderRadius: '10px',
-              WebkitAppearance: 'none',
             }}
           >
             <video
@@ -95,7 +94,6 @@ const StyledSection = (props: StyledSectionProps) => {
                 width: 'calc(100% + 1px)',
                 display: 'block',
                 marginLeft: '-1px',
-                WebkitAppearance: 'none',
               }}
             />
           </Box>

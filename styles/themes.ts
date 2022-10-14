@@ -28,6 +28,9 @@ export const globalStyles = {
   'html, body, body > div': {
     height: '100%',
   },
+  'video, div': {
+    '-webkit-appearance': 'none',
+  },
 };
 
 export const theme = createTheme({
