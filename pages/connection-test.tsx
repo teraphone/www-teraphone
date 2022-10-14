@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useGetConnectionTestTokenQuery } from '../src/redux/api';
 import {
   setLogLevel,
@@ -379,76 +380,85 @@ const ConnectionTest = () => {
   }, [resetTests, runPhase1, runPhase2]);
 
   return (
-    <Container>
-      <Paper>
-        <Box
-          sx={{ display: 'flex' }}
-          flexDirection={{ xs: 'column', md: 'row' }}
-        >
-          <Box sx={{ p: 3 }}>
-            <Typography variant="h3" component="h1">
-              Connection Test
-            </Typography>
-            <br />
-            <Typography variant="body1">
-              Test your connection to Teraphone's servers.
-            </Typography>
-            <br />
-            <LoadingButton
-              variant="contained"
-              disabled={!data?.roomToken || testsPending}
-              onClick={runTests}
-              loading={!data?.roomToken || testsPending}
-            >
-              Begin Test
-            </LoadingButton>
+    <>
+      <Head>
+        <title>TERAPHONE | Connection Test</title>
+        <meta
+          name="description"
+          content="Test your connection to Teraphone's servers."
+        />
+      </Head>
+      <Container>
+        <Paper>
+          <Box
+            sx={{ display: 'flex' }}
+            flexDirection={{ xs: 'column', md: 'row' }}
+          >
+            <Box sx={{ p: 3 }}>
+              <Typography variant="h3" component="h1">
+                Connection Test
+              </Typography>
+              <br />
+              <Typography variant="body1">
+                Test your connection to Teraphone's servers.
+              </Typography>
+              <br />
+              <LoadingButton
+                variant="contained"
+                disabled={!data?.roomToken || testsPending}
+                onClick={runTests}
+                loading={!data?.roomToken || testsPending}
+              >
+                Begin Test
+              </LoadingButton>
+            </Box>
+            <Box sx={{ p: 3 }}>
+              <Typography variant="h3" component="h1">
+                Results
+              </Typography>
+              <List>
+                <TestStatusItem
+                  key="test-signal-connection"
+                  status={testSignalConnectionStatus}
+                  message="Connecting to signal connection via WebSocket"
+                  error={testSignalConnectionError}
+                />
+                <TestStatusItem
+                  key="test-webrtc-connection"
+                  status={testWebRTCConnectionStatus}
+                  message="Establishing WebRTC connection"
+                  error={testWebRTCConnectionError}
+                />
+                <TestStatusItem
+                  key="test-connect-turn"
+                  status={testConnectTURNStatus}
+                  message="Can connect via TURN"
+                  error={testConnectTURNError}
+                />
+                <TestStatusItem
+                  key="test-publish-audio"
+                  status={testPublishAudioStatus}
+                  message="Can publish audio"
+                  error={testPublishAudioError}
+                />
+                <TestStatusItem
+                  key="test-publish-video"
+                  status={testPublishVideoStatus}
+                  message="Can publish video"
+                  error={testPublishVideoError}
+                />
+                <TestStatusItem
+                  key="test-resume-connection"
+                  status={testResumeConnectionStatus}
+                  message="Resuming connection after interruption"
+                  error={testResumeConnectionError}
+                />
+              </List>
+            </Box>
           </Box>
-          <Box sx={{ p: 3 }}>
-            <Typography variant="h3" component="h1">
-              Results
-            </Typography>
-            <List>
-              <TestStatusItem
-                key="test-signal-connection"
-                status={testSignalConnectionStatus}
-                message="Connecting to signal connection via WebSocket"
-                error={testSignalConnectionError}
-              />
-              <TestStatusItem
-                key="test-webrtc-connection"
-                status={testWebRTCConnectionStatus}
-                message="Establishing WebRTC connection"
-                error={testWebRTCConnectionError}
-              />
-              <TestStatusItem
-                key="test-connect-turn"
-                status={testConnectTURNStatus}
-                message="Can connect via TURN"
-                error={testConnectTURNError}
-              />
-              <TestStatusItem
-                key="test-publish-audio"
-                status={testPublishAudioStatus}
-                message="Can publish audio"
-                error={testPublishAudioError}
-              />
-              <TestStatusItem
-                key="test-publish-video"
-                status={testPublishVideoStatus}
-                message="Can publish video"
-                error={testPublishVideoError}
-              />
-              <TestStatusItem
-                key="test-resume-connection"
-                status={testResumeConnectionStatus}
-                message="Resuming connection after interruption"
-                error={testResumeConnectionError}
-              />
-            </List>
-          </Box>
-        </Box>
-      </Paper>
-    </Container>
+        </Paper>
+      </Container>
+    </>
   );
 };
 
