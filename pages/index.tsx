@@ -40,7 +40,6 @@ interface StyledSectionProps {
 
 const StyledSection = (props: StyledSectionProps) => {
   const { headline, subheadline, listItems, videoPath, reversed } = props;
-  // todo: finish this
   return (
     <Grid
       container
