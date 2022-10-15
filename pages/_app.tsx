@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 import type { AppProps } from 'next/app';
 import { EmotionCache } from '@emotion/react';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
@@ -48,6 +49,7 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <MsalProvider instance={msalInstance}>
           <AppChrome>
+            <GoogleAnalytics trackPageViews gaMeasurementId="G-XJ7THJ5556" />
             <Component {...pageProps} />
           </AppChrome>
         </MsalProvider>
