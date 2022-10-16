@@ -22,7 +22,7 @@ const Download = () => {
           Mac OS
         </Typography>
         <br />
-        <Box sx={{ ml: 3 }}>
+        <Box>
           <Typography component="h3" variant="h5">
             Intel (most common)
           </Typography>
@@ -35,7 +35,7 @@ const Download = () => {
           <br />
           <br />
           <Typography component="h3" variant="h5">
-            Apple Silicon (M1)
+            Apple Silicon
           </Typography>
           <Link
             href="https://github.com/teraphone/releases/releases/latest/download/TERAPHONE-Setup-mac-arm64.dmg"
@@ -56,6 +56,14 @@ const Download = () => {
         >
           TERAPHONE-Setup-win-x64.exe
         </Link>
+        <br />
+        <br />
+        <Box>
+          <Typography component="h3" variant="h5">
+            Windows Installation Instructions
+          </Typography>
+        </Box>
+
         <Box sx={{ mt: 2 }}>
           <Typography variant="body1">
             You may see a Microsoft Defender SmartScreen warning after running
