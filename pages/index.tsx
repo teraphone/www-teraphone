@@ -94,8 +94,7 @@ const StyledSection = (props: StyledSectionProps) => {
                 width: 'calc(100% + 1px)',
                 display: 'block',
                 marginLeft: '-1px',
-                WebkitBorderRadius: '10px',
-                MozBorderRadius: '10px',
+                borderRadius: '10px',
               }}
             />
           </Box>
