@@ -21,6 +21,7 @@ import Link, { NextLinkComposed } from './Link';
 const pages = [
   { name: 'Home', url: '/' },
   { name: 'Help', url: '/help' },
+  { name: 'Download', url: '/download' },
 ];
 
 const Header = () => {
@@ -84,6 +85,7 @@ const Header = () => {
                         ? 'underline 2px rgba(255, 255, 255, 0.4)'
                         : 'none',
                     textUnderlineOffset: '5px',
+                    minWidth: 0,
                   }}
                 >
                   {page.name}

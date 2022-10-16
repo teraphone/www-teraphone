@@ -94,6 +94,7 @@ const StyledSection = (props: StyledSectionProps) => {
                 width: 'calc(100% + 1px)',
                 display: 'block',
                 marginLeft: '-1px',
+                borderRadius: '10px',
               }}
             />
           </Box>
@@ -118,27 +119,27 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'Break down silos',
         secondaryText: 'Shared rooms encourage participation.',
-        iconPath: '/icons/Icon_smart-city.png',
+        iconPath: '/icons/Icon_smart city.svg',
       },
       {
         key: 2,
         primaryText: 'Encourage tribal knowledge circulation',
         secondaryText:
           'Reduce coordination friction for real-time communication.',
-        iconPath: '/icons/icon_online-education.png',
+        iconPath: '/icons/Icon_online education.svg',
       },
       {
         key: 3,
         primaryText: 'Improve the collaboration experience',
         secondaryText: 'Stop presentation interruptions and visual fatigue.',
         iconPath:
-          '/icons/Icon_negotiation,-interview,-conversation,-communication-20.png',
+          '/icons/Icon_negotiation, interview, conversation, communication-20.svg',
       },
       {
         key: 4,
         primaryText: 'Reduce social isolation',
         secondaryText: 'More inclusive real-time interactions.',
-        iconPath: '/icons/Icon_society,-social,-communication.png',
+        iconPath: '/icons/Icon_society, social, communication.svg',
       },
     ],
     videoPath: '/videos/benefits-clip.mp4',
@@ -154,21 +155,21 @@ export default function IndexPage() {
         primaryText: 'Audio-first communication',
         secondaryText:
           'For casual conversation, co-working, meeetings, pair-programming...',
-        iconPath: '/icons/Icon_vlog-video-communication.png',
+        iconPath: '/icons/Icon_vlog video communication.svg',
       },
       {
         key: 2,
         primaryText: 'Designed for minimal friction',
         secondaryText: 'No need to distribute links or calendar invites.',
         iconPath:
-          '/icons/Icon_Bubble,-chat,-chat-bubble,-communication,-message,-feedback-60.png',
+          '/icons/Icon_Bubble, chat, chat bubble, communication, message, feedback-60.svg',
       },
       {
         key: 3,
         primaryText: 'Have something to say?',
         secondaryText: 'Join or leave with a single click.',
         iconPath:
-          '/icons/Icon_creative-idea,-bulb,-idea,-light,-person,-solution.png',
+          '/icons/Icon_creative idea, bulb, idea, light, person, solution.svg',
       },
     ],
     videoPath: '/videos/persistence-clip.mp4',
@@ -183,20 +184,20 @@ export default function IndexPage() {
         primaryText: 'Find the action',
         secondaryText: "See who's in the conversation before joining.",
         iconPath:
-          '/icons/Icon_work,-co-working,-office,-workers,-employees.png',
+          '/icons/Icon_work, co-working, office, workers, employees.svg',
       },
       {
         key: 2,
         primaryText: 'Mentors, make yourself available',
         secondaryText: 'Simplify office hours and 1:1s.',
-        iconPath: '/icons/Icon_calendar,-planning,-planner.png',
+        iconPath: '/icons/Icon_calendar, planning, planner.svg',
       },
       {
         key: 3,
         primaryText: 'Need a break?',
         secondaryText: 'See who else is hanging out.',
         iconPath:
-          '/icons/Icon_Armchair,-chair,-furniture,-interior,-comfort.png',
+          '/icons/Icon_Armchair, chair, furniture, interior, comfort.svg',
       },
     ],
     videoPath: '/videos/presence-clip.mp4',
@@ -211,19 +212,19 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'More than just a screen share',
         secondaryText: 'Each participant can share multiple',
-        iconPath: '/icons/Icon_client,-customer,-profil,-user,-care,-hand.png',
+        iconPath: '/icons/Icon_client, customer, profil, user, care, hand.svg',
       },
       {
         key: 2,
         primaryText: 'Built for battlestations',
         secondaryText: 'Multi-monitor support for your viewing pleasure.',
-        iconPath: '/icons/Icon_devices,-computer,-laptop.png',
+        iconPath: '/icons/Icon_devices, computer, laptop.svg',
       },
       {
         key: 3,
         primaryText: 'Get the most out of your pixels',
         secondaryText: 'View fullscreen streams in HD.',
-        iconPath: '/icons/Icon_diamond,-crystal,-clean-code.png',
+        iconPath: '/icons/Icon_diamond, crystal, clean code.svg',
       },
     ],
     videoPath: '/videos/collaboration-clip.mp4',
@@ -237,19 +238,19 @@ export default function IndexPage() {
         key: 1,
         primaryText: 'Single Sign-On (SSO)',
         secondaryText: 'Use your current Work or School account.',
-        iconPath: '/icons/Icon_secure,-web-security,-network,-shield.png',
+        iconPath: '/icons/Icon_secure, web security, network, shield.svg',
       },
       {
         key: 2,
         primaryText: 'Simplified onboarding',
         secondaryText: 'Automatic profile set-up and contact discovery.',
-        iconPath: '/icons/Icon_puzzle,-solution-47.png',
+        iconPath: '/icons/Icon_puzzle, solution-47.svg',
       },
       {
         key: 3,
         primaryText: 'More Teams integrations coming soon',
         secondaryText: 'Activity feed, chat bots, deep links...',
-        iconPath: '/icons/Icon_launch,-mission,-rocket,-start,-startup.png',
+        iconPath: '/icons/Icon_launch, mission, rocket, start, startup.svg',
       },
     ],
     videoPath: '/videos/teams-clip.mp4',
@@ -380,7 +381,7 @@ export default function IndexPage() {
         </Grid>
         <Grid item xs={12} sm={6} alignSelf="center">
           <img
-            src="/images/teraphone-app-screenshot-1113x720.jpg"
+            src="/images/teraphone-app-screenshot-noshadow-progressive.jpg"
             alt="Teraphone screenshot"
             height="720"
             width="1113"
@@ -482,6 +483,15 @@ export default function IndexPage() {
               variant="body2"
             >
               Contact
+            </Link>
+            <Link
+              href="/connection-test"
+              mx={2}
+              my={1}
+              sx={{ whiteSpace: 'nowrap' }}
+              variant="body2"
+            >
+              Connection Test
             </Link>
           </Box>
           <Box>
