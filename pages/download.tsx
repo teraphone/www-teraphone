@@ -62,6 +62,7 @@ const Download = () => {
             the installer. This is because our code signing certificates are
             new, and we're still building up our reputation with Microsoft.
             <span style={{ fontWeight: 'bold' }}>
+              {' '}
               You can safely ignore this warning and click "More info" and then
               "Run anyway"
             </span>{' '}
