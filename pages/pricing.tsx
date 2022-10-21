@@ -143,17 +143,31 @@ interface TeamsFeatures extends FeatureSpec {
 interface BusinessFeatures extends FeatureSpec {
   title: 'Business Support Features';
   features: {
-    'License management': FeatureValue;
     '24/7 Email support': FeatureValue;
+    'License management': FeatureValue;
     'Phone support': FeatureValue;
     'Dedicated Teraphone account partner': FeatureValue;
     'Onboarding and training': FeatureValue;
     'Custom terms': FeatureValue;
-    "Invoicing/PO's": FeatureValue;
+    'Invoicing/POs': FeatureValue;
     'Procurement process': FeatureValue;
     'Security and Legal reviews': FeatureValue;
     'Self-hosting/custom deployment': FeatureValue;
   };
+}
+
+interface Plan {
+  name: string;
+  price: number | string;
+  priceAlt: number | string;
+  priceUnits: string;
+  description: string;
+  coreFeatures: CoreFeatures;
+  teamsFeatures: TeamsFeatures;
+  businessFeatures: BusinessFeatures;
+  ctaText: string;
+  ctaLink: string;
+  ctaEnabled: boolean;
 }
 
 const Pricing = () => {
@@ -163,6 +177,165 @@ const Pricing = () => {
 
   const monthlyPrice = 25 * (1 + 0.2 * (billingPeriod === 'monthly' ? 1 : 0));
   console.log('monthlyPrice:', monthlyPrice);
+
+  const trialPlan: Plan = {
+    name: 'TRIAL',
+    price: '30 Days Free',
+    priceAlt: 'Free',
+    priceUnits: '',
+    description: 'When you just want to try things out',
+    coreFeatures: {
+      features: {
+        'Number of teams': 'Unlimited',
+        'Number of rooms': 'Unlimited',
+        'Number of users': 'Unlimited',
+        'Meeting duration': 'Unlimited',
+        'Meeting participants': '16+',
+        'Desktop client': true,
+        'Web client': true,
+        'HD voice': true,
+        'HD camera sharing': true,
+        'HD screen sharing': true,
+        'Multiple screen sharing': true,
+        'Advanced presence signaling': true,
+        'Room customization': false,
+      },
+    } as CoreFeatures,
+    teamsFeatures: {
+      features: {
+        'Single Sign-On (SSO)': true,
+        'Import Team memberships': true,
+        'Import Teams profile': true,
+        'Activity feed notifications': false,
+        'Calendar support': false,
+        'Chat bot': false,
+        'Presence enhancement': false,
+      },
+    } as TeamsFeatures,
+    businessFeatures: {
+      features: {
+        '24/7 Email support': true,
+        'License management': false,
+        'Phone support': false,
+        'Dedicated Teraphone account partner': false,
+        'Onboarding and training': false,
+        'Custom terms': false,
+        'Invoicing/POs': false,
+        'Procurement process': false,
+        'Security and Legal reviews': false,
+        'Self-hosting/custom deployment': false,
+      },
+    } as BusinessFeatures,
+    ctaText: 'Get Started',
+    ctaLink: 'https://web.teraphone.app',
+    ctaEnabled: true,
+  };
+
+  const proPlan: Plan = {
+    name: 'PROFESSIONAL',
+    price: '$' + monthlyPrice,
+    priceAlt: '$' + monthlyPrice,
+    priceUnits: '/user/mo',
+    description: 'When your team wants the full-featured experience',
+    coreFeatures: {
+      features: {
+        'Number of teams': 'Unlimited',
+        'Number of rooms': 'Unlimited',
+        'Number of users': 'Unlimited',
+        'Meeting duration': 'Unlimited',
+        'Meeting participants': '16+',
+        'Desktop client': true,
+        'Web client': true,
+        'HD voice': true,
+        'HD camera sharing': true,
+        'HD screen sharing': true,
+        'Multiple screen sharing': true,
+        'Advanced presence signaling': true,
+        'Room customization': 'Coming Soon!',
+      },
+    } as CoreFeatures,
+    teamsFeatures: {
+      features: {
+        'Single Sign-On (SSO)': true,
+        'Import Team memberships': true,
+        'Import Teams profile': true,
+        'Activity feed notifications': 'Coming Soon!',
+        'Calendar support': 'Coming Soon!',
+        'Chat bot': 'Coming Soon!',
+        'Presence enhancement': 'Coming Soon!',
+      },
+    } as TeamsFeatures,
+    businessFeatures: {
+      features: {
+        '24/7 Email support': true,
+        'License management': false,
+        'Phone support': false,
+        'Dedicated Teraphone account partner': false,
+        'Onboarding and training': false,
+        'Custom terms': false,
+        'Invoicing/POs': false,
+        'Procurement process': false,
+        'Security and Legal reviews': false,
+        'Self-hosting/custom deployment': false,
+      },
+    } as BusinessFeatures,
+    ctaText: 'Coming Soon!',
+    ctaLink: '',
+    ctaEnabled: false,
+  };
+
+  const enterprisePlan: Plan = {
+    name: 'ENTERPRISE',
+    price: 'Contact Us',
+    priceAlt: '-',
+    priceUnits: '',
+    description: 'When your organization has special requirements',
+    coreFeatures: {
+      features: {
+        'Number of teams': 'Unlimited',
+        'Number of rooms': 'Unlimited',
+        'Number of users': 'Unlimited',
+        'Meeting duration': 'Unlimited',
+        'Meeting participants': '16+',
+        'Desktop client': true,
+        'Web client': true,
+        'HD voice': true,
+        'HD camera sharing': true,
+        'HD screen sharing': true,
+        'Multiple screen sharing': true,
+        'Advanced presence signaling': true,
+        'Room customization': 'Coming Soon!',
+      },
+    } as CoreFeatures,
+    teamsFeatures: {
+      features: {
+        'Single Sign-On (SSO)': true,
+        'Import Team memberships': true,
+        'Import Teams profile': true,
+        'Activity feed notifications': 'Coming Soon!',
+        'Calendar support': 'Coming Soon!',
+        'Chat bot': 'Coming Soon!',
+        'Presence enhancement': 'Coming Soon!',
+      },
+    } as TeamsFeatures,
+    businessFeatures: {
+      features: {
+        '24/7 Email support': true,
+        'License management': true,
+        'Phone support': true,
+        'Dedicated Teraphone account partner': true,
+        'Onboarding and training': true,
+        'Custom terms': true,
+        'Invoicing/POs': true,
+        'Procurement process': true,
+        'Security and Legal reviews': true,
+        'Self-hosting/custom deployment': 'Contact Us',
+      },
+    } as BusinessFeatures,
+    ctaText: 'Book a Meeting',
+    ctaLink: 'https://savvycal.com/dwurtz/teraphone-enterprise-inquiry',
+    ctaEnabled: true,
+  };
 
   return (
     <>
