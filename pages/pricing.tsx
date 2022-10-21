@@ -101,6 +101,61 @@ const BillingPeriodSwitcher = (props: {
   );
 };
 
+type FeatureValue = boolean | number | string | React.ReactNode;
+
+interface FeatureSpec {
+  title: string;
+  features: { [feature: string]: FeatureValue };
+}
+
+interface CoreFeatures extends FeatureSpec {
+  title: 'Core Features';
+  features: {
+    'Number of teams': FeatureValue;
+    'Number of rooms': FeatureValue;
+    'Number of users': FeatureValue;
+    'Meeting duration': FeatureValue;
+    'Meeting participants': FeatureValue;
+    'Desktop client': FeatureValue;
+    'Web client': FeatureValue;
+    'HD voice': FeatureValue;
+    'HD camera sharing': FeatureValue;
+    'HD screen sharing': FeatureValue;
+    'Multiple screen sharing': FeatureValue;
+    'Advanced presence signaling': FeatureValue;
+    'Room customization': FeatureValue;
+  };
+}
+
+interface TeamsFeatures extends FeatureSpec {
+  title: 'Microsoft Teams integrations';
+  features: {
+    'Single Sign-On (SSO)': FeatureValue;
+    'Import Team memberships': FeatureValue;
+    'Import Teams profile': FeatureValue;
+    'Activity feed notifications': FeatureValue;
+    'Calendar support': FeatureValue;
+    'Chat bot': FeatureValue;
+    'Presence enhancement': FeatureValue;
+  };
+}
+
+interface BusinessFeatures extends FeatureSpec {
+  title: 'Business Support Features';
+  features: {
+    'License management': FeatureValue;
+    '24/7 Email support': FeatureValue;
+    'Phone support': FeatureValue;
+    'Dedicated Teraphone account partner': FeatureValue;
+    'Onboarding and training': FeatureValue;
+    'Custom terms': FeatureValue;
+    "Invoicing/PO's": FeatureValue;
+    'Procurement process': FeatureValue;
+    'Security and Legal reviews': FeatureValue;
+    'Self-hosting/custom deployment': FeatureValue;
+  };
+}
+
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annually'>(
     'annually'
