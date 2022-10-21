@@ -24,6 +24,7 @@ const Pricing = () => {
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
   const md = useMediaQuery(theme.breakpoints.up('md'));
   const lg = useMediaQuery(theme.breakpoints.up('lg'));
+  const heroFontSize = lg ? 64 : md ? 64 : sm ? 40 : 30;
   return (
     <>
       <Head>
@@ -41,41 +42,64 @@ const Pricing = () => {
             textAlign: 'center',
           }}
         >
-          <Typography variant="h1" fontSize={64}>
+          <Typography variant="h1" fontSize={heroFontSize}>
             Teamwork should be easy.
           </Typography>
-          <Typography variant="h1" color="primary" fontSize={64}>
+          <Typography variant="h1" color="primary" fontSize={heroFontSize}>
             Start Free.
           </Typography>
           <Typography variant="body1">{`is sm: ${sm}`}</Typography>
           <Typography variant="body1">{`is md: ${md}`}</Typography>
           <Typography variant="body1">{`is lg: ${lg}`}</Typography>
-          <Box
-            sx={{
-              alignSelf: 'center',
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Typography
-                variant="body1"
+          <Box>
+            <Stack
+              direction={md ? 'row-reverse' : 'column'}
+              spacing={3}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Box
                 sx={{
-                  fontWeight: billingPeriod === 'monthly' ? 'bold' : 'normal',
+                  width: md ? 'auto' : '100%',
+                  backgroundColor: 'rgba(240, 248, 255, 1)',
+                  borderRadius: 2,
                 }}
               >
-                Billed Monthly
-              </Typography>
-              <Switch
-                checked={billingPeriod === 'annually'}
-                onChange={handleBillingChange}
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  fontWeight: billingPeriod === 'annually' ? 'bold' : 'normal',
-                }}
-              >
-                Billed Annually
-              </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color:
+                      billingPeriod === 'monthly' ? 'gray' : 'primary.main',
+                    fontWeight: 'bold',
+                    p: 2,
+                  }}
+                >
+                  Save 20% with annual plans
+                </Typography>
+              </Box>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: billingPeriod === 'monthly' ? 'bold' : 'normal',
+                  }}
+                >
+                  Billed Monthly
+                </Typography>
+                <Switch
+                  checked={billingPeriod === 'annually'}
+                  onChange={handleBillingChange}
+                />
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight:
+                      billingPeriod === 'annually' ? 'bold' : 'normal',
+                  }}
+                >
+                  Billed Annually
+                </Typography>
+              </Stack>
             </Stack>
           </Box>
         </Box>
