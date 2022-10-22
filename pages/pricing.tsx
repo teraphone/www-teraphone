@@ -9,6 +9,10 @@ import {
   Theme,
   Paper,
 } from '@mui/material';
+import ArrowRightIcon from '@mui/icons-material/NavigateNext';
+import ArrowDownIcon from '@mui/icons-material/ExpandMore';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { theme } from '../styles/themes';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -173,12 +177,87 @@ interface Plan {
   ctaEnabled: boolean;
 }
 
+const SinglePlanFeatureStack = (props: { features: FeatureSpec }) => {
+  const { title, features } = props.features;
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <Box
+      sx={{
+        mb: 2,
+        borderStyle: 'solid',
+        borderColor: '#eee',
+        borderRadius: 2,
+      }}
+    >
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            p: 2,
+            cursor: 'pointer',
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 'normal', color: 'primary.main' }}
+          >
+            {title}
+          </Typography>
+          <Box>
+            {expanded ? (
+              <ArrowDownIcon sx={{ fontSize: 24, color: 'primary.main' }} />
+            ) : (
+              <ArrowRightIcon sx={{ fontSize: 24, color: 'primary.main' }} />
+            )}
+          </Box>
+        </Box>
+        {expanded &&
+          Object.entries(features).map(([name, value]) => {
+            const valueIcon =
+              value === true ? (
+                <CheckCircleIcon sx={{ fontSize: 16 }} />
+              ) : value === false ? (
+                <RemoveIcon sx={{ fontSize: 16 }} />
+              ) : (
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 'bold', textAlign: 'right' }}
+                >
+                  {value}
+                </Typography>
+              );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  p: 2,
+                  borderTopStyle: 'solid',
+                  borderTopColor: '#eee',
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: 16, fontWeight: '400', textAlign: 'left' }}
+                >
+                  {name}
+                </Typography>
+                <Box>{valueIcon}</Box>
+              </Box>
+            );
+          })}
+      </Box>
+    </Box>
+  );
+};
+
 const SinglePlanView = (props: { plan: Plan }) => {
   const { plan } = props;
   const {
     name,
     price,
-    priceAlt,
     priceUnits,
     description,
     coreFeatures,
@@ -188,6 +267,7 @@ const SinglePlanView = (props: { plan: Plan }) => {
     ctaLink,
     ctaEnabled,
   } = plan;
+  const [featuresHidden, setFeaturesHidden] = useState(true);
 
   return (
     <Paper
@@ -237,9 +317,26 @@ const SinglePlanView = (props: { plan: Plan }) => {
           {ctaText}
         </Button>
       </Box>
+      <Box sx={{ py: 2 }}>
+        <Button
+          onClick={() => setFeaturesHidden(!featuresHidden)}
+          endIcon={featuresHidden ? <ArrowRightIcon /> : <ArrowDownIcon />}
+        >
+          See all features
+        </Button>
+      </Box>
+      {!featuresHidden && (
+        <Box sx={{ py: 2 }}>
+          <SinglePlanFeatureStack features={coreFeatures} />
+          <SinglePlanFeatureStack features={teamsFeatures} />
+          <SinglePlanFeatureStack features={businessFeatures} />
+        </Box>
+      )}
     </Paper>
   );
 };
+
+// todo: add MultiPlanView
 
 const PlansAndFeatures = (props: {
   theme: Theme;
@@ -274,6 +371,7 @@ const Pricing = () => {
     priceUnits: '',
     description: '30-day trial to test things out',
     coreFeatures: {
+      title: 'Core Features',
       features: {
         'Number of teams': 'Unlimited',
         'Number of rooms': 'Unlimited',
@@ -291,6 +389,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
+      title: 'Microsoft Teams integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
@@ -302,6 +401,7 @@ const Pricing = () => {
       },
     } as TeamsFeatures,
     businessFeatures: {
+      title: 'Business Support Features',
       features: {
         '24/7 Email support': true,
         'License management': false,
@@ -327,6 +427,7 @@ const Pricing = () => {
     priceUnits: '/user/mo',
     description: 'When your team wants the full-featured experience',
     coreFeatures: {
+      title: 'Core Features',
       features: {
         'Number of teams': 'Unlimited',
         'Number of rooms': 'Unlimited',
@@ -344,6 +445,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
+      title: 'Microsoft Teams integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
@@ -355,9 +457,10 @@ const Pricing = () => {
       },
     } as TeamsFeatures,
     businessFeatures: {
+      title: 'Business Support Features',
       features: {
         '24/7 Email support': true,
-        'License management': false,
+        'License management': true,
         'Phone support': false,
         'Dedicated Teraphone account partner': false,
         'Onboarding and training': false,
@@ -380,6 +483,7 @@ const Pricing = () => {
     priceUnits: '',
     description: 'When your organization has special requirements',
     coreFeatures: {
+      title: 'Core Features',
       features: {
         'Number of teams': 'Unlimited',
         'Number of rooms': 'Unlimited',
@@ -397,6 +501,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
+      title: 'Microsoft Teams integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
@@ -408,6 +513,7 @@ const Pricing = () => {
       },
     } as TeamsFeatures,
     businessFeatures: {
+      title: 'Business Support Features',
       features: {
         '24/7 Email support': true,
         'License management': true,
