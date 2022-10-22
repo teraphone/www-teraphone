@@ -1,15 +1,18 @@
 import {
   Box,
+  Button,
   Container,
   Stack,
   Switch,
   Typography,
   useMediaQuery,
   Theme,
+  Paper,
 } from '@mui/material';
 import { theme } from '../styles/themes';
 import Head from 'next/head';
 import { useState } from 'react';
+import Link from '../components/Link';
 
 const HeroSection = (props: {
   primaryText: string;
@@ -20,7 +23,7 @@ const HeroSection = (props: {
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
   const md = useMediaQuery(theme.breakpoints.up('md'));
   const lg = useMediaQuery(theme.breakpoints.up('lg'));
-  const heroFontSize = lg ? 64 : md ? 64 : sm ? 40 : 30;
+  const heroFontSize = lg ? 64 : md ? 64 : sm ? 40 : 28;
 
   return (
     <Box sx={{ py: 4 }}>
@@ -170,6 +173,92 @@ interface Plan {
   ctaEnabled: boolean;
 }
 
+const SinglePlanView = (props: { plan: Plan }) => {
+  const { plan } = props;
+  const {
+    name,
+    price,
+    priceAlt,
+    priceUnits,
+    description,
+    coreFeatures,
+    teamsFeatures,
+    businessFeatures,
+    ctaText,
+    ctaLink,
+    ctaEnabled,
+  } = plan;
+
+  return (
+    <Paper
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'center',
+        borderRadius: 2,
+        my: 4,
+        p: 4,
+      }}
+    >
+      <Box sx={{ py: 2 }}>
+        <Typography variant="h2" sx={{ fontSize: 24, fontWeight: 'normal' }}>
+          {name}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          py: 2,
+        }}
+      >
+        <Typography variant="body1" sx={{ fontSize: 36, fontWeight: 'bold' }}>
+          {price}
+        </Typography>
+        <Typography variant="body1" sx={{ fontSize: 20, mt: 1 }}>
+          {priceUnits}
+        </Typography>
+      </Box>
+      <Box sx={{ py: 2 }}>
+        <Typography variant="body1" sx={{ fontSize: 24 }}>
+          {description}
+        </Typography>
+      </Box>
+      <Box sx={{ py: 2 }}>
+        <Button
+          disabled={!ctaEnabled}
+          fullWidth
+          variant="contained"
+          href={ctaLink}
+          target="_blank"
+          disableElevation
+        >
+          {ctaText}
+        </Button>
+      </Box>
+    </Paper>
+  );
+};
+
+const PlansAndFeatures = (props: {
+  theme: Theme;
+  trialPlan: Plan;
+  proPlan: Plan;
+  enterprisePlan: Plan;
+}) => {
+  const { theme, trialPlan, proPlan, enterprisePlan } = props;
+  const md = useMediaQuery(theme.breakpoints.up('md'));
+
+  return (
+    <>
+      <SinglePlanView plan={trialPlan} />
+      <SinglePlanView plan={proPlan} />
+      <SinglePlanView plan={enterprisePlan} />
+    </>
+  );
+};
+
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annually'>(
     'annually'
@@ -180,10 +269,10 @@ const Pricing = () => {
 
   const trialPlan: Plan = {
     name: 'TRIAL',
-    price: '30 Days Free',
+    price: 'Free',
     priceAlt: 'Free',
     priceUnits: '',
-    description: 'When you just want to try things out',
+    description: '30-day trial to test things out',
     coreFeatures: {
       features: {
         'Number of teams': 'Unlimited',
@@ -366,6 +455,12 @@ const Pricing = () => {
             billingPeriod={billingPeriod}
             setBillingPeriod={setBillingPeriod}
             theme={theme}
+          />
+          <PlansAndFeatures
+            theme={theme}
+            trialPlan={trialPlan}
+            proPlan={proPlan}
+            enterprisePlan={enterprisePlan}
           />
         </Box>
       </Container>
