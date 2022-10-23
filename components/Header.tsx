@@ -20,6 +20,7 @@ import Link, { NextLinkComposed } from './Link';
 
 const pages = [
   { name: 'Home', url: '/' },
+  { name: 'Pricing', url: '/pricing' },
   { name: 'Help', url: '/help' },
   { name: 'Download', url: '/download' },
 ];
