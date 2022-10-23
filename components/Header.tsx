@@ -92,6 +92,27 @@ const Header = () => {
                   {page.name}
                 </Button>
               ))}
+              <Button
+                component={NextLinkComposed}
+                key="Sign-In"
+                onClick={handleCloseNavMenu}
+                to="https://web.teraphone.app"
+                target="_blank"
+                variant="outlined"
+                sx={{
+                  my: 2,
+                  display: 'block',
+                  minWidth: 0,
+                  color: 'white',
+                  borderColor: 'white',
+                  '&:hover': {
+                    color: 'white',
+                    borderColor: 'white',
+                  },
+                }}
+              >
+                Sign<span style={{ whiteSpace: 'nowrap' }}> </span>In
+              </Button>
             </Box>
             <IconButton
               size="large"
@@ -156,19 +177,21 @@ const Header = () => {
             </MenuList>
             <Box onClick={() => handleCloseNavMenu()} p={2} textAlign="center">
               <Button
-                color="success"
                 component={NextLinkComposed}
-                onClick={() => {
-                  handleCloseNavMenu();
-                  setTimeout(() => {
-                    const emailInput = document.getElementsByName('email')[0];
-                    if (emailInput) emailInput.focus();
-                  }, 100);
+                onClick={handleCloseNavMenu}
+                to="https://web.teraphone.app"
+                target="_blank"
+                variant="outlined"
+                sx={{
+                  color: 'black',
+                  borderColor: 'black',
+                  '&:hover': {
+                    color: 'black',
+                    borderColor: 'black',
+                  },
                 }}
-                to="/#signup"
-                variant="contained"
               >
-                Sign up
+                Sign In
               </Button>
             </Box>
           </Paper>
