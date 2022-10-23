@@ -17,7 +17,6 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { theme } from '../styles/themes';
 import Head from 'next/head';
 import { useState } from 'react';
-import Link from '../components/Link';
 
 const HeroSection = (props: {
   primaryText: string;
@@ -32,10 +31,14 @@ const HeroSection = (props: {
 
   return (
     <Box sx={{ py: 4 }}>
-      <Typography variant="h1" fontSize={heroFontSize}>
+      <Typography variant="h1" fontSize={heroFontSize ? heroFontSize : 64}>
         {primaryText}
       </Typography>
-      <Typography variant="h1" color="primary" fontSize={heroFontSize}>
+      <Typography
+        variant="h1"
+        color="primary"
+        fontSize={heroFontSize ? heroFontSize : 64}
+      >
         {secondaryText}
       </Typography>
     </Box>
