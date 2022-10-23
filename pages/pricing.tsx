@@ -651,7 +651,13 @@ const FAQItem = (props: { question: string; answer: string }) => {
       sx={{ p: 4, mb: 4, cursor: 'pointer' }}
       onClick={() => setExpanded(!expanded)}
     >
-      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
         <Typography variant="h3" sx={{ textAlign: 'left' }}>
           {question}
         </Typography>
