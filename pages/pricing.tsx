@@ -395,6 +395,158 @@ const PriceGridItem = (props: { plan: Plan; xs: number }) => {
   );
 };
 
+const PriceAltGridItem = (props: { plan: Plan; xs: number }) => {
+  const { plan, xs } = props;
+  const { name, priceAlt, ctaText, ctaLink, ctaEnabled } = plan;
+  return (
+    <Grid item xs={xs}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+          borderRadius: 2,
+          borderStyle: 'solid',
+          borderColor: '#eee',
+          p: 2,
+          height: '100%',
+        }}
+      >
+        <Box sx={{ py: 1 }}>
+          <Typography variant="h2" sx={{ fontSize: 16, fontWeight: 'normal' }}>
+            {name}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            py: 1,
+          }}
+        >
+          <Typography variant="body1" sx={{ fontSize: 20, fontWeight: 'bold' }}>
+            {priceAlt}
+          </Typography>
+        </Box>
+        <Box sx={{ py: 1 }}>
+          <Button
+            disabled={!ctaEnabled}
+            fullWidth
+            variant="outlined"
+            href={ctaLink}
+            target="_blank"
+            disableElevation
+            size="small"
+          >
+            {ctaText}
+          </Button>
+        </Box>
+      </Box>
+    </Grid>
+  );
+};
+
+const MultiPlanFeatureStack = (props: {
+  trial: FeatureSpec;
+  pro: FeatureSpec;
+  enterprise: FeatureSpec;
+  defaultExpanded: boolean;
+}) => {
+  const { trial, pro, enterprise, defaultExpanded } = props;
+  const { title, features: trialFeatures } = trial;
+  const { features: proFeatures } = pro;
+  const { features: enterpriseFeatures } = enterprise;
+  const [expanded, setExpanded] = useState(defaultExpanded);
+  const names = Object.keys(trialFeatures);
+  return (
+    <Box
+      sx={{
+        my: 2,
+        borderStyle: 'solid',
+        borderColor: '#eee',
+        borderRadius: 2,
+      }}
+    >
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            p: 2,
+            cursor: 'pointer',
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 'normal', color: 'primary.main' }}
+          >
+            {title}
+          </Typography>
+          <Box>
+            {expanded ? (
+              <ArrowDownIcon sx={{ fontSize: 24, color: 'primary.main' }} />
+            ) : (
+              <ArrowRightIcon sx={{ fontSize: 24, color: 'primary.main' }} />
+            )}
+          </Box>
+        </Box>
+        {expanded &&
+          names.map((name) => {
+            const values = [
+              trialFeatures[name],
+              proFeatures[name],
+              enterpriseFeatures[name],
+            ];
+
+            return (
+              <Grid
+                container
+                spacing={0}
+                sx={{ p: 0, borderTopStyle: 'solid', borderTopColor: '#eee' }}
+              >
+                <Grid item xs={3}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      p: 2,
+                      fontSize: 16,
+                      fontWeight: '400',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {name}
+                  </Typography>
+                </Grid>
+                {values.map((value) => {
+                  const valueIcon =
+                    value === true ? (
+                      <CheckCircleIcon sx={{ fontSize: 16 }} />
+                    ) : value === false ? (
+                      <RemoveIcon sx={{ fontSize: 16 }} />
+                    ) : (
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 'bold', textAlign: 'center' }}
+                      >
+                        {value}
+                      </Typography>
+                    );
+                  return (
+                    <Grid item xs={3} sx={{ p: 2, textAlign: 'center' }}>
+                      {valueIcon}
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            );
+          })}
+      </Box>
+    </Box>
+  );
+};
+
 const MultiPlanView = (props: {
   trialPlan: Plan;
   proPlan: Plan;
@@ -402,11 +554,63 @@ const MultiPlanView = (props: {
 }) => {
   const { trialPlan, proPlan, enterprisePlan } = props;
   return (
-    <Grid container spacing={2}>
-      <PriceGridItem plan={trialPlan} xs={4} />
-      <PriceGridItem plan={proPlan} xs={4} />
-      <PriceGridItem plan={enterprisePlan} xs={4} />
-    </Grid>
+    <>
+      <Grid container spacing={2}>
+        <PriceGridItem plan={trialPlan} xs={4} />
+        <PriceGridItem plan={proPlan} xs={4} />
+        <PriceGridItem plan={enterprisePlan} xs={4} />
+      </Grid>
+      <Paper sx={{ my: 4, p: 4 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <Box sx={{ p: 2 }}>
+              <Box sx={{ py: 1, textAlign: 'left' }}>
+                <Typography
+                  variant="h2"
+                  sx={{ fontSize: 16, fontWeight: 'normal' }}
+                >
+                  FEATURES
+                </Typography>
+              </Box>
+              <Box sx={{ py: 1, textAlign: 'left' }}>
+                <Typography
+                  variant="body1"
+                  sx={{ fontSize: 20, fontWeight: 'bold' }}
+                >
+                  Features by plan
+                </Typography>
+              </Box>
+              <Box sx={{ py: 1, textAlign: 'left' }}>
+                <Typography variant="body1" sx={{ fontSize: 16 }}>
+                  Find the plan that makes the most sense for you or your team
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <PriceAltGridItem plan={trialPlan} xs={3} />
+          <PriceAltGridItem plan={proPlan} xs={3} />
+          <PriceAltGridItem plan={enterprisePlan} xs={3} />
+        </Grid>
+        <MultiPlanFeatureStack
+          trial={trialPlan.coreFeatures}
+          pro={proPlan.coreFeatures}
+          enterprise={enterprisePlan.coreFeatures}
+          defaultExpanded={true}
+        />
+        <MultiPlanFeatureStack
+          trial={trialPlan.teamsFeatures}
+          pro={proPlan.teamsFeatures}
+          enterprise={enterprisePlan.teamsFeatures}
+          defaultExpanded={false}
+        />
+        <MultiPlanFeatureStack
+          trial={trialPlan.businessFeatures}
+          pro={proPlan.businessFeatures}
+          enterprise={enterprisePlan.businessFeatures}
+          defaultExpanded={false}
+        />
+      </Paper>
+    </>
   );
 };
 
