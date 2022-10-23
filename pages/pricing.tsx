@@ -178,6 +178,11 @@ interface Plan {
   ctaEnabled: boolean;
 }
 
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
 const SinglePlanFeatureStack = (props: { features: FeatureSpec }) => {
   const { title, features } = props.features;
   const [expanded, setExpanded] = useState(false);
@@ -638,13 +643,67 @@ const PlansAndFeatures = (props: {
   );
 };
 
+const FAQItem = (props: { question: string; answer: string }) => {
+  const { question, answer } = props;
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <Paper
+      sx={{ p: 4, mb: 4, cursor: 'pointer' }}
+      onClick={() => setExpanded(!expanded)}
+    >
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Typography variant="h3" sx={{ textAlign: 'left' }}>
+          {question}
+        </Typography>
+        <Box sx={{ textAlign: 'right', ml: 2 }}>
+          {expanded ? <ArrowDownIcon /> : <ArrowRightIcon />}
+        </Box>
+      </Box>
+      {expanded && (
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="body1" sx={{ textAlign: 'left' }}>
+            {answer}
+          </Typography>
+        </Box>
+      )}
+    </Paper>
+  );
+};
+
+const FAQSection = (props: { theme: Theme; FAQs: FAQ[] }) => {
+  const { theme, FAQs } = props;
+  const md = useMediaQuery(theme.breakpoints.up('md'));
+  return (
+    <Box sx={{ my: 4, display: 'flex', flexDirection: md ? 'row' : 'column' }}>
+      <Box>
+        <Typography
+          variant="h2"
+          sx={{ fontSize: 48, textAlign: md ? 'left' : 'center', mb: 4 }}
+        >
+          Frequently Asked Questions
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          ml: md ? 4 : 0,
+          width: '100%',
+        }}
+      >
+        {FAQs.map((faq) => (
+          <FAQItem question={faq.question} answer={faq.answer} />
+        ))}
+      </Box>
+    </Box>
+  );
+};
+
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annually'>(
     'annually'
   );
-
   const monthlyPrice = 25 * (1 + 0.2 * (billingPeriod === 'monthly' ? 1 : 0));
-  console.log('monthlyPrice:', monthlyPrice);
 
   const trialPlan: Plan = {
     name: 'TRIAL',
@@ -814,6 +873,29 @@ const Pricing = () => {
     ctaEnabled: true,
   };
 
+  const FAQs: FAQ[] = [
+    {
+      question: 'What happens at the end of the trial?',
+      answer:
+        'At the end of your 30-day trial, you will be unable to sign in to Teraphone until a subscription has been assigned to your account. You can purchase a subscription yourself, or ask your manager or IT administrator to purchase a subscription and assign it to your account.',
+    },
+    {
+      question: 'Can we try Teraphone with multiple users?',
+      answer:
+        'Absolutely, invite your entire team to try Teraphone free for 30 days. No purchase, commitment, or credit card required.',
+    },
+    {
+      question: 'What payment methods do you accept?',
+      answer:
+        'Teraphone payments and subscriptions are managed by Microsoft through the AppSource Marketplace. Credit cards supported: Visa, Master Card, American Express, and Discover.',
+    },
+    {
+      question: 'Do I need a Microsoft Teams account?',
+      answer:
+        'If your organization does not use Microsoft Teams then we do not recommend using Teraphone. Teraphone uses Microsoft as its identity provider. You will need a Microsoft account in order to sign in. Teraphone uses Microsoft Teams to determine which contact groups to import into Teraphone.',
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -850,6 +932,7 @@ const Pricing = () => {
             proPlan={proPlan}
             enterprisePlan={enterprisePlan}
           />
+          <FAQSection theme={theme} FAQs={FAQs} />
         </Box>
       </Container>
     </>
