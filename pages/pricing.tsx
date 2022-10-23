@@ -24,21 +24,18 @@ const HeroSection = (props: {
   theme: Theme;
 }) => {
   const { primaryText, secondaryText, theme } = props;
+  const xs = useMediaQuery(theme.breakpoints.up('xs'));
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
   const md = useMediaQuery(theme.breakpoints.up('md'));
   const lg = useMediaQuery(theme.breakpoints.up('lg'));
-  const heroFontSize = lg ? 64 : md ? 64 : sm ? 40 : 28;
+  const heroFontSize = lg ? 64 : md ? 64 : sm ? 40 : xs ? 28 : 64;
 
   return (
     <Box sx={{ py: 4 }}>
-      <Typography variant="h1" fontSize={heroFontSize ? heroFontSize : 64}>
+      <Typography variant="h1" fontSize={heroFontSize}>
         {primaryText}
       </Typography>
-      <Typography
-        variant="h1"
-        color="primary"
-        fontSize={heroFontSize ? heroFontSize : 64}
-      >
+      <Typography variant="h1" color="primary" fontSize={heroFontSize}>
         {secondaryText}
       </Typography>
     </Box>
