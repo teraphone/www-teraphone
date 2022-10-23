@@ -136,7 +136,7 @@ interface CoreFeatures extends FeatureSpec {
 }
 
 interface TeamsFeatures extends FeatureSpec {
-  title: 'Microsoft Teams integrations';
+  title: 'Microsoft Teams Integrations';
   features: {
     'Single Sign-On (SSO)': FeatureValue;
     'Import Team memberships': FeatureValue;
@@ -671,7 +671,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
-      title: 'Microsoft Teams integrations',
+      title: 'Microsoft Teams Integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
@@ -727,7 +727,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
-      title: 'Microsoft Teams integrations',
+      title: 'Microsoft Teams Integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
@@ -783,7 +783,7 @@ const Pricing = () => {
       },
     } as CoreFeatures,
     teamsFeatures: {
-      title: 'Microsoft Teams integrations',
+      title: 'Microsoft Teams Integrations',
       features: {
         'Single Sign-On (SSO)': true,
         'Import Team memberships': true,
