@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Theme,
   Paper,
+  Grid,
 } from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/NavigateNext';
 import ArrowDownIcon from '@mui/icons-material/ExpandMore';
@@ -336,7 +337,78 @@ const SinglePlanView = (props: { plan: Plan }) => {
   );
 };
 
-// todo: add MultiPlanView
+const PriceGridItem = (props: { plan: Plan; xs: number }) => {
+  const { plan, xs } = props;
+  const { name, price, priceUnits, description, ctaText, ctaLink, ctaEnabled } =
+    plan;
+  return (
+    <Grid item xs={xs}>
+      <Paper
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+          borderRadius: 2,
+          p: 4,
+          height: '100%',
+        }}
+      >
+        <Box sx={{ py: 2 }}>
+          <Typography variant="h2" sx={{ fontSize: 24, fontWeight: 'normal' }}>
+            {name}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            py: 2,
+          }}
+        >
+          <Typography variant="body1" sx={{ fontSize: 36, fontWeight: 'bold' }}>
+            {price}
+          </Typography>
+          <Typography variant="body1" sx={{ fontSize: 20, mt: 1 }}>
+            {priceUnits}
+          </Typography>
+        </Box>
+        <Box sx={{ py: 2, height: '100%' }}>
+          <Typography variant="body1" sx={{ fontSize: 20, textAlign: 'left' }}>
+            {description}
+          </Typography>
+        </Box>
+        <Box sx={{ py: 2 }}>
+          <Button
+            disabled={!ctaEnabled}
+            fullWidth
+            variant="contained"
+            href={ctaLink}
+            target="_blank"
+            disableElevation
+          >
+            {ctaText}
+          </Button>
+        </Box>
+      </Paper>
+    </Grid>
+  );
+};
+
+const MultiPlanView = (props: {
+  trialPlan: Plan;
+  proPlan: Plan;
+  enterprisePlan: Plan;
+}) => {
+  const { trialPlan, proPlan, enterprisePlan } = props;
+  return (
+    <Grid container spacing={2}>
+      <PriceGridItem plan={trialPlan} xs={4} />
+      <PriceGridItem plan={proPlan} xs={4} />
+      <PriceGridItem plan={enterprisePlan} xs={4} />
+    </Grid>
+  );
+};
 
 const PlansAndFeatures = (props: {
   theme: Theme;
@@ -347,7 +419,13 @@ const PlansAndFeatures = (props: {
   const { theme, trialPlan, proPlan, enterprisePlan } = props;
   const md = useMediaQuery(theme.breakpoints.up('md'));
 
-  return (
+  return md ? (
+    <MultiPlanView
+      trialPlan={trialPlan}
+      proPlan={proPlan}
+      enterprisePlan={enterprisePlan}
+    />
+  ) : (
     <>
       <SinglePlanView plan={trialPlan} />
       <SinglePlanView plan={proPlan} />
