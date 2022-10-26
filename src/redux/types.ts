@@ -31,3 +31,19 @@ export type AuthUserInfo = {
 export type ConnectionTestToken = {
   roomToken: string;
 };
+
+export type ResolveRequest = {
+  token: string;
+};
+
+export type ResolveResponse = {
+  subscriptionId: string;
+};
+
+export type ActivateRequest = {
+  subscriptionId: string;
+};
+
+export type ActivateResponse = {
+  subscriptionId: string;
+};

@@ -6,6 +6,10 @@ import {
   AuthResponse,
   AuthRequest,
   ConnectionTestToken,
+  ResolveRequest,
+  ResolveResponse,
+  ActivateRequest,
+  ActivateResponse,
 } from './types';
 
 export const peachoneApi = createApi({
@@ -40,6 +44,26 @@ export const peachoneApi = createApi({
         body,
       }),
     }),
+    resolve: builder.mutation<
+      PeachoneResponse<ResolveResponse>,
+      ResolveRequest
+    >({
+      query: (body) => ({
+        url: '/subscriptions/resolve',
+        method: 'POST',
+        body,
+      }),
+    }),
+    activate: builder.mutation<
+      PeachoneResponse<ActivateResponse>,
+      ActivateRequest
+    >({
+      query: (body) => ({
+        url: '/subscriptions/activate',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -48,4 +72,6 @@ export const {
   useGetPrivateQuery,
   useGetConnectionTestTokenQuery,
   useAuthMutation,
+  useResolveMutation,
+  useActivateMutation,
 } = peachoneApi;
