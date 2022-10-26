@@ -64,6 +64,14 @@ export const peachoneApi = createApi({
         body,
       }),
     }),
+    // TODO: Add GET /subscriptions
+    // - Returns map of maps of Subscription objects where the keys are tenant IDs, then subscription ID
+    // TODO: Add GET /subscriptions/:tid/users
+    // - Returns array of TenantUser objects
+    // TODO: Add PATCH /subscriptions/:tid/users/:oid
+    // - { subscriptionId: 'sid' } // assign
+    // - { subscriptionId: '' } // unassign
+    // - Returns updated user: TenantUser object
   }),
 });
 

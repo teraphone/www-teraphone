@@ -45,5 +45,55 @@ export type ActivateRequest = {
 };
 
 export type ActivateResponse = {
-  subscriptionId: string;
+  subscription: Subscription;
 };
+
+export type TenantUser = {
+  oid: string;
+  name: string;
+  email: string;
+  tid: string;
+  createdAt: number;
+  updatedAt: number;
+  subscriptionId: string;
+  trialActivated: boolean;
+  trialExpiresAt: number;
+};
+
+export type Subscription = {
+  autoRenew: boolean;
+  beneficiaryEmail: string;
+  beneficiaryOid: string;
+  beneficiaryTid: string;
+  beneficiaryPuid: string;
+  createdAt: number;
+  id: string;
+  isTest: boolean;
+  name: string;
+  offerId: string;
+  planId: string;
+  publisherId: string;
+  purchaserEmail: string;
+  purchaserOid: string;
+  purchaserTid: string;
+  purchaserPuid: string;
+  quantity: number;
+  saasSubscriptionStatus: SubscriptionStatusEnum;
+  sandboxType: SandboxTypeEnum;
+  sessionId: string;
+  sessionMode: SessionModeEnum;
+  storeFront: string;
+  subscriptionTermStartDate: number;
+  subscriptionTermEndDate: number;
+};
+
+export type SubscriptionStatusEnum =
+  | 'NotStarted'
+  | 'PendingFulfillmentStart'
+  | 'Subscribed'
+  | 'Suspended'
+  | 'Unsubscribed';
+
+export type SandboxTypeEnum = 'None' | 'Csp';
+
+export type SessionModeEnum = 'None' | 'DryRun';
