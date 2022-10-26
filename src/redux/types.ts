@@ -12,6 +12,14 @@ export type AuthRequest = {
   msAccessToken: string;
 };
 
+export type AuthResponse = {
+  accessToken: string;
+  accessTokenExpiration: number;
+  refreshToken: string;
+  refreshTokenExpiration: number;
+  userInfo: AuthUserInfo;
+};
+
 export type AuthUserInfo = {
   oid: string;
   tid: string;

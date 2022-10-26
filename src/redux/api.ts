@@ -1,18 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { RootState } from './store';
 import {
   PeachoneResponse,
   Welcome,
-  AuthUserInfo,
+  AuthResponse,
   AuthRequest,
   ConnectionTestToken,
 } from './types';
 
 export const peachoneApi = createApi({
   reducerPath: 'peachoneApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.teraphone.app/v1' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://api.teraphone.app/v1',
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.accessToken;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getPublic: builder.query<PeachoneResponse<Welcome>, void>({
       query: () => '/public',
+    }),
+    getPrivate: builder.query<PeachoneResponse<Welcome>, void>({
+      query: () => '/private',
     }),
     getConnectionTestToken: builder.query<
       PeachoneResponse<ConnectionTestToken>,
@@ -20,7 +33,7 @@ export const peachoneApi = createApi({
     >({
       query: () => '/public/connection-test-token',
     }),
-    auth: builder.mutation<PeachoneResponse<AuthUserInfo>, AuthRequest>({
+    auth: builder.mutation<PeachoneResponse<AuthResponse>, AuthRequest>({
       query: (body) => ({
         url: '/public/auth',
         method: 'POST',
@@ -32,6 +45,7 @@ export const peachoneApi = createApi({
 
 export const {
   useGetPublicQuery,
+  useGetPrivateQuery,
   useGetConnectionTestTokenQuery,
   useAuthMutation,
 } = peachoneApi;

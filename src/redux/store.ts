@@ -9,7 +9,11 @@ export const store = configureStore({
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(peachoneApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredPaths: ['auth'],
+      },
+    }).concat(peachoneApi.middleware),
 });
 
 setupListeners(store.dispatch);
