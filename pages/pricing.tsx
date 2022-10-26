@@ -911,12 +911,13 @@ const Pricing = () => {
           content="View subscription and pricing options."
         />
       </Head>
-      <Container>
+      <Container sx={{ p: 0 }}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             textAlign: 'center',
+            p: 0,
           }}
         >
           <HeroSection
