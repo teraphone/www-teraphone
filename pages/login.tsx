@@ -13,6 +13,10 @@ const oboScopes = {
   scopes: ['api://9ef60b2f-3246-4390-8e17-a57478e7ec45/User.Read'],
 };
 
+// TODO: Refactor to use async function in useEffect
+// const handlePeachoneAuth = async () {
+// }
+
 const Login = () => {
   const { instance, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();

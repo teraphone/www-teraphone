@@ -5,13 +5,18 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../src/redux/hooks';
 import { selectAccessToken } from '../../src/redux/AuthSlice';
+import { useResolveMutation, useActivateMutation } from '../../src/redux/api';
 
 // TODO:
-// - [x] auth with peachone
-// - [ ] exchange token with resolve api to get subscription
-// -   use MS subscription `token`
+// - [x] Auth with peachone
+// - [x] Exchange token with resolve API to get subscription
+// -   Use MS subscription `token`
 // - send subscriptionId to activate api
 // - redirect to /subscriptions/overview
+
+// TODO: Refactor to use async function in useEffect
+// const handleResolveSubscription = async () {
+// }
 
 const Activate = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -23,6 +28,11 @@ const Activate = (): JSX.Element => {
     skip: !isAuthenticated,
   });
   const peachoneAccessToken = useAppSelector(selectAccessToken);
+  const [resolveSubscription, { status }] = useResolveMutation();
+  const [activateSubscription, { status: activateStatus }] =
+    useActivateMutation();
+
+  const { token } = router.query;
 
   useEffect(() => {
     if (inProgress === InteractionStatus.None) {
@@ -33,6 +43,16 @@ const Activate = (): JSX.Element => {
         };
         console.log('redirecting to:', urlObj);
         router.push(urlObj).catch(console.error);
+      } else if (typeof token === 'string') {
+        console.log('Resolving subscription...');
+        resolveSubscription({ token })
+          .unwrap()
+          .then(
+            ({ subscriptionId }) =>
+              console.log('subscriptionId:', subscriptionId)
+            // TODO: Send subscriptionId to activate api
+            // TODO: Redirect to /subscriptions/overview
+          );
       }
     }
   }, [
@@ -41,7 +61,9 @@ const Activate = (): JSX.Element => {
     instance,
     isAuthenticated,
     peachoneAccessToken,
+    resolveSubscription,
     router,
+    token,
   ]);
 
   if (isLoading) {
