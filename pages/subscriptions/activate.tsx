@@ -45,23 +45,27 @@ const Activate = (): JSX.Element => {
             console.log('redirecting to:', urlObj);
             router.push(urlObj);
           } else if (typeof token === 'string') {
-            console.log('Resolving subscription...');
             const { subscriptionId } = await resolveSubscription({
               token,
             }).unwrap();
-            console.log('subscriptionId:', subscriptionId);
+            console.log('Resolved subscription: ', subscriptionId);
             // TODO: Send subscriptionId to activate api
+            const subscription = await activateSubscription({
+              subscriptionId,
+            }).unwrap();
+            console.log('Activated subscription: ', subscription);
             // TODO: Redirect to /subscriptions/overview
+            // router.push('/subscriptions/overview');
           }
         }
       } catch (e) {
+        // TODO: Expose error to user
         console.error(e);
       }
     })();
   }, [
-    dispatch,
+    activateSubscription,
     inProgress,
-    instance,
     isAuthenticated,
     peachoneAccessToken,
     resolveSubscription,
