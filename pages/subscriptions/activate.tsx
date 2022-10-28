@@ -14,10 +14,6 @@ import { useResolveMutation, useActivateMutation } from '../../src/redux/api';
 // - send subscriptionId to activate api
 // - redirect to /subscriptions/overview
 
-// TODO: Refactor to use async function in useEffect
-// const handleResolveSubscription = async () {
-// }
-
 const Activate = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { inProgress, instance } = useMsal();
@@ -35,26 +31,33 @@ const Activate = (): JSX.Element => {
   const { token } = router.query;
 
   useEffect(() => {
-    if (inProgress === InteractionStatus.None) {
-      if (!isAuthenticated || !peachoneAccessToken) {
-        const urlObj = {
-          pathname: '/login',
-          query: { destination: '/subscriptions/activate', ...router.query },
-        };
-        console.log('redirecting to:', urlObj);
-        router.push(urlObj).catch(console.error);
-      } else if (typeof token === 'string') {
-        console.log('Resolving subscription...');
-        resolveSubscription({ token })
-          .unwrap()
-          .then(
-            ({ subscriptionId }) =>
-              console.log('subscriptionId:', subscriptionId)
+    (async () => {
+      try {
+        if (inProgress === InteractionStatus.None) {
+          if (!isAuthenticated || !peachoneAccessToken) {
+            const urlObj = {
+              pathname: '/login',
+              query: {
+                destination: '/subscriptions/activate',
+                ...router.query,
+              },
+            };
+            console.log('redirecting to:', urlObj);
+            router.push(urlObj);
+          } else if (typeof token === 'string') {
+            console.log('Resolving subscription...');
+            const { subscriptionId } = await resolveSubscription({
+              token,
+            }).unwrap();
+            console.log('subscriptionId:', subscriptionId);
             // TODO: Send subscriptionId to activate api
             // TODO: Redirect to /subscriptions/overview
-          );
+          }
+        }
+      } catch (e) {
+        console.error(e);
       }
-    }
+    })();
   }, [
     dispatch,
     inProgress,

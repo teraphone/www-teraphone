@@ -13,10 +13,6 @@ const oboScopes = {
   scopes: ['api://9ef60b2f-3246-4390-8e17-a57478e7ec45/User.Read'],
 };
 
-// TODO: Refactor to use async function in useEffect
-// const handlePeachoneAuth = async () {
-// }
-
 const Login = () => {
   const { instance, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
@@ -46,26 +42,30 @@ const Login = () => {
   }, [dispatch, inProgress, instance, isAuthenticated]);
 
   useEffect(() => {
-    if (
-      isAuthenticated &&
-      msAccessToken &&
-      status === QueryStatus.uninitialized
-    ) {
-      console.log('msAccessToken:', msAccessToken);
-      console.log('status:', status);
-      // Start POST mutation to peachone auth
-      peachoneAuth({ msAccessToken })
-        .unwrap()
-        .then((data) => {
+    (async () => {
+      try {
+        if (
+          isAuthenticated &&
+          msAccessToken &&
+          status === QueryStatus.uninitialized
+        ) {
+          console.log('msAccessToken:', msAccessToken);
+          console.log('status:', status);
+
+          // Start POST mutation to peachone auth
+          const data = await peachoneAuth({ msAccessToken }).unwrap();
+
           if (data) {
             console.log('got peachone response:', data);
             const urlObj = { pathname: targetPage, query };
             console.log('redirecting to:', urlObj);
-            router.push(urlObj).catch(console.error);
+            router.push(urlObj);
           }
-        })
-        .catch(console.error);
-    }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   }, [
     isAuthenticated,
     msAccessToken,
