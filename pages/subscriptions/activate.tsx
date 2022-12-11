@@ -1,32 +1,22 @@
-import { useGetPrivateQuery } from '../../src/redux/api';
+import { useEffect, useState } from 'react';
 import { InteractionStatus } from '@azure/msal-browser';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../src/redux/hooks';
+import { useAppSelector } from '../../src/redux/hooks';
 import { selectAccessToken } from '../../src/redux/AuthSlice';
 import { useResolveMutation, useActivateMutation } from '../../src/redux/api';
-
-// TODO:
-// - [x] Auth with peachone
-// - [x] Exchange token with resolve API to get subscription
-// -   Use MS subscription `token`
-// - send subscriptionId to activate api
-// - redirect to /subscriptions/overview
+import { Alert, Box, CircularProgress } from '@mui/material';
+import { getErrorMessage } from '../../src/utils/errors';
 
 const Activate = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const { inProgress, instance } = useMsal();
-  // const { data, error, isLoading } = useGetPublicQuery();
+  const { inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
-  const { data, error, isLoading } = useGetPrivateQuery(undefined, {
-    skip: !isAuthenticated,
-  });
   const peachoneAccessToken = useAppSelector(selectAccessToken);
-  const [resolveSubscription, { status }] = useResolveMutation();
-  const [activateSubscription, { status: activateStatus }] =
-    useActivateMutation();
+  const [resolveSubscription] = useResolveMutation();
+  const [activateSubscription] = useActivateMutation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const { token } = router.query;
 
@@ -49,18 +39,32 @@ const Activate = (): JSX.Element => {
               token,
             }).unwrap();
             console.log('Resolved subscription: ', subscriptionId);
-            // TODO: Send subscriptionId to activate api
             const subscription = await activateSubscription({
               subscriptionId,
             }).unwrap();
             console.log('Activated subscription: ', subscription);
-            // TODO: Redirect to /subscriptions/overview
-            // router.push('/subscriptions/overview');
+            setIsLoading(false);
+            router.push('/subscriptions');
           }
         }
-      } catch (e) {
-        // TODO: Expose error to user
-        console.error(e);
+      } catch (error) {
+        // eslint-disable-next-line
+        // @ts-ignore
+        window.error = error;
+        console.error(
+          'An unknown error occured while activating the subscription: ',
+          error
+        );
+        setIsLoading(false);
+
+        const message = getErrorMessage(error);
+        if (message) {
+          setError(message);
+        } else {
+          setError(
+            'An unknown error occured while activating the subscription.'
+          );
+        }
       }
     })();
   }, [
@@ -73,23 +77,28 @@ const Activate = (): JSX.Element => {
     token,
   ]);
 
+  if (error) {
+    return <Alert severity="error">{error}</Alert>;
+  }
+
   if (isLoading) {
     return (
-      <div>
-        <p>Loading...</p>
-      </div>
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        <CircularProgress />
+        <p>Activating subscription...</p>
+      </Box>
     );
   }
 
-  if (error) {
-    return (
-      <div>
-        <p>Error: {JSON.stringify(error)}</p>
-      </div>
-    );
-  }
-
-  return <div>Success: {JSON.stringify(data)}</div>;
+  return <div>Success</div>;
 };
 
 export default Activate;

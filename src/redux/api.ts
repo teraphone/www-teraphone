@@ -52,6 +52,14 @@ export const peachoneApi = createApi({
         url: '/subscriptions/resolve',
         method: 'POST',
         body,
+        responseHandler: async (response) => {
+          // `response` is from the from Fetch API: https://mdn.io/response
+          try {
+            return await response.clone().json();
+          } catch (error) {
+            return { detail: await response.text() };
+          }
+        },
       }),
     }),
     activate: builder.mutation<
@@ -62,6 +70,16 @@ export const peachoneApi = createApi({
         url: '/subscriptions/activate',
         method: 'POST',
         body,
+        // TODO: Check if this can be async or if response.body.asJSON() needs
+        // to be used: https://jakearchibald.com/2014/reading-responses/
+        responseHandler: async (response) => {
+          // `response` is from the from Fetch API: https://mdn.io/response
+          try {
+            return await response.clone().json();
+          } catch (error) {
+            return { detail: await response.text() };
+          }
+        },
       }),
     }),
     // TODO: Add GET /subscriptions
