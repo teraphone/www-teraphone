@@ -6,7 +6,7 @@ import { useAppSelector } from '../../src/redux/hooks';
 import { selectAccessToken } from '../../src/redux/AuthSlice';
 import { useResolveMutation, useActivateMutation } from '../../src/redux/api';
 import { Alert, Box, CircularProgress } from '@mui/material';
-import { getErrorMessage } from '../../src/utils/errors';
+import { getErrorMessage, ParseableErrorType } from '../../src/utils/errors';
 
 const Activate = (): JSX.Element => {
   const { inProgress } = useMsal();
@@ -48,21 +48,20 @@ const Activate = (): JSX.Element => {
           }
         }
       } catch (error) {
-        // eslint-disable-next-line
-        // @ts-ignore
-        window.error = error;
         console.error(
           'An unknown error occured while activating the subscription: ',
           error
         );
         setIsLoading(false);
 
-        const message = getErrorMessage(error);
+        const message = getErrorMessage(error as ParseableErrorType);
         if (message) {
-          setError(message);
+          setError(
+            `An error occured while activating the subscription: ${message}`
+          );
         } else {
           setError(
-            'An unknown error occured while activating the subscription.'
+            'An unknown error occured while activating the subscription'
           );
         }
       }

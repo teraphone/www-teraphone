@@ -1,4 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { RootState } from './store';
 import {
   PeachoneResponse,
@@ -11,6 +15,10 @@ import {
   ActivateRequest,
   ActivateResponse,
 } from './types';
+
+const defaultEndpointDefinition = {
+  responseHandler: 'content-type',
+} as FetchArgs;
 
 export const peachoneApi = createApi({
   reducerPath: 'peachoneApi',
@@ -26,19 +34,29 @@ export const peachoneApi = createApi({
   }),
   endpoints: (builder) => ({
     getPublic: builder.query<PeachoneResponse<Welcome>, void>({
-      query: () => '/public',
+      query: () => ({
+        ...defaultEndpointDefinition,
+        url: '/public',
+      }),
     }),
     getPrivate: builder.query<PeachoneResponse<Welcome>, void>({
-      query: () => '/private',
+      query: () => ({
+        ...defaultEndpointDefinition,
+        url: '/private',
+      }),
     }),
     getConnectionTestToken: builder.query<
       PeachoneResponse<ConnectionTestToken>,
       void
     >({
-      query: () => '/public/connection-test-token',
+      query: () => ({
+        ...defaultEndpointDefinition,
+        url: '/public/connection-test-token',
+      }),
     }),
     auth: builder.mutation<PeachoneResponse<AuthResponse>, AuthRequest>({
       query: (body) => ({
+        ...defaultEndpointDefinition,
         url: '/public/auth',
         method: 'POST',
         body,
@@ -49,17 +67,10 @@ export const peachoneApi = createApi({
       ResolveRequest
     >({
       query: (body) => ({
+        ...defaultEndpointDefinition,
         url: '/subscriptions/resolve',
         method: 'POST',
         body,
-        responseHandler: async (response) => {
-          // `response` is from the from Fetch API: https://mdn.io/response
-          try {
-            return await response.clone().json();
-          } catch (error) {
-            return { detail: await response.text() };
-          }
-        },
       }),
     }),
     activate: builder.mutation<
@@ -67,19 +78,10 @@ export const peachoneApi = createApi({
       ActivateRequest
     >({
       query: (body) => ({
+        ...defaultEndpointDefinition,
         url: '/subscriptions/activate',
         method: 'POST',
         body,
-        // TODO: Check if this can be async or if response.body.asJSON() needs
-        // to be used: https://jakearchibald.com/2014/reading-responses/
-        responseHandler: async (response) => {
-          // `response` is from the from Fetch API: https://mdn.io/response
-          try {
-            return await response.clone().json();
-          } catch (error) {
-            return { detail: await response.text() };
-          }
-        },
       }),
     }),
     // TODO: Add GET /subscriptions
