@@ -1,78 +1,103 @@
-import { useAuthMutation, useGetPublicQuery } from '../../src/redux/api';
+import { useEffect, useState } from 'react';
 import { InteractionStatus } from '@azure/msal-browser';
 import { useIsAuthenticated, useMsal } from '@azure/msal-react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { selectMSAuthResult, setMSAuthResult } from '../../src/redux/AuthSlice';
-import { useAppDispatch, useAppSelector } from '../../src/redux/hooks';
-
-const oboScopes = {
-  scopes: ['api://9ef60b2f-3246-4390-8e17-a57478e7ec45/User.Read'],
-};
+import { useAppSelector } from '../../src/redux/hooks';
+import { selectAccessToken } from '../../src/redux/AuthSlice';
+import { useResolveMutation, useActivateMutation } from '../../src/redux/api';
+import { Alert, Box, CircularProgress } from '@mui/material';
+import { getErrorMessage, ParseableErrorType } from '../../src/utils/errors';
 
 const Activate = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const { inProgress, instance } = useMsal();
-  const { data, error, isLoading } = useGetPublicQuery();
+  const { inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
-  const { accessToken: msAccessToken } = useAppSelector(selectMSAuthResult);
-  const [peachoneAuth, result] = useAuthMutation();
-  console.log('peachone result', result);
+  const peachoneAccessToken = useAppSelector(selectAccessToken);
+  const [resolveSubscription] = useResolveMutation();
+  const [activateSubscription] = useActivateMutation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const { token } = router.query;
 
   useEffect(() => {
-    if (inProgress === InteractionStatus.None) {
-      if (!isAuthenticated) {
-        const urlObj = {
-          pathname: '/login',
-          query: { destination: '/subscriptions/activate', ...router.query },
-        };
-        console.log('redirecting to:', urlObj);
-        router.push(urlObj).catch(console.error);
-      } else {
-        console.log('is authenticated');
-        instance
-          .acquireTokenSilent(oboScopes)
-          .then((authResult) => dispatch(setMSAuthResult(authResult)))
-          .catch(console.error);
+    (async () => {
+      try {
+        if (inProgress === InteractionStatus.None) {
+          if (!isAuthenticated || !peachoneAccessToken) {
+            const urlObj = {
+              pathname: '/login',
+              query: {
+                destination: '/subscriptions/activate',
+                ...router.query,
+              },
+            };
+            console.log('redirecting to:', urlObj);
+            router.push(urlObj);
+          } else if (typeof token === 'string') {
+            const { subscriptionId } = await resolveSubscription({
+              token,
+            }).unwrap();
+            console.log('Resolved subscription: ', subscriptionId);
+            const subscription = await activateSubscription({
+              subscriptionId,
+            }).unwrap();
+            console.log('Activated subscription: ', subscription);
+            setIsLoading(false);
+            router.push('/subscriptions');
+          }
+        }
+      } catch (error) {
+        console.error(
+          'An unknown error occured while activating the subscription: ',
+          error
+        );
+        setIsLoading(false);
+
+        const message = getErrorMessage(error as ParseableErrorType);
+        if (message) {
+          setError(
+            `An error occured while activating the subscription: ${message}`
+          );
+        } else {
+          setError(
+            'An unknown error occured while activating the subscription'
+          );
+        }
       }
-    }
-  }, [dispatch, inProgress, instance, isAuthenticated, router]);
+    })();
+  }, [
+    activateSubscription,
+    inProgress,
+    isAuthenticated,
+    peachoneAccessToken,
+    resolveSubscription,
+    router,
+    token,
+  ]);
 
-  useEffect(() => {
-    if (msAccessToken) {
-      console.log('msAccessToken:', msAccessToken);
-      peachoneAuth({ msAccessToken })
-        .unwrap()
-        .then((data) => {
-          console.log('got peachone response:', data); // <--- this is undefined???
-        })
-        .catch(console.error);
-      // todo:
-      // - auth with peachone
-      // - exchange token with resolve api to get subscription
-      // - send subscriptionId to activate api
-      // - redirect to /subscriptions/overview
-    }
-  }, [msAccessToken, peachoneAuth]);
+  if (error) {
+    return <Alert severity="error">{error}</Alert>;
+  }
 
   if (isLoading) {
     return (
-      <div>
-        <p>Loading...</p>
-      </div>
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        <CircularProgress />
+        <p>Activating subscription...</p>
+      </Box>
     );
   }
 
-  if (error) {
-    return (
-      <div>
-        <p>Error: {JSON.stringify(error)}</p>
-      </div>
-    );
-  }
-
-  return <div>Success: {JSON.stringify(data)}</div>;
+  return <div>Success</div>;
 };
 
 export default Activate;

@@ -33,7 +33,7 @@ const Header = () => {
   const handleCloseNavMenu = () => setIsMenuOpen(false);
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="static" elevation={0} sx={{ flexGrow: 0, flexShrink: 0 }}>
       <Container>
         <Toolbar
           disableGutters
